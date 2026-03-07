@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🦷 Dental Booking Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='widget.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+
+        .chat-container {
+            width: 400px;
+            height: 500px;
+            background: white;
+            margin: 40px auto;
+            display: flex;
+            flex-direction: column;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .suggestion-btn {
+            padding: 6px 10px;
+            border-radius: 14px;
+            border: 1px solid #007bff;
+            background: white;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .suggestion-btn:hover {
+            background: #007bff;
+            color: white;
+        }
+
+
+        .message {
+            margin: 8px 0;
+            padding: 8px 12px;
+            border-radius: 16px;
+            max-width: 80%;
+            font-size: 14px;
+        }
+
+        .user {
+            background: #007bff;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .bot {
+            background: #e5e5ea;
+            color: black;
+            align-self: flex-start;
+        }
+
+        .input-area {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+
+<!-- ✅ Load JS properly -->
+<script src="{{ url_for('static', filename='widget.js') }}"></script>
+<script>
+    let typingBubble = null;
+
+    function addMessage(text, sender) {
+        const messages = document.getElementById("messages");
+        const div = document.createElement("div");
+        div.className = "message " + sender;
+        div.innerText = text;
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+        return div;
+    }
+
+    function showTyping() {
+        typingBubble = addMessage("AI is typing…", "bot");
+        typingBubble.style.fontStyle = "italic";
+        typingBubble.style.opacity = "0.7";
+    }
+
+    function removeTyping() {
+        if (typingBubble) {
+            typingBubble.remove();
+            typingBubble = null;
+        }
+    }
+
+    async function sendMessage() {
+        const input = document.getElementById("message");
+        const text = input.value.trim();
+        if (!text) return;
+
+        addMessage(text, "user");
+        input.value = "";
+
+        showTyping();
+
+        const res = await fetch("/chat", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                user_id: "demo_user",
+                message: text
+            })
+        });
+
+        const data = await res.json();
+        removeTyping();
+        addMessage(data.reply, "bot");
+
+        if (data.suggestions) {
+            showSuggestions(data.suggestions);
+        }
+    }
+
+    function showSuggestions(items) {
+        const messages = document.getElementById("messages");
+        const wrapper = document.createElement("div");
+        wrapper.className = "suggestions";
+
+        items.forEach(text => {
+            const btn = document.createElement("button");
+            btn.className = "suggestion-btn";
+            btn.innerText = text;
+            btn.onclick = () => sendSuggestion(text);
+            wrapper.appendChild(btn);
+        });
+
+        messages.appendChild(wrapper);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    function sendSuggestion(text) {
+        document.getElementById("message").value = text;
+        sendMessage();
+    }
+
+    // ✅ Enter key support (defined ONCE)
+    document.getElementById("message").addEventListener("keydown", e => {
+        if (e.key === "Enter") sendMessage();
+    });
+</script>
+
+
+
+</body>
+</html>

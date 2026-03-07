@@ -1,0 +1,47 @@
+
+
+/* 🔥 This makes it bottom-right */
+.chat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    width: 400px;
+    height: 500px;
+
+    background: white;
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+
+    z-index: 9999;
+}
+
+.messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.input-area {
+    display: flex;
+    border-top: 1px solid #ddd;
+}
+
+input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
