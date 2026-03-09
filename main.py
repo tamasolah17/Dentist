@@ -4,8 +4,10 @@ from flask_cors import CORS
 app2 = Flask(__name__)
 CORS(app2)
 user_sessions = {}
-@app2.route("/chat", methods=["POST"])  
+@app2.route("/chat", methods=["POST","OPTIONS"])
 def chat():
+    if request.method == "OPTIONS":
+        return '', 200
     data = request.json
     user_id = data.get("user_id")
     message = data.get("message", "").strip()
