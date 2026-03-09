@@ -1,7 +1,8 @@
 from flask import Flask, request, jsonify, render_template
 from agent import handle_message
-
+from flask_cors import CORS
 app2 = Flask(__name__)
+CORS(app2)
 user_sessions = {}
 @app2.route("/chat", methods=["POST"])  
 def chat():

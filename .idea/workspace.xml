@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="df5d3721-fe21-4195-aaa6-4acb80b7b1ca" name="Changes" comment="My agent">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mass_Email.py" beforeDir="false" afterPath="$PROJECT_DIR$/Mass_Email.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dentist_outreach.db" beforeDir="false" afterPath="$PROJECT_DIR$/dentist_outreach.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/widget.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/widget.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,12 +29,12 @@
     &quot;assignee&quot;: &quot;tamasolah17&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/tamasolah17/Dentist.git",
-    "accountId": "bd1dbb3c-fca4-4273-900a-9a0f850c3424"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/tamasolah17/Dentist.git&quot;,
+    &quot;accountId&quot;: &quot;bd1dbb3c-fca4-4273-900a-9a0f850c3424&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/main.py" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -47,30 +46,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.Automate_Bulk_Emails.executor": "Run",
-    "Python.Automate_Bulk_Emails1.executor": "Run",
-    "Python.Email_Extractor.executor": "Run",
-    "Python.Mass_Email.executor": "Run",
-    "Python.WebScraper.executor": "Run",
-    "Python.agent.executor": "Run",
-    "Python.chatbot_detector.executor": "Run",
-    "Python.intent_classifier.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/nnavo/PycharmProjects/Dentist"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.Automate_Bulk_Emails.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Automate_Bulk_Emails1.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Email_Extractor.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Mass_Email.executor&quot;: &quot;Run&quot;,
+    &quot;Python.WebScraper.executor&quot;: &quot;Run&quot;,
+    &quot;Python.agent.executor&quot;: &quot;Run&quot;,
+    &quot;Python.chatbot_detector.executor&quot;: &quot;Run&quot;,
+    &quot;Python.intent_classifier.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/nnavo/PycharmProjects/Dentist&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "Python"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;Python&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\nnavo\PycharmProjects\Dentist" />
@@ -231,7 +230,23 @@
       <option name="project" value="LOCAL" />
       <updated>1772851919900</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1773025794539</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1773025794539</updated>
+    </task>
+    <task id="LOCAL-00016" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1773025925417</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1773025925417</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
