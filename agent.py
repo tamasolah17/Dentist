@@ -138,23 +138,14 @@ def handle_message(user_id, message, session):
 
         }
     elif intent == "Treatments":
-
-        return {
-            "reply": (
-
-                "We offer whitening, implants, braces and cleanings. Which are you interested in?"
-
-
-            ),
-            "suggestions": [
-                "whitening",
-                "implants",
-                "braces",
-                "cleanings"
-
-            ]
-
+        return jsonify({
+            "intent": "Treatments",
+            "confidence": 1.0,
+            "reply": "We offer whitening, implants, braces and cleanings. Which are you interested in"
         }
+
+        )
+
 
     elif intent == "Emergency":
         reply = "🚨 Please call us immediately for emergencies. Would you like the number?"
