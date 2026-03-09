@@ -15,20 +15,18 @@ Your goal:
 Classify the user's message into exactly ONE intent.
 
 
-ALLOWED_INTENTS = {
-    "pricing_objection"
-    "trust_objection"
-    
-    "welcome_message"
-    "Insurance"
-    "Treatments"
-    "Booking"
-    "Emergency"
-    "Issues"
-    "human"
+ALLOWED_INTENTS = [
+    "pricing_objection",
+    "trust_objection",
+    "welcome_message",
+    "insurance",
+    "treatments",
+    "booking",
+    "emergency",
+    "issues",
+    "human",
     "unknown"
-    
-}
+]
 
 Guidelines:
 - Questions about insurance and other discounts from patients → Insurance
@@ -78,10 +76,12 @@ def classify_intent(user_id: str, message: str) -> dict:
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=messages,
-        temperature=0
+        temperature=0,
+        response_format={"type": "json_object"}
     )
 
     raw = response.choices[0].message.content.strip()
+    print("RAW OPENAI RESPONSE:", raw)
 
     try:
         data = json.loads(raw)
