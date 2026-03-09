@@ -196,7 +196,7 @@ window.addEventListener("DOMContentLoaded", function () {
             if (!welcomeLoaded) {
                 welcomeLoaded = true;
 
-                const res =  await fetch("https://bot.automationclinics.com/chat", {
+                const res = await fetch("/chat", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
