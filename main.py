@@ -31,4 +31,4 @@ def index():
     return render_template("dentistpage.html")
 
 if __name__ == "__main__":
-    app2.run(debug=True)
+    app2.run(host="0.0.0.0", port=5000)
