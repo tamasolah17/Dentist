@@ -3,3 +3,5 @@ agent
 memory
 openai
 gunicorn
+CORS
+flask-cors
