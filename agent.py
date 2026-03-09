@@ -120,8 +120,6 @@ def handle_message(user_id, message, session):
     intent = result["intent"].lower()
     confidence = result["confidence"].lower()
 
-    intent = result["intent"]
-    confidence = result["confidence"]
 
     if confidence < 0.1:
         intent = "unknown"
