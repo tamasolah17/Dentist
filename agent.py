@@ -118,13 +118,13 @@ def handle_message(user_id, message, session):
         return {"reply": "Sorry, I didn't understand that. Could you rephrase?"}
 
     intent = result["intent"].lower()
-    confidence = result["confidence"].lower()
+    confidence = result["confidence"]
 
 
     if confidence < 0.1:
         intent = "unknown"
 
-    if intent == "Booking":
+    if intent == "booking":
         session["stage"] = "awaiting_treatment"
 
         return {
@@ -155,7 +155,7 @@ def handle_message(user_id, message, session):
             ]
 
         }
-    elif intent == "Treatments":
+    elif intent == "treatments":
 
         return {
             "reply": (
@@ -174,11 +174,17 @@ def handle_message(user_id, message, session):
 
         }
 
-    elif intent == "Emergency":
-        reply = "🚨 Please call us immediately for emergencies. Would you like the number?"
+
+    elif intent == "emergency":
+
+        return {
+
+            "reply": "🚨 Please call us immediately for emergencies. Would you like the number?"
+
+        }
 
 
-    elif intent == "Insurance":
+    elif intent == "insurance":
 
         return {
 
