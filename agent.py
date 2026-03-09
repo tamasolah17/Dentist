@@ -110,17 +110,20 @@ def handle_message(user_id, message, session):
                 "suggestions": ["Book appointment", "Talk to receptionist"]
             }
         result = classify_intent(user_id, message)
+        print("DEBUG INTENT:", result)
+
+
     except Exception as e:
         print("Classifier error:", e)
         return {"reply": "Sorry, I didn't understand that. Could you rephrase?"}
 
-    intent = result["intent"]
-    confidence = result["confidence"]
+    intent = result["intent"].lower()
+    confidence = result["confidence"].lower()
 
     intent = result["intent"]
     confidence = result["confidence"]
 
-    if confidence < 0.2:
+    if confidence < 0.1:
         intent = "unknown"
 
     if intent == "Booking":
