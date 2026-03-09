@@ -29,18 +29,13 @@ ALLOWED_INTENTS :
 
 
 Guidelines:
-- Questions about insurance and other discounts from patients → Insurance
-- Questions about treatments → Treatments
-- Questions about teeth issues, side effects → Issues
-- Questions about treatments → Treatments
-- Questions about bookings → Booking
-- Questions about emergency appointments → Emergency
+- Questions about insurance and other discounts from patients → insurance
+- Questions about treatments → treatments
+- Questions about teeth issues, side effects → issues
+- Questions about bookings → booking
+- Questions about emergency appointments → emergency
 - Questions about price, discounts, value → pricing_objection
 - Questions about legitimacy, reviews, trust → trust_objection
-- Questions about delivery time or shipping → shipping_objection
-- Questions about returns, refunds, warranty → refund_objection
-- Questions about whether the product is right for them → product_fit_question
-- Answers   after only "product_fit_question" focused on skin issues,acnes → "Mask_declaration" . ONLY AFTER product_fit_question!!
 - If the chatbox is blank, contains 0 answers and 0 questions → trigger welcome_message
 
    
