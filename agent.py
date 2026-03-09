@@ -81,8 +81,24 @@ def handle_message(user_id, message, session):
     # =========================
     # NORMAL INTENT HANDLING
     # =========================
+    if not message:
+        return {
+            "reply": "ANYÁTOKAT MAGYAROK",
+            "suggestions": [
+                "Book appointment",
+                "Treatments",
+                "Insurance",
+                "Emergency"
+            ]
+        }
+    try:
+        result = classify_intent(user_id, message)
+    except Exception as e:
+        print("Classifier error:", e)
+        return {"reply": "Sorry, I didn't understand that. Could you rephrase?"}
 
-    result = classify_intent(user_id, message)
+    intent = result["intent"]
+    confidence = result["confidence"]
 
     intent = result["intent"]
     confidence = result["confidence"]
