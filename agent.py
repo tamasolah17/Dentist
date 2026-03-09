@@ -9,7 +9,7 @@ def handle_message(user_id, message, session):
     # =========================
 
     treatments = ["whitening", "implants", "braces", "cleanings"]
-
+    message = message.lower().strip()
     if message.lower() in treatments:
         session["selected_treatment"] = message.capitalize()
         session["stage"] = "awaiting_treatment"
@@ -92,6 +92,23 @@ def handle_message(user_id, message, session):
             ]
         }
     try:
+        if "treatment" in message:
+            return {
+                "reply": "We offer whitening, implants, braces and cleanings. Which are you interested in?",
+                "suggestions": ["whitening", "implants", "braces", "cleanings"]
+            }
+
+        if "price" in message or "cost" in message:
+            return {
+                "reply": "🦷 Teeth whitening starts at $120 and consultation is $40.\n\nWould you like to book an appointment?",
+                "suggestions": ["Book appointment", "Talk to human"]
+            }
+
+        if "insurance" in message:
+            return {
+                "reply": "Yes, we accept most major insurance providers.",
+                "suggestions": ["Book appointment", "Talk to receptionist"]
+            }
         result = classify_intent(user_id, message)
     except Exception as e:
         print("Classifier error:", e)
