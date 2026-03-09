@@ -15,7 +15,7 @@ Your goal:
 Classify the user's message into exactly ONE intent.
 
 
-ALLOWED_INTENTS = [
+ALLOWED_INTENTS :
     "pricing_objection",
     "trust_objection",
     "welcome_message",
@@ -26,7 +26,7 @@ ALLOWED_INTENTS = [
     "issues",
     "human",
     "unknown"
-]
+
 
 Guidelines:
 - Questions about insurance and other discounts from patients → Insurance
