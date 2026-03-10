@@ -196,7 +196,7 @@ window.addEventListener("DOMContentLoaded", function () {
             if (!welcomeLoaded) {
                 welcomeLoaded = true;
 
-                const res = await fetch("http://127.0.0.1:5000/chat", {
+                const res = await fetch("https://bot.automationclinics.com/chat", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -319,7 +319,7 @@ window.addEventListener("DOMContentLoaded", function () {
     showTyping();
 
     try {
-        const res = await fetch("http://127.0.0.1:5000/chat", {
+        const res = await fetch("https://bot.automationclinics.com/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
