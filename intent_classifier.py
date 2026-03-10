@@ -72,7 +72,7 @@ def classify_intent(user_id: str, message: str) -> dict:
         model="gpt-4o-mini",
         messages=messages,
         temperature=0,
-
+        response_format={"type": "json_object"}
     )
 
     raw = response.choices[0].message.content.strip()

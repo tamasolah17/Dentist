@@ -290,7 +290,8 @@ window.addEventListener("DOMContentLoaded", function () {
     const text = input.value.trim();
     if (!text) return;
 
-    const userMsg = document.createElement("div");userMsg.innerText = text;
+    const userMsg = document.createElement("div");
+    userMsg.innerText = text;
 
     userMsg.style.display = "inline-block";
     userMsg.style.alignSelf = "flex-end";

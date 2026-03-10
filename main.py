@@ -7,7 +7,7 @@ user_sessions = {}
 @app2.route("/chat", methods=["POST","OPTIONS"])
 def chat():
     if request.method == "OPTIONS":
-        return '', 200
+        return 'LOL', 200
     data = request.json
     user_id = data.get("user_id")
     message = data.get("message", "").strip()
