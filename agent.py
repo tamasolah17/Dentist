@@ -91,16 +91,37 @@ def handle_message(user_id, message, session):
                 "Emergency"
             ]
         }
+    try:
+        if "treatment" in message:
+            return {
+                "reply": "We offer whitening, implants, braces and cleanings. Which are you interested in?",
+                "suggestions": ["whitening", "implants", "braces", "cleanings"]
+            }
 
-    result = classify_intent(user_id, message)
+        if "price" in message or "cost" in message:
+            return {
+                "reply": "🦷 Teeth whitening starts at $120 and consultation is $40.\n\nWould you like to book an appointment?",
+                "suggestions": ["Book appointment", "Talk to human"]
+            }
 
-    print("DEBUG INTENT RAW:", result)
+        if "insurance" in message:
+            return {
+                "reply": "Yes, we accept most major insurance providers.",
+                "suggestions": ["Book appointment", "Talk to receptionist"]
+            }
+        result = classify_intent(user_id, message)
+        print("DEBUG INTENT:", result)
 
-    intent = result.get("intent", "unknown").lower()
-    confidence = result.get("confidence", 0)
+
+    except Exception as e:
+        print("Classifier error:", e)
+        return {"reply": "Sorry, I didn't understand that. Could you rephrase?"}
+
+    intent = result["intent"].lower()
+    confidence = result["confidence"]
 
 
-    if confidence < 0.1:
+    if confidence < 0:
         intent = "unknown"
 
     if intent == "booking":
@@ -193,33 +214,7 @@ def handle_message(user_id, message, session):
 
     else:
         reply = "I can help with appointments, treatments, insurance, or emergencies."
-    try:
-        if "treatment" in message:
-            return {
-                "reply": "We offer whitening, implants, braces and cleanings. Which are you interested in?",
-                "suggestions": ["whitening", "implants", "braces", "cleanings"]
-            }
 
-        if "price" in message or "cost" in message:
-            return {
-                "reply": "🦷 Teeth whitening starts at $120 and consultation is $40.\n\nWould you like to book an appointment?",
-                "suggestions": ["Book appointment", "Talk to human"]
-            }
-
-        if "insurance" in message:
-            return {
-                "reply": "Yes, we accept most major insurance providers.",
-                "suggestions": ["Book appointment", "Talk to receptionist"]
-            }
-
-        print("DEBUG INTENT:", result)
-
-
-    except Exception as e:
-        print("Classifier error:", e)
-        return {"reply": "Sorry, I didn't understand that. Could you rephrase?"}
     add_message(user_id, "assistant", reply)
-    print("MESSAGE:", message)
-    print("INTENT:", intent)
-    print("CONFIDENCE:", confidence)
+
     return {"reply": reply}
