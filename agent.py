@@ -93,8 +93,11 @@ def handle_message(user_id, message, session):
         }
 
     result = classify_intent(user_id, message)
-    intent = result["intent"].lower()
-    confidence = result["confidence"]
+
+    print("DEBUG INTENT RAW:", result)
+
+    intent = result.get("intent", "unknown").lower()
+    confidence = result.get("confidence", 0)
 
 
     if confidence < 0.1:
@@ -216,5 +219,7 @@ def handle_message(user_id, message, session):
         print("Classifier error:", e)
         return {"reply": "Sorry, I didn't understand that. Could you rephrase?"}
     add_message(user_id, "assistant", reply)
-
+    print("MESSAGE:", message)
+    print("INTENT:", intent)
+    print("CONFIDENCE:", confidence)
     return {"reply": reply}
