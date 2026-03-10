@@ -93,8 +93,10 @@ def handle_message(user_id, message, session):
         }
 
 
-
-
+    result = classify_intent(user_id, message)
+    intent = result["intent"]
+    confidence = result["confidence"]
+    print("DEBUG INTENT:", result)
 
     if confidence < 0.2:
         intent = "unknown"
