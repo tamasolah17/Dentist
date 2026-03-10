@@ -116,15 +116,9 @@ def handle_message(user_id, message, session):
         print("Classifier error:", e)
         return {"reply": "Sorry, I didn't understand that. Could you rephrase?"}
 
-    try:
-        result = classify_intent(user_id, message) or {}
-
-        intent = result.get("intent", "unknown").lower()
-        confidence = result.get("confidence", 0)
-
-    except Exception as e:
-        print("INTENT ERROR:", e)
-        return {"reply": "Sorry, something went wrong."}
+    # TEMP FIX
+    intent = "unknown"
+    confidence = 0.5
 
 
     if confidence < 0.2:
