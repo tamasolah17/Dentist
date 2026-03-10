@@ -8,7 +8,7 @@ user_sessions = {}
 def chat():
     if request.method == "OPTIONS":
         return 'LOL', 200
-    data = request.json
+    data = request.get_json()
     user_id = data.get("user_id")
     message = data.get("message", "").strip()
 

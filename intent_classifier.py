@@ -16,15 +16,15 @@ Classify the user's message into exactly ONE intent.
 
 
 ALLOWED_INTENTS = [
-    "pricing_objection"
-    "trust_objection"
-    "welcome_message"
-    "insurance"
-    "treatments"
-    "booking"
-    "emergency"
-    "issues"
-    "human"
+    "pricing_objection",
+    "trust_objection",
+    "welcome_message",
+    "insurance",
+    "treatments",
+    "booking",
+    "emergency",
+    "issues",
+    "human",
     "unknown"
 ]
 
