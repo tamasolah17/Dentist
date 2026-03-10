@@ -15,7 +15,7 @@ Your goal:
 Classify the user's message into exactly ONE intent.
 
 
-ALLOWED_INTENTS :
+ALLOWED_INTENTS = [
     "pricing_objection",
     "trust_objection",
     "welcome_message",
@@ -26,7 +26,7 @@ ALLOWED_INTENTS :
     "issues",
     "human",
     "unknown"
-
+]
 
 Guidelines:
 - Questions about insurance and other discounts from patients → insurance
@@ -72,7 +72,7 @@ def classify_intent(user_id: str, message: str) -> dict:
         model="gpt-4o-mini",
         messages=messages,
         temperature=0,
-        response_format={"type": "json_object"}
+
     )
 
     raw = response.choices[0].message.content.strip()

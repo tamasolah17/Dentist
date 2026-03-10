@@ -121,7 +121,7 @@ def handle_message(user_id, message, session):
     confidence = result["confidence"]
 
 
-    if confidence < 0:
+    if confidence < 0.3:
         intent = "unknown"
 
     if intent == "booking":
