@@ -80,6 +80,7 @@ def classify_intent(user_id: str, message: str) -> dict:
 
     try:
         data = json.loads(raw)
+        print("PARSED:", data)
     except json.JSONDecodeError:
         data = {"intent": "unknown", "confidence": 0.0}
 
