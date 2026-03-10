@@ -83,7 +83,7 @@ def handle_message(user_id, message, session):
     # =========================
     if not message:
         return {
-            "reply": "ANYÁTOKAT MAGYAROK",
+            "reply": "YES",
             "suggestions": [
                 "Book appointment",
                 "Treatments",
