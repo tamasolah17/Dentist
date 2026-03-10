@@ -109,14 +109,14 @@ def handle_message(user_id, message, session):
                 "reply": "Yes, we accept most major insurance providers.",
                 "suggestions": ["Book appointment", "Talk to receptionist"]
             }
-        result = classify_intent(user_id, message)
-        print("DEBUG INTENT:", result)
+
+
 
 
     except Exception as e:
         print("Classifier error:", e)
         return {"reply": "Sorry, I didn't understand that. Could you rephrase?"}
-
+    result = classify_intent(user_id, message)
     intent = result["intent"].lower()
     confidence = result["confidence"]
 
