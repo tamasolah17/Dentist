@@ -83,7 +83,7 @@ def handle_message(user_id, message, session):
     # =========================
     if not message:
         return {
-            "reply": "YES",
+            "reply": "ANY",
             "suggestions": [
                 "Book appointment",
                 "Treatments",
@@ -109,16 +109,17 @@ def handle_message(user_id, message, session):
                 "reply": "Yes, we accept most major insurance providers.",
                 "suggestions": ["Book appointment", "Talk to receptionist"]
             }
-
+        result = classify_intent(user_id, message)
+        intent = result["intent"]
+        confidence = result["confidence"]
+        print("DEBUG INTENT:", result)
 
 
     except Exception as e:
         print("Classifier error:", e)
         return {"reply": "Sorry, I didn't understand that. Could you rephrase?"}
 
-    # TEMP FIX
-    intent = "unknown"
-    confidence = 0.5
+
 
 
     if confidence < 0.2:
