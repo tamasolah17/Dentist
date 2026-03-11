@@ -147,42 +147,54 @@ window.addEventListener("DOMContentLoaded", function () {
 
     // INPUT AREA
     const inputArea = document.createElement("div");
+
     inputArea.style.display = "flex";
-    inputArea.style.borderTop = "1px solid #ddd";
+    inputArea.style.alignItems = "center";
+    inputArea.style.padding = "12px";
+    inputArea.style.gap = "10px";
+    inputArea.style.borderTop = "1px solid #e5e7eb";
+    inputArea.style.background = "white";
 
     const input = document.createElement("input");
     input.placeholder = "Type a message...";
+
     input.style.flex = "1";
-    input.style.padding = "10px";
-    input.style.border = "none";
-    input.style.outline = "none";
-    input.style.borderRadius = "20px";
-    input.style.border = "1px solid #e5e7eb";
-    input.style.padding = "10px 14px";
+    input.style.height = "50px";
+    input.style.borderRadius = "25px";
+    input.style.border = "2px solid #34d399";
+    input.style.padding = "0 16px";
     input.style.fontSize = "14px";
     input.style.outline = "none";
-    input.addEventListener("keydown", function (e) {
+
+    input.addEventListener("keydown", function(e) {
         if (e.key === "Enter") {
             sendMessage();
         }
     });
 
-
     const sendBtn = document.createElement("button");
-    sendBtn.addEventListener("click", sendMessage);
-    sendBtn.innerText = "Send";
-    sendBtn.style.background = "#007bff";
-    sendBtn.style.color = "white";
+
+    sendBtn.innerHTML = "➤";
+
+    sendBtn.style.width = "50px";
+    sendBtn.style.height = "50px";
+    sendBtn.style.borderRadius = "50%";
     sendBtn.style.border = "none";
-    sendBtn.style.padding = "10px 15px";
+    sendBtn.style.background = "#34d399";
+    sendBtn.style.color = "white";
+    sendBtn.style.fontSize = "18px";
     sendBtn.style.cursor = "pointer";
-    sendBtn.style.background = "#22c55e";
+
+    sendBtn.style.display = "flex";
+    sendBtn.style.alignItems = "center";
+    sendBtn.style.justifyContent = "center";
+
+    sendBtn.addEventListener("click", sendMessage);
 
     inputArea.appendChild(input);
     inputArea.appendChild(sendBtn);
+
     chatBox.appendChild(inputArea);
-
-
 
     let welcomeLoaded = false;
 

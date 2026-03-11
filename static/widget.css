@@ -1,6 +1,4 @@
-
-
-/* 🔥 This makes it bottom-right */
+/* Chat container */
 .chat-container {
     position: fixed;
     bottom: 20px;
@@ -19,25 +17,38 @@
     z-index: 9999;
 }
 
-.messages {
+/* messages area */
+.chat-container .messages {
     flex: 1;
     padding: 10px;
     overflow-y: auto;
 }
 
-.input-area {
-    display: flex;
-    border-top: 1px solid #ddd;
+/* input area */
+.chat-container .input-area{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px;
 }
 
-input {
+/* input field */
+.chat-container input {
     flex: 1;
     padding: 10px;
     border: none;
     outline: none;
+    box-shadow: none;
 }
 
-button {
+/* input focus fix */
+.chat-container input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* button */
+.chat-container button {
     padding: 10px 15px;
     border: none;
     background: #007bff;
@@ -45,3 +56,20 @@ button {
     cursor: pointer;
 }
 
+/* isolate widget */
+.chat-container * {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.chat-container .send-btn{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#2fb39c;
+    color:white;
+    font-size:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
