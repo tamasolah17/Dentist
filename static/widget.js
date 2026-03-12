@@ -62,7 +62,19 @@ window.addEventListener("DOMContentLoaded", function () {
     header.innerHTML = `
     <div style="display:flex;align-items:center;gap:8px;">
 
+    <div style="
+    width:28px;
+    height:28px;
+    background:white;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    ">
 
+    <img src="https://cdn.shopify.com/s/files/1/0930/3893/6393/files/AutoClinicsLogo3.png?v=1773200243"
+    style="width:20px;height:20px;object-fit:contain;">
+    </div>
 
     <div style="display:flex;flex-direction:column;">
     <span style="font-size:15px;font-weight:600;">Dental Booking Assistant</span>

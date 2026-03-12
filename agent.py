@@ -83,7 +83,7 @@ def handle_message(user_id, message, session):
             f"✅ Thank you {session['name']}!\n\n"
             f"Appointment request received:\n"
             f"Treatment: {session['treatment']}\n"
-            f"Date: {session['date']}\n"
+            f"Appointment: {session['appointment']}\n"
             f"Time: {session['time']}\n\n"
             "Our receptionist will contact you shortly."
         )
