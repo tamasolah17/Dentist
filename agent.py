@@ -41,8 +41,8 @@ def handle_message(user_id, message, session):
         session["stage"] = "awaiting_appointment"
 
         return {
-            "reply": "⏰ Do you prefer morning or afternoon?",
-            "suggestions": ["lol", "Afternoon"]
+            "reply": "Do you prefer morning or afternoon?",
+            "suggestions": ["Morning", "Afternoon"]
         }
     elif session.get("stage") == "awaiting_appointment":
         session["appointment"] = message

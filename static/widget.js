@@ -438,7 +438,7 @@ window.addEventListener("DOMContentLoaded", function () {
         border-radius:16px;
         border:1px solid #e5e7eb;
         color:black;
-        max-width:70%;
+        max-width:100%;
         font-size:14px;
         line-height:1.4;
         ">
