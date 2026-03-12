@@ -38,11 +38,25 @@ def handle_message(user_id, message, session):
 
     elif session.get("stage") == "awaiting_date":
         session["date"] = message
-        session["stage"] = "awaiting_time"
+        session["stage"] = "awaiting_appointment"
 
         return {
             "reply": "⏰ Do you prefer morning or afternoon?",
-            "suggestions": ["Morning", "Afternoon"]
+            "suggestions": ["lol", "Afternoon"]
+        }
+    elif session.get("stage") == "awaiting_appointment":
+        session["appointment"] = message
+        session["stage"] = "awaiting_time"
+        choice = message.strip().lower()
+
+        if choice == "morning":
+            suggestions = ["9:00 AM", "10:30 AM", "11:30 AM"]
+        else:
+            suggestions = ["12:30 PM", "2:00 PM", "3:30 PM"]
+
+        return {
+            "reply": "What time would you prefer?",
+            "suggestions": suggestions
         }
 
     elif session.get("stage") == "awaiting_time":

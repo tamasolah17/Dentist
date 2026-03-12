@@ -60,11 +60,17 @@ window.addEventListener("DOMContentLoaded", function () {
     // HEADER
     const header = document.createElement("div");
     header.innerHTML = `
-        <div style="display:flex;flex-direction:column;">
-        <span style="font-size:15px;font-weight:600;">🦷 Dental Booking Assistant</span>
-        <span style="font-size:11px;opacity:0.8;">Online now</span>
-        </div>
-        `;
+    <div style="display:flex;align-items:center;gap:8px;">
+
+
+
+    <div style="display:flex;flex-direction:column;">
+    <span style="font-size:15px;font-weight:600;">Dental Booking Assistant</span>
+    <span style="font-size:11px;opacity:0.8;">Online now</span>
+    </div>
+
+    </div>
+    `;
     header.style.display = "flex";
 
     header.style.padding = "12px";
@@ -83,6 +89,7 @@ window.addEventListener("DOMContentLoaded", function () {
     messages.style.flex = "1";
     messages.style.display = "flex";
     messages.style.flexDirection = "column";
+    messages.style.alignItems = "flex-start";
 
 
     chatBox.appendChild(messages);
@@ -220,13 +227,37 @@ window.addEventListener("DOMContentLoaded", function () {
                 const data = await res.json();
 
                 const botMsg = document.createElement("div");
-                botMsg.innerText = data.reply || "No response.";
+
+                botMsg.style.display = "flex";
+                botMsg.style.alignItems = "flex-start";
+                botMsg.style.gap = "8px";
                 botMsg.style.margin = "8px 0";
-                botMsg.style.padding = "8px 12px";
-                botMsg.style.borderRadius = "16px";
-                botMsg.style.background = "#f1f3f7";
-                botMsg.style.border = "1px solid #e5e7eb";
-                botMsg.style.color = "black";
+
+                botMsg.innerHTML = `
+                <img src="https://cdn.shopify.com/s/files/1/0930/3893/6393/files/AutoClinicsLogo3.png?v=1773200243"
+                style="
+                width:28px;
+                height:28px;
+                border-radius:50%;
+                object-fit:contain;
+                flex-shrink:0;
+                ">
+
+                <div style="
+                background:#f1f3f7;
+                padding:10px 14px;
+                border-radius:16px;
+                border:1px solid #e5e7eb;
+                color:black;
+                max-width:100%;
+                font-size:14px;
+                line-height:1.4;
+                word-break:break-word;
+                ">
+                ${data.reply || "No response."}
+                </div>
+                `;
+
                 messages.appendChild(botMsg);
                 messages.scrollTop = messages.scrollHeight;
 
@@ -241,7 +272,7 @@ window.addEventListener("DOMContentLoaded", function () {
         typingBubble = document.createElement("div");
         typingBubble.innerHTML = "AI is typing<span>.</span><span>.</span><span>.</span>";
         typingBubble.style.fontSize = "13px";
-
+        typingBubble.style.alignSelf = "flex-end"
         typingBubble.style.margin = "8px 0";
         typingBubble.style.padding = "8px 12px";
         typingBubble.style.borderRadius = "16px";
@@ -270,12 +301,12 @@ window.addEventListener("DOMContentLoaded", function () {
             const btn = document.createElement("button");
             btn.innerText = text;
 
-            btn.style.borderRadius = "14px";
+            btn.style.borderRadius = "17px";
             btn.style.border = "1px solid #ddd";
 
 
 
-            btn.style.border = "1px solid #e5e7eb";
+            btn.style.border = "2px solid #e5e7eb";
             btn.style.background = "#f9fafb";
             btn.style.color = "#374151";
             btn.style.fontSize = "12px";
@@ -283,8 +314,19 @@ window.addEventListener("DOMContentLoaded", function () {
             btn.style.borderRadius = "14px";
 
 
-            btn.style.cursor = "pointer";
 
+            btn.style.cursor = "pointer";
+            btn.onmouseenter = () => {
+                btn.style.background = "#34d399";
+                btn.style.borderColor = "#34d399";
+                btn.style.color = "white";
+            };
+
+            btn.onmouseleave = () => {
+                btn.style.background = "#f9fafb";
+                btn.style.borderColor = "#e5e7eb";
+                btn.style.color = "#374151";
+            };
             btn.onclick = () => {
                 input.value = text;
                 sendMessage();
@@ -344,15 +386,65 @@ window.addEventListener("DOMContentLoaded", function () {
 
         removeTyping();
 
-        const botMsg = document.createElement("div");
-        botMsg.innerText = data.reply || "No response.";
-        botMsg.style.margin = "8px 0";
-        botMsg.style.padding = "8px 12px";
-        botMsg.style.borderRadius = "16px";
-        botMsg.style.background = "#f1f3f7";
-        botMsg.style.border = "1px solid #e5e7eb";
-        botMsg.style.color = "black";
+       const botMsg = document.createElement("div");
 
+        botMsg.style.display = "flex";
+        botMsg.style.alignItems = "flex-start";
+        botMsg.style.gap = "8px";
+        botMsg.style.margin = "8px 0";
+
+        botMsg.innerHTML = `
+        <img src="https://cdn.shopify.com/s/files/1/0930/3893/6393/files/AutoClinicsLogo3.png?v=1773200243"
+        style="
+        width:28px;
+        height:28px;
+        border-radius:50%;
+        object-fit:contain;
+        flex-shrink:0;
+        ">
+
+        <div style="
+        background:#f1f3f7;
+        padding:10px 14px;
+        border-radius:16px;
+        border:1px solid #e5e7eb;
+        color:black;
+        max-width:100%;
+        font-size:14px;
+        line-height:1.4;
+        ">
+        </div>
+        `;
+        let reply = data.reply || "No response.";
+
+        // Only format the appointment confirmation message
+        if (reply.includes("Appointment request received")) {
+            reply = reply.replace(/\n/g, "<br>");
+        }
+
+        botMsg.innerHTML = `
+        <img src="https://cdn.shopify.com/s/files/1/0930/3893/6393/files/AutoClinicsLogo3.png?v=1773200243"
+        style="
+        width:28px;
+        height:28px;
+        border-radius:50%;
+        object-fit:contain;
+        flex-shrink:0;
+        ">
+
+        <div style="
+        background:#f1f3f7;
+        padding:10px 14px;
+        border-radius:16px;
+        border:1px solid #e5e7eb;
+        color:black;
+        max-width:70%;
+        font-size:14px;
+        line-height:1.4;
+        ">
+        ${reply}
+        </div>
+        `;
         messages.appendChild(botMsg);
 
         if (data.suggestions && data.suggestions.length > 0) {
