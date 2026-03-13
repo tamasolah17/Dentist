@@ -24,10 +24,11 @@ SMTP_SERVER = "smtp-relay.brevo.com"
 SMTP_PORT = 587
 SMTP_USERNAME = "9bfe0b001@smtp-brevo.com"
 
-SMTP_PASSWORD = "xsmtpsib-328c74420b4d6f2086fb4c0a37d2cba831b76a4d533c86b299b19b9994f5d2af-nXKVWVdOrLo0Pdqt"
+SMTP_PASSWORD = "xsmtpsib-328c74420b4d6f2086fb4c0a37d2cba831b76a4d533c86b299b19b9994f5d2af-YxWL60vGElxaszwG"
 SENDER_EMAIL = "contact@automationclinics.com"
-
-
+TEST_MODE = True
+TEST_EMAIL = "nnavocs@gmail.com"
+MAX_EMAILS_PER_RUN = 1
 
 SEND_DELAY = 3  # seconds between emails (anti-spam safety)
 import sqlite3
@@ -35,7 +36,7 @@ import sqlite3
 conn = sqlite3.connect("dentist_outreach.db")
 c = conn.cursor()
 
-c.execute("UPDATE recipients SET status='pending'")
+#c.execute("UPDATE recipients SET status='pending'")
 
 conn.commit()
 conn.close()
@@ -147,7 +148,7 @@ Some clinics are using a lightweight AI reception system to capture those after-
 Would you be open to seeing a short preview of how this could look on your website?
 
 Best regards,
-Niko
+Oláh Thomas
 Dental Automation Specialist
 
 If this isn’t relevant, just let me know and I won’t follow up.
@@ -167,11 +168,19 @@ If this isn’t relevant, just let me know and I won’t follow up.
 <p>Would you be open to seeing a short preview of how this could look on your website?</p>
 
 <p>Best regards,<br>
-Niko<br>
-Dental Automation Specialist</p>
+Thomas Oláh<br>
+Founder<br>
+AutomationClinics</p>
 
-<p style="font-size:12px;color:gray;">
-If this isn’t relevant, just let me know and I won’t follow up.
+<p style="text-align:left;margin-top:2px;">
+<img src="https://cdn.shopify.com/s/files/1/0930/3893/6393/files/AutoClinicsLogo17.jpg?v=1773359880" width="120" style="display:block;">
+</p>
+
+<p style="font-size:13px;color:gray;">
+AutomationClinics<br>
+contact@automationclinics.com<br>
+📍40212 Düsseldorf
+Germany
 </p>
 
 </body>
@@ -266,11 +275,17 @@ def send_bulk():
     if not leads:
         print("No pending leads.")
         return
-
+    count = 0
     for clinic_name, email, reviews, city in leads:
+        if TEST_MODE == True:
+            email = TEST_EMAIL
+        else:
 
-        email = clean_email(email)
+            email = clean_email(email)
+        if count >= MAX_EMAILS_PER_RUN:
+            break
 
+        count += 1
         if not valid_email(email):
             print(f"Skipping invalid email: {email}")
             continue
