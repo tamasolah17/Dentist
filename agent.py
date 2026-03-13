@@ -9,8 +9,8 @@ def handle_message(user_id, message, session):
     # =========================
 
     treatments = ["whitening", "implants", "braces", "cleanings"]
-    message = message.lower().strip()
     raw_message = message.strip()
+    message = raw_message.lower()
     if message.lower() in treatments:
         session["selected_treatment"] = message.capitalize()
         session["stage"] = "awaiting_treatment"
