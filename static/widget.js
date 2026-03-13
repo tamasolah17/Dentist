@@ -66,7 +66,7 @@ window.addEventListener("DOMContentLoaded", function () {
     width:28px;
     height:28px;
     background:white;
-    border-radius:50%;
+    border-radius:51%;
     display:flex;
     align-items:center;
     justify-content:center;
