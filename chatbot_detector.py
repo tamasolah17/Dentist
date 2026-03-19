@@ -6,9 +6,17 @@ input_file = "high_value_dentists.csv"
 output_file = "qualified_dentist_leads.csv"
 
 chatbot_keywords = [
-    "tawk", "intercom", "drift", "zendesk",
-    "livechat", "crisp", "chatbase",
-    "messenger", "chat-widget", "chatbot"
+      "tawk.to",
+    "intercom",
+    "drift",
+    "zendesk",
+    "livechat",
+    "crisp",
+    "chatbase",
+    "smartsupp",
+    "userlike",
+    "chatbot",
+    "AI assistant"
 ]
 
 email_pattern = r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+"
@@ -45,7 +53,7 @@ with open(input_file, newline="", encoding="utf-8") as f:
 
             # Qualification logic
             if (
-                reviews >= 80 and
+                reviews >= 40 and
                 row["email"] != "" and
                 row["chatbot_detected"] == "No"
             ):

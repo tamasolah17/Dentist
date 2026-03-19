@@ -17,6 +17,7 @@ from datetime import datetime
 # =========================
 
 DB_NAME = "dentist_outreach.db"
+
 CSV_INPUT = "qualified_dentist_leads.csv"
 CAMPAIGN_NAME = "Berlin_Dentists_Campaign"
 
@@ -24,22 +25,25 @@ SMTP_SERVER = "smtp-relay.brevo.com"
 SMTP_PORT = 587
 SMTP_USERNAME = "9bfe0b001@smtp-brevo.com"
 
-SMTP_PASSWORD = "xsmtpsib-328c74420b4d6f2086fb4c0a37d2cba831b76a4d533c86b299b19b9994f5d2af-YxWL60vGElxaszwG"
-SENDER_EMAIL = "contact@automationclinics.com"
-TEST_MODE = True
-TEST_EMAIL = "nnavocs@gmail.com"
-MAX_EMAILS_PER_RUN = 1
+SMTP_PASSWORD = "xsmtpsib-328c74420b4d6f2086fb4c0a37d2cba831b76a4d533c86b299b19b9994f5d2af-IUsjlFo35dQjJoXv"
+SENDER_EMAIL = "thomas.meier@automationclinics.com"
+
 
 SEND_DELAY = 3  # seconds between emails (anti-spam safety)
+SENT_FILE = "sent_emails.txt"
+print(SENT_FILE)
+def load_sent_emails():
+    if not os.path.exists(SENT_FILE):
+        return set()
+    with open(SENT_FILE, "r") as f:
+        return set(line.strip() for line in f)
+
+def save_sent_email(email):
+    with open(SENT_FILE, "a") as f:
+        f.write(email + "\n")
 import sqlite3
 
-conn = sqlite3.connect("dentist_outreach.db")
-c = conn.cursor()
 
-#c.execute("UPDATE recipients SET status='pending'")
-
-conn.commit()
-conn.close()
 
 print("Statuses reset to pending.")
 # =========================
@@ -137,19 +141,21 @@ def generate_email(clinic_name, reviews, city):
     subject = f"Quick question about {clinic_name}"
 
     body_plain = f"""
-Hi,
+Hi there,
 
 I came across {clinic_name} while researching highly rated dental clinics in {city} — {reviews} Google reviews is impressive.
 
-I noticed your website doesn’t currently offer an instant assistant for handling patient inquiries outside office hours.
+I noticed your website doesn’t currently offer an AI assistant for handling patient inquiries outside office hours.
 
-Some clinics are using a lightweight AI reception system to capture those after-hours requests and convert them into booked appointments automatically.
+Most clinics are using a lightweight AI reception system to capture those after-hours requests and convert them into booked appointments automatically.
 
-Would you be open to seeing a short preview of how this could look on your website?
+I recorded a quick 60-second example: https://www.automationclinics.com/pages/ai-asisstant-demo
+Worth taking a look?
 
 Best regards,
-Oláh Thomas
-Dental Automation Specialist
+Thomas Meier
+Founder - AutomationClinics
+
 
 If this isn’t relevant, just let me know and I won’t follow up.
 """
@@ -157,27 +163,28 @@ If this isn’t relevant, just let me know and I won’t follow up.
     body_html = f"""
 <html>
 <body>
-<p>Hi,</p>
+<p>Hallo,</p>
 
-<p>I came across <strong>{clinic_name}</strong> while researching highly rated dental clinics in {city} — <strong>{reviews} Google reviews</strong> is impressive.</p>
+<p>ich bin auf <strong>{clinic_name}</strong> gestoßen — <strong>{reviews} Bewertungen</strong> ist wirklich stark.</p>
 
-<p>I noticed your website doesn’t currently offer an instant assistant for handling patient inquiries outside office hours.</p>
+<p><strong>Kurze Frage:</strong><br>
+Werden bei Ihnen Anfragen außerhalb der Öffnungszeiten aktuell erfasst?</p>
 
-<p>Some clinics are using a lightweight AI reception system to capture those after-hours requests and convert them into booked appointments automatically.</p>
+<p>Viele Praxen verlieren genau dort täglich neue Patienten.</p>
 
-<p>Would you be open to seeing a short preview of how this could look on your website?</p>
+<p>Ich habe dazu ein kurzes 60-Sekunden Beispiel vorbereitet:<br>
+https://www.automationclinics.com/</p>
 
-<p>Best regards,<br>
-Thomas Oláh<br>
-Founder<br>
-AutomationClinics</p>
+<p>Lohnt sich ein kurzer Blick?</p>
 
-<p style="text-align:left;margin-top:2px;">
-<img src="https://cdn.shopify.com/s/files/1/0930/3893/6393/files/AutoClinicsLogo17.jpg?v=1773359880" width="120" style="display:block;">
+<p>mit Freundlichen Grüßen,<br>
+Thomas Meier<br>
+Founder - AutomationClinics<br>
 </p>
-
+<p style="text-align:left;margin-top:0px;">
+<img src= "https://cdn.shopify.com/s/files/1/0930/3893/6393/files/AutoClinicsLogo17.jpg?v=1773769989" width="120" style="display:block;">
+</p>
 <p style="font-size:13px;color:gray;">
-AutomationClinics<br>
 contact@automationclinics.com<br>
 📍40212 Düsseldorf
 Germany
@@ -230,11 +237,14 @@ def log_status(email, status):
         VALUES (?, ?, ?)
     """, (email, CAMPAIGN_NAME, status))
 
-    c.execute("""
-        UPDATE recipients
-        SET status = ?
-        WHERE email = ?
-    """, (status, email))
+    if status == "sent":
+        c.execute("DELETE FROM recipients WHERE email = ?", (email,))
+    else:
+        c.execute("""
+            UPDATE recipients
+            SET status = ?
+            WHERE email = ?
+        """, (status, email))
 
     conn.commit()
     conn.close()
@@ -266,7 +276,7 @@ def send_bulk():
     c.execute("""
         SELECT clinic_name, email, reviews, city
         FROM recipients
-        WHERE status = 'pending'
+        
     """)
 
     leads = c.fetchall()
@@ -275,17 +285,12 @@ def send_bulk():
     if not leads:
         print("No pending leads.")
         return
-    count = 0
+    sent_emails = load_sent_emails()
     for clinic_name, email, reviews, city in leads:
-        if TEST_MODE == True:
-            email = TEST_EMAIL
-        else:
 
-            email = clean_email(email)
-        if count >= MAX_EMAILS_PER_RUN:
-            break
-
-        count += 1
+        if email in sent_emails:
+            print(f"Skipping already emailed: {email}")
+            continue
         if not valid_email(email):
             print(f"Skipping invalid email: {email}")
             continue
@@ -294,7 +299,8 @@ def send_bulk():
         success = send_email(email, subject, body_plain, body_html)
 
         log_status(email, "sent" if success else "failed")
-
+        if success:
+            save_sent_email(email)
         print(f"{clinic_name} → {'Sent' if success else 'Failed'}")
 
         time.sleep(SEND_DELAY)

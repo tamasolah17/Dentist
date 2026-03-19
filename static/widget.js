@@ -15,7 +15,7 @@ window.addEventListener("DOMContentLoaded", function () {
     button.style.fontSize = "26px";
     button.style.position = "fixed";
     button.style.bottom = "20px";
-    button.style.right = "20px";
+    button.style.right = "470px";
      button.style.width = "60px";
     button.style.height = "60px";
     button.style.borderRadius = "50%";
@@ -39,7 +39,7 @@ window.addEventListener("DOMContentLoaded", function () {
     const chatBox = document.createElement("div");
     chatBox.style.position = "fixed";
     chatBox.style.bottom = "90px";
-    chatBox.style.right = "20px";
+    chatBox.style.right = "480px";
     chatBox.style.width = "350px";
     chatBox.style.height = "460px";
     chatBox.style.background = "white";
@@ -77,8 +77,8 @@ window.addEventListener("DOMContentLoaded", function () {
     </div>
 
     <div style="display:flex;flex-direction:column;">
-    <span style="font-size:15px;font-weight:600;">Dental Booking Assistant</span>
-    <span style="font-size:11px;opacity:0.8;">Online now</span>
+    <span style="font-size:15px;font-weight:60;">Dental Booking Assistant</span>
+    <span style="font-size:11px;opacity:0.8;">Always Active</span>
     </div>
 
     </div>
