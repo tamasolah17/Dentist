@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df5d3721-fe21-4195-aaa6-4acb80b7b1ca" name="Changes" comment="My agent">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dentist_outreach.db" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dentists_with_chatbot_status.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dentists_with_emails.csv" beforeDir="false" />
@@ -13,7 +12,6 @@
       <change beforePath="$PROJECT_DIR$/high_value_dentists.csv" beforeDir="false" afterPath="$PROJECT_DIR$/high_value_dentists.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/outreach_emails.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/qualified_dentist_leads.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/widget.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/widget.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,14 +123,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1770391771205</updated>
-    </task>
-    <task id="LOCAL-00019" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1773075460293</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1773075460293</updated>
     </task>
     <task id="LOCAL-00020" summary="My agent">
       <option name="closed" value="true" />
@@ -518,7 +508,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773887254539</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1773888527795</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1773888527795</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="UnknownFeatures">
