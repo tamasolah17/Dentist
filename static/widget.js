@@ -39,7 +39,7 @@ window.addEventListener("DOMContentLoaded", function () {
     const chatBox = document.createElement("div");
     chatBox.style.position = "fixed";
     chatBox.style.bottom = "90px";
-    chatBox.style.right = "510px";
+    chatBox.style.right = "350px";
     chatBox.style.width = "350px";
     chatBox.style.height = "460px";
     chatBox.style.background = "white";
