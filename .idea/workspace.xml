@@ -10,7 +10,7 @@
       <change beforePath="$PROJECT_DIR$/dentists_with_chatbot_status.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dentists_with_emails.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/email_campaign.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/high_value_dentists.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/high_value_dentists.csv" beforeDir="false" afterPath="$PROJECT_DIR$/high_value_dentists.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/outreach_emails.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/qualified_dentist_leads.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/static/widget.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/widget.js" afterDir="false" />
@@ -125,14 +125,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1770391771205</updated>
-    </task>
-    <task id="LOCAL-00018" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1773074778401</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1773074778401</updated>
     </task>
     <task id="LOCAL-00019" summary="My agent">
       <option name="closed" value="true" />
@@ -518,7 +510,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773886512254</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1773887254539</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1773887254539</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="UnknownFeatures">
