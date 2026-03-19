@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="df5d3721-fe21-4195-aaa6-4acb80b7b1ca" name="Changes" comment="My agent">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mass_Email.py" beforeDir="false" afterPath="$PROJECT_DIR$/Mass_Email.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebScraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/WebScraper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chatbot_detector.py" beforeDir="false" afterPath="$PROJECT_DIR$/chatbot_detector.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dentist_outreach.db" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dentists_with_chatbot_status.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dentists_with_emails.csv" beforeDir="false" />
@@ -17,7 +14,6 @@
       <change beforePath="$PROJECT_DIR$/outreach_emails.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/qualified_dentist_leads.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/static/widget.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/widget.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/dentistpage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dentistpage.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,30 +125,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1770391771205</updated>
-    </task>
-    <task id="LOCAL-00015" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1773025794539</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1773025794539</updated>
-    </task>
-    <task id="LOCAL-00016" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1773025925417</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1773025925417</updated>
-    </task>
-    <task id="LOCAL-00017" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1773073588514</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1773073588514</updated>
     </task>
     <task id="LOCAL-00018" summary="My agent">
       <option name="closed" value="true" />
@@ -522,7 +494,31 @@
       <option name="project" value="LOCAL" />
       <updated>1773411910497</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1773886380672</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1773886380672</updated>
+    </task>
+    <task id="LOCAL-00065" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1773886485963</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1773886485963</updated>
+    </task>
+    <task id="LOCAL-00066" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1773886512254</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1773886512254</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="UnknownFeatures">
