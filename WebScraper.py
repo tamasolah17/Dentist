@@ -2,7 +2,7 @@ import requests
 import csv
 import time
 
-API_KEY = "AIzaSyA-oJTA9ZOGos0FmPxxAbTTo3PaVGuii6s"
+API_KEY = "AIzaSyClRbGBQ6QHZJdw73blnRnZYHGF5JXelLQ"
 
 germany_cities = [
     # Major cities

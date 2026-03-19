@@ -15,7 +15,7 @@ window.addEventListener("DOMContentLoaded", function () {
     button.style.fontSize = "26px";
     button.style.position = "fixed";
     button.style.bottom = "20px";
-    button.style.right = "530px";
+    button.style.right = "490px";
      button.style.width = "60px";
     button.style.height = "60px";
     button.style.borderRadius = "50%";
@@ -39,7 +39,7 @@ window.addEventListener("DOMContentLoaded", function () {
     const chatBox = document.createElement("div");
     chatBox.style.position = "fixed";
     chatBox.style.bottom = "90px";
-    chatBox.style.right = "550px";
+    chatBox.style.right = "510px";
     chatBox.style.width = "350px";
     chatBox.style.height = "460px";
     chatBox.style.background = "white";
