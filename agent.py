@@ -84,11 +84,11 @@ def handle_message(user_id, message, session):
 
         confirmation = (
             f"✅ Vielen Dank, {session['name']}!\n\n"
-            f"Ihre Terminanfrage:\n"
-            f"Behandlung: {session['treatment']}\n"
-            f"Termin: {session['appointment']}\n"
-            f"Uhrzeit: {session['time']}\n\n"
-            "Unser Team wird sich in Kürze bei Ihnen melden."
+            "🗓️ Ihre Terminanfrage im Überblick:\n\n"
+            f"• Behandlung: {session['treatment']}\n"
+            f"• Datum: {session['appointment']}\n"
+            f"• Uhrzeit: {session['time']}\n\n"
+            "📞 Unser Team wird sich in Kürze bei Ihnen melden, um den Termin zu bestätigen."
         )
 
         add_message(user_id, "assistant", confirmation)
