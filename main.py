@@ -22,7 +22,7 @@ def chat():
         return jsonify({
             "intent": "welcome_message",
             "confidence": 1.0,
-            "reply":  "Hi. Welcome to our clinic. I am your personal Assistant. How can I help you?😊."
+            "reply": "Hallo und herzlich willkommen in unserer Praxis 😊 Ich bin Ihr digitaler Assistent. Wie kann ich Ihnen helfen?"
         }
 
         )

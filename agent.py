@@ -16,14 +16,15 @@ def handle_message(user_id, message, session):
         session["stage"] = "awaiting_treatment"
         return {
             "reply": (
-                f"Great choice! 🦷 {message.capitalize()} is one of our most requested treatments.\n\n"
-                "Would you like to book an appointment or speak with our receptionist?"
+                f"Gute Wahl! 🦷 {message.capitalize()} gehört zu unseren häufigsten Behandlungen.\n\n"
+                "Möchten Sie einen Termin buchen oder mit unserem Team sprechen?"
             ),
             "suggestions": [
-                "Book appointment",
-                "Talk to human"
+                "Termin buchen",
+                "Mit Mitarbeiter sprechen"
             ]
         }
+
     # =========================
     # APPOINTMENT FLOW HANDLER
     # =========================
@@ -33,8 +34,8 @@ def handle_message(user_id, message, session):
         session["stage"] = "awaiting_date"
 
         return {
-            "reply": "📅 What date works best for you?",
-            "suggestions": ["Tomorrow", "This week", "Next week"]
+            "reply": "📅 Welcher Termin passt Ihnen am besten?",
+            "suggestions": ["Morgen", "Diese Woche", "Nächste Woche"]
         }
 
     elif session.get("stage") == "awaiting_date":
@@ -42,21 +43,22 @@ def handle_message(user_id, message, session):
         session["stage"] = "awaiting_appointment"
 
         return {
-            "reply": "Do you prefer morning or afternoon?",
-            "suggestions": ["Morning", "Afternoon"]
+            "reply": "Bevorzugen Sie einen Termin am Vormittag oder Nachmittag?",
+            "suggestions": ["Vormittag", "Nachmittag"]
         }
+
     elif session.get("stage") == "awaiting_appointment":
         session["appointment"] = message
         session["stage"] = "awaiting_time"
         choice = message.strip().lower()
 
         if choice == "morning":
-            suggestions = ["9:00 AM", "10:30 AM", "11:30 AM"]
+            suggestions = ["9:00", "10:30", "11:30"]
         else:
-            suggestions = ["12:30 PM", "2:00 PM", "3:30 PM"]
+            suggestions = ["12:30", "14:00", "15:30"]
 
         return {
-            "reply": "What time would you prefer?",
+            "reply": "Welche Uhrzeit passt Ihnen am besten?",
             "suggestions": suggestions
         }
 
@@ -65,7 +67,7 @@ def handle_message(user_id, message, session):
         session["stage"] = "awaiting_name"
 
         return {
-            "reply": "👤 Could I have your full name please?"
+            "reply": "👤 Wie ist Ihr vollständiger Name?"
         }
 
     elif session.get("stage") == "awaiting_name":
@@ -73,7 +75,7 @@ def handle_message(user_id, message, session):
         session["stage"] = "awaiting_phone"
 
         return {
-            "reply": "📞 Please provide your phone number so we can confirm the appointment."
+            "reply": "📞 Bitte geben Sie Ihre Telefonnummer an, damit wir den Termin bestätigen können."
         }
 
     elif session.get("stage") == "awaiting_phone":
@@ -81,12 +83,12 @@ def handle_message(user_id, message, session):
         session["stage"] = None
 
         confirmation = (
-            f"✅ Thank you {session['name']}!\n\n"
-            f"Appointment request received:\n"
-            f"Treatment: {session['treatment']}\n"
-            f"Appointment: {session['appointment']}\n"
-            f"Time: {session['time']}\n\n"
-            "Our receptionist will contact you shortly."
+            f"✅ Vielen Dank, {session['name']}!\n\n"
+            f"Ihre Terminanfrage:\n"
+            f"Behandlung: {session['treatment']}\n"
+            f"Termin: {session['appointment']}\n"
+            f"Uhrzeit: {session['time']}\n\n"
+            "Unser Team wird sich in Kürze bei Ihnen melden."
         )
 
         add_message(user_id, "assistant", confirmation)
@@ -98,138 +100,118 @@ def handle_message(user_id, message, session):
     # =========================
     if not message:
         return {
-            "reply": "ANY",
+            "reply": "Wie kann ich Ihnen helfen?",
             "suggestions": [
-                "Book appointment",
-                "Treatments",
-                "Insurance",
-                "Emergency"
+                "Termin buchen",
+                "Behandlungen",
+                "Versicherung",
+                "Notfall"
             ]
         }
+
     try:
         if "treatment" in message:
             return {
-                "reply": "We offer whitening, implants, braces and cleanings. Which are you interested in?",
+                "reply": "Wir bieten Zahnaufhellung, Implantate, Zahnspangen und Zahnreinigung an. Wofür interessieren Sie sich?",
                 "suggestions": ["whitening", "implants", "braces", "cleanings"]
             }
 
         if "price" in message or "cost" in message:
             return {
-                "reply": "🦷 Teeth whitening starts at $120 and consultation is $40.\n\nWould you like to book an appointment?",
-                "suggestions": ["Book appointment", "Talk to human"]
+                "reply": "🦷 Zahnaufhellung beginnt ab 120 € und die Beratung kostet 40 €.\n\nMöchten Sie einen Termin buchen?",
+                "suggestions": ["Termin buchen", "Mit Mitarbeiter sprechen"]
             }
 
         if "insurance" in message:
             return {
-                "reply": "Yes, we accept most major insurance providers.",
-                "suggestions": ["Book appointment", "Talk to receptionist"]
+                "reply": "Ja, wir akzeptieren die meisten gängigen Versicherungen.",
+                "suggestions": ["Termin buchen", "Mit Rezeption sprechen"]
             }
-
-
 
     except Exception as e:
         print("Classifier error:", e)
-        return {"reply": "Sorry, I didn't understand that. Could you rephrase?"}
+        return {"reply": "Entschuldigung, das habe ich nicht verstanden. Können Sie es bitte anders formulieren?"}
 
     result = classify_intent(user_id, message)
     intent = result["intent"]
     confidence = result["confidence"]
     print("DEBUG INTENT:", result)
 
-    if confidence < 0.2:
+    if confidence < 0.25:
         intent = "unknown"
 
     if intent == "booking":
         session["stage"] = "awaiting_treatment"
 
         return {
-            "reply": "🦷 What treatment would you like to book?",
+            "reply": "🦷 Welche Behandlung möchten Sie buchen?",
             "suggestions": [
-                "Teeth Cleaning",
-                "Teeth Whitening",
-                "Dental Implant",
-                "General Check-up"
+                "Zahnreinigung",
+                "Zahnaufhellung",
+                "Implantat",
+                "Kontrolluntersuchung"
             ]
         }
-
 
     elif intent == "pricing_objection":
 
         return {
             "reply": (
-
-                "🦷 Teeth whitening starts at $120 and consultation is $40.\n\n"
-                "Would you like to book an appointment for a detailed quote?"
-
+                "🦷 Zahnaufhellung beginnt ab 120 € und die Beratung kostet 40 €.\n\n"
+                "Möchten Sie einen Termin für ein genaues Angebot buchen?"
             ),
             "suggestions": [
-
-                "Book appointment",
-                "Talk to a human"
-
+                "Termin buchen",
+                "Mit Mitarbeiter sprechen"
             ]
-
         }
+
     elif intent == "treatments":
 
         return {
             "reply": (
-
-                "We offer whitening, implants, braces and cleanings. Which are you interested in?"
-
-
+                "Wir bieten Zahnaufhellung, Implantate, Zahnspangen und Zahnreinigung an. Wofür interessieren Sie sich?"
             ),
             "suggestions": [
                 "whitening",
                 "implants",
                 "braces",
                 "cleanings"
-
             ]
-
         }
-
 
     elif intent == "emergency":
 
         return {
-
-            "reply": "🚨 Please call us immediately for emergencies. Would you like the number?"
-
+            "reply": "🚨 Bitte rufen Sie uns im Notfall direkt an. Möchten Sie unsere Telefonnummer?"
         }
-
 
     elif intent == "insurance":
 
         return {
-
             "reply": (
-
-                "Yes, we accept most major insurance providers.\n\n"
-                "Would you like to book a consultation so we can verify your coverage?"
-
+                "Ja, wir akzeptieren die meisten gängigen Versicherungen.\n\n"
+                "Möchten Sie einen Termin vereinbaren, damit wir Ihre Versicherung prüfen können?"
             ),
-
             "suggestions": [
-
-                "Book appointment",
-                "Talk to receptionist"
-
+                "Termin buchen",
+                "Mit Rezeption sprechen"
             ]
-
         }
+
     elif intent == "Location_Hours":
-        reply = "📍 123 Main Street. Mon–Fri 9am–6pm."
+        reply = "📍 Musterstraße 123. Mo–Fr 9:00–18:00 Uhr."
 
     elif intent == "Human":
-        reply = "Please leave your name and phone number and we’ll call you."
+        reply = "Bitte hinterlassen Sie Ihren Namen und Ihre Telefonnummer, wir rufen Sie zurück."
 
     elif intent == "welcome_message":
-        reply =  "Hi 👋 Welcome to our clinic. My name is Lena, your personal Assistant. How can I help you?:)."
+        reply = "Guten Tag 👋 Willkommen in unserer Praxis. Ich bin Ihr digitaler Assistent. Wie kann ich Ihnen helfen?"
 
     else:
-        reply = "I can help with appointments, treatments, insurance, or emergencies."
+        reply = "Ich kann Ihnen bei Terminen, Behandlungen, Versicherungen oder Notfällen helfen."
 
     add_message(user_id, "assistant", reply)
+    print("l")
 
     return {"reply": reply}
