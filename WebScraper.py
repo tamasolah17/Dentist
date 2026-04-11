@@ -2,69 +2,70 @@ import requests
 import csv
 import time
 
-API_KEY = "AIzaSyClRbGBQ6QHZJdw73blnRnZYHGF5JXelLQ"
+
 
 germany_cities = [
-    # Major cities
-    "Berlin","Hamburg","Munich","Cologne","Frankfurt","Stuttgart",
-    "Düsseldorf","Dortmund","Essen","Leipzig","Bremen","Dresden",
+   # Major cities
+   "Berlin","Hamburg","Munich","Cologne","Frankfurt","Stuttgart",
+   "Düsseldorf","Dortmund","Essen","Leipzig","Bremen","Dresden",
 
-    # Secondary strong cities
-    "Hanover","Nuremberg","Duisburg","Bochum","Wuppertal","Bielefeld",
-    "Bonn","Münster","Karlsruhe","Mannheim","Augsburg","Wiesbaden",
+   # Secondary strong cities
+   "Hanover","Nuremberg","Duisburg","Bochum","Wuppertal","Bielefeld",
+#   "Bonn","Münster","Karlsruhe","Mannheim","Augsburg","Wiesbaden",
 
     # High-income / important regions
-    "Heidelberg","Freiburg im Breisgau","Regensburg","Ulm","Würzburg",
-    "Potsdam","Mainz","Kassel","Erfurt","Saarbrücken",
+   "Heidelberg","Freiburg im Breisgau","Regensburg","Ulm","Würzburg",
+   "Potsdam","Mainz","Kassel","Erfurt","Saarbrücken",
 
-    # Munich region (VERY important)
-    "Garching","Freising","Dachau","Erding","Starnberg","Fürstenfeldbruck",
+#    Munich region (VERY important)
+    "Garching","Freising","Dachau","Erding","Starnberg","Fürstenfeldbruck"
 
     # Frankfurt region
-    "Offenbach","Darmstadt","Wiesbaden","Bad Homburg","Hanau",
+#   "Offenbach","Darmstadt","Wiesbaden","Bad Homburg","Hanau",
 
     # Stuttgart region
-    "Esslingen","Ludwigsburg","Böblingen","Sindelfingen",
+#   "Esslingen","Ludwigsburg","Böblingen","Sindelfingen",
 
     # Hamburg region
-    "Altona","Norderstedt","Ahrensburg",
+#   "Altona","Norderstedt","Ahrensburg",
 
     # Berlin region
-    "Potsdam","Oranienburg","Bernau"
+#   "Potsdam","Oranienburg","Bernau"
 ]
 
-austria_cities = [
+# austria_cities = [
     # Major cities
-    "Vienna","Graz","Linz","Salzburg","Innsbruck",
+    # "Vienna","Graz","Linz","Salzburg","Innsbruck",
 
     # Secondary cities
-    "Klagenfurt","Villach","Wels","Sankt Pölten","Dornbirn",
+    # "Klagenfurt","Villach","Wels","Sankt Pölten","Dornbirn",
 
     # Vienna region (VERY important)
-    "Mödling","Baden","Klosterneuburg","Schwechat","Korneuburg",
+    # "Mödling","Baden","Klosterneuburg","Schwechat","Korneuburg",
 
     # Graz region
-    "Seiersberg","Leibnitz","Voitsberg",
+    # "Seiersberg","Leibnitz","Voitsberg",
 
     # Linz region
-    "Steyr","Traun","Leonding",
+    # "Steyr","Traun","Leonding",
 
     # Salzburg region
-    "Hallein","Seekirchen","Anif",
+    # "Hallein","Seekirchen","Anif",
 
     # Innsbruck region
-    "Hall in Tirol","Telfs","Zirl"
-]
+    # "Hall in Tirol","Telfs","Zirl"
+# ]
 switzerland_cities = [
     # Major cities
-    "Zurich","Geneva","Basel","Bern","Lausanne",
+
+     "Zurich","Geneva","Basel","Bern","Lausanne",
 
     # Wealthy / high-income areas
-    "Zug","Lucerne","Winterthur","St. Gallen","Lugano",
-    "Biel","Thun","Schaffhausen","Fribourg","Neuchatel",
+     "Zug","Lucerne","Winterthur","St. Gallen","Lugano",
+     "Biel","Thun","Schaffhausen","Fribourg","Neuchatel",
 
     # Zurich region (VERY IMPORTANT)
-    "Kloten","Uster","Dübendorf","Wetzikon","Dietikon",
+     "Kloten","Uster","Dübendorf","Wetzikon","Dietikon",
 
     # Geneva region
     "Carouge","Vernier","Nyon","Meyrin",
@@ -95,15 +96,17 @@ HIGH_INTENT_QUERIES = [
 ]
 SEARCH_QUERIES = []
 
-for city in germany_cities:
-    for query in HIGH_INTENT_QUERIES:
-        SEARCH_QUERIES.append(f"{query} {city}")
-        SEARCH_QUERIES.append(f"{query} near {city}")
-        SEARCH_QUERIES.append(f"{query} Umgebung {city}")
+#for city in germany_cities:
+    #for query in HIGH_INTENT_QUERIES:
+            #SEARCH_QUERIES.append(f"{query} {city}")
+            #SEARCH_QUERIES.append(f"Zahnarzt {city}")
+            ##SEARCH_QUERIES.append(f"Dentist {city}")
+            #SEARCH_QUERIES.append(f"{query} near {city}")
+            #SEARCH_QUERIES.append(f"{query} Umgebung {city}")
 
-for city in austria_cities:
-    SEARCH_QUERIES.append(f"Zahnarzt {city}")
-    SEARCH_QUERIES.append(f"Dentist {city}")
+# for city in austria_cities:
+    # SEARCH_QUERIES.append(f"Zahnarzt {city}")
+    # SEARCH_QUERIES.append(f"Dentist {city}")
 
 
 for city in switzerland_cities:
@@ -112,13 +115,13 @@ for city in switzerland_cities:
 for city in switzerland_cities:
     for query in HIGH_INTENT_QUERIES:
         SEARCH_QUERIES.append(f"{query} {city}")
-MIN_REVIEWS = 35
+MIN_REVIEWS = 50
 
-
+API_KEY = "AIzaSyB9LiwggTWkr8aL21H7daRYuXwE_sIDzH4"
 search_url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
 details_url = "https://maps.googleapis.com/maps/api/place/details/json"
 SENT_FILE = "sent_emails.txt"
-SCRAPED_FILE = "scraped_places.txt"
+SCRAPED_FILE = "scraped_places2.txt"
 
 def load_scraped_places():
     try:
@@ -146,6 +149,7 @@ sent_emails = load_sent_emails()
 sent_domains = {domain_from_email(email) for email in sent_emails}
 dentists = []
 next_page_token = None
+print("lol",SEARCH_QUERIES)
 for SEARCH_QUERY in SEARCH_QUERIES:
 
     print(f"Searching: {SEARCH_QUERY}")

@@ -18,15 +18,16 @@ from datetime import datetime
 
 DB_NAME = "dentist_outreach.db"
 
-CSV_INPUT = "qualified_dentist_leads.csv"
+CSV_INPUT = "enriched_dentists.csv"
 CAMPAIGN_NAME = "Berlin_Dentists_Campaign"
 
 SMTP_SERVER = "smtp-relay.brevo.com"
 SMTP_PORT = 587
 SMTP_USERNAME = "9bfe0b001@smtp-brevo.com"
 
-SMTP_PASSWORD = "xsmtpsib-328c74420b4d6f2086fb4c0a37d2cba831b76a4d533c86b299b19b9994f5d2af-IUsjlFo35dQjJoXv"
+SMTP_PASSWORD = "xsmtpsib-328c74420b4d6f2086fb4c0a37d2cba831b76a4d533c86b299b19b9994f5d2af-hCqPCf7cxkpB7Cf4"
 SENDER_EMAIL = "thomas.meier@automationclinics.com"
+
 
 
 SEND_DELAY = 3  # seconds between emails (anti-spam safety)
@@ -92,7 +93,7 @@ def import_leads():
 
     for _, row in df.iterrows():
 
-        if row["qualified"] != "YES":
+        if int(row["reviews"]) < 35:
             continue
 
         email = clean_email(row["email"])
@@ -138,7 +139,7 @@ def extract_last_name(clinic_name):
 
 def generate_email(clinic_name, reviews, city):
 
-    subject = f"Quick question about {clinic_name}"
+    subject = f"Kurze Frage zur {clinic_name}"
 
     body_plain = f"""
 Hi there,
@@ -161,32 +162,39 @@ If this isn’t relevant, just let me know and I won’t follow up.
 """
 
     body_html = f"""
-<html>
+<html><html>
 <body>
+
 <p>Hallo,</p>
 
-<p>ich bin auf <strong>{clinic_name}</strong> gestoßen — <strong>{reviews} Bewertungen</strong> ist wirklich stark.</p>
+<p>ich habe mir <strong>{clinic_name}</strong> kurz angesehen — mit <strong>{reviews} Bewertungen</strong> gehören Sie definitiv zu den gefragteren Praxen in Ihrer Region.</p>
 
-<p><strong>Kurze Frage:</strong><br>
-Werden bei Ihnen Anfragen außerhalb der Öffnungszeiten aktuell erfasst?</p>
+<p><strong>Kurze Frage:</strong></p>
 
-<p>Viele Praxen verlieren genau dort täglich neue Patienten.</p>
+<p>Was passiert bei Ihnen aktuell mit Anfragen, die abends oder am Wochenende reinkommen?</p>
 
-<p>Ich habe dazu ein kurzes 60-Sekunden Beispiel vorbereitet:<br>
-https://www.automationclinics.com/</p>
+<p>Viele Patienten kontaktieren mehrere Praxen gleichzeitig — und entscheiden sich meist für die, die zuerst reagiert.</p>
 
-<p>Lohnt sich ein kurzer Blick?</p>
+<p>Genau hier geht bei vielen Praxen ein Teil der Anfragen verloren, ohne dass es im Alltag auffällt — was sich langfristig auch auf die Konkurrenzfähigkeit gegenüber anderen 5-Sterne-Praxen auswirkt.</p>
 
-<p>mit Freundlichen Grüßen,<br>
+<p>Wir haben eine Lösung, die solche Anfragen automatisch auffängt und priorisiert, sodass besonders relevante Anliegen direkt im Fokus stehen — ganz ohne zusätzlichen Aufwand.</p>
+
+<p>Könnte das ggf. auch für den Praxisinhaber interessant sein?</p>
+
+
+<p>Mit freundlichen Grüßen,<br>
 Thomas Meier<br>
-Founder - AutomationClinics<br>
+Founder - AutomationClinics</p>
+
+<p style="margin-top:0; position: relative;">
+  <img src="https://cdn.shopify.com/s/files/1/0930/3893/6393/files/ChatGPT_Image_2026._marc._8._03_47_26_1.png?v=1774406176"
+       width="120"
+       style="position: relative; left: 25px;">
 </p>
-<p style="text-align:left;margin-top:0px;">
-<img src= "https://cdn.shopify.com/s/files/1/0930/3893/6393/files/AutoClinicsLogo17.jpg?v=1773769989" width="120" style="display:block;">
-</p>
+
 <p style="font-size:13px;color:gray;">
-contact@automationclinics.com<br>
-📍40212 Düsseldorf
+thomas.meier@automationclinics.com<br>
+📍40212 Düsseldorf<br>
 Germany
 </p>
 
@@ -286,8 +294,11 @@ def send_bulk():
         print("No pending leads.")
         return
     sent_emails = load_sent_emails()
+    counter = 0
     for clinic_name, email, reviews, city in leads:
 
+        if counter == 360 :
+            break
         if email in sent_emails:
             print(f"Skipping already emailed: {email}")
             continue
@@ -299,10 +310,11 @@ def send_bulk():
         success = send_email(email, subject, body_plain, body_html)
 
         log_status(email, "sent" if success else "failed")
+        counter += 1
         if success:
             save_sent_email(email)
         print(f"{clinic_name} → {'Sent' if success else 'Failed'}")
-
+        print("counter:", counter)
         time.sleep(SEND_DELAY)
 
 
