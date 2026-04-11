@@ -52,7 +52,7 @@ def handle_message(user_id, message, session):
         session["stage"] = "awaiting_time"
         choice = message.strip().lower()
 
-        if choice == "morning":
+        if choice == "vormittag":
             suggestions = ["9:00", "10:30", "11:30"]
         else:
             suggestions = ["12:30", "14:00", "15:30"]
@@ -83,11 +83,11 @@ def handle_message(user_id, message, session):
         session["stage"] = None
 
         confirmation = (
-            f"✅ Vielen Dank, {session['name']}!\n\n"
-            "🗓️ Ihre Terminanfrage im Überblick:\n\n"
-            f"• Behandlung: {session['treatment']}\n"
-            f"• Datum: {session['appointment']}\n"
-            f"• Uhrzeit: {session['time']}\n\n"
+            f"✅ Vielen Dank, {session['name']}!<br><br>"
+            "🗓️ Ihre Terminanfrage im Überblick:<br><br>"
+            f"• Behandlung: {session['treatment']}<br>"
+            f"• Datum: {session['appointment']}<br>"
+            f"• Uhrzeit: {session['time']}<br><br>"
             "📞 Unser Team wird sich in Kürze bei Ihnen melden, um den Termin zu bestätigen."
         )
 
