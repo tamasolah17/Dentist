@@ -4,7 +4,19 @@ from flask import Flask, request, jsonify, session
 
 
 def handle_message(user_id, message, session):
-    treatments = ["whitening", "implants", "braces", "cleanings"]
+
+    raw_message = message.strip()
+    message = raw_message.lower()
+
+    # =========================
+    # MAPPINGS
+    # =========================
+    GERMAN_TO_INTERNAL = {
+        "zahnreinigung": "cleanings",
+        "zahnaufhellung": "whitening",
+        "implantat": "implants",
+        "zahnspange": "braces"
+    }
 
     TREATMENT_LABELS = {
         "cleanings": "Zahnreinigung",
@@ -13,36 +25,42 @@ def handle_message(user_id, message, session):
         "braces": "Zahnspange"
     }
 
-    raw_message = message.strip()
-    message = raw_message.lower()
-
     # =========================
     # STATE CHECK
     # =========================
     in_flow = session.get("stage") is not None
 
     # =========================
-    # START BOOKING FLOW
+    # START BOOKING
     # =========================
     if message in ["buchen", "termin", "termin buchen"]:
         session.clear()
         session["stage"] = "awaiting_treatment"
 
         return {
-            "reply": "🦷 Welche Behandlung möchten Sie buchen?",
-            "suggestions": ["cleanings", "whitening", "implants", "braces"]
+            "reply": (
+                "🦷 Wir bieten unter anderem Zahnreinigung, Zahnaufhellung, Implantate und Zahnspangen an.\n\n"
+                "Welche Behandlung möchten Sie buchen?"
+            ),
+            "suggestions": [
+                "Zahnreinigung",
+                "Zahnaufhellung",
+                "Implantat",
+                "Zahnspange"
+            ]
         }
 
     # =========================
     # TREATMENT SELECTION
     # =========================
-    if message in treatments and session.get("stage") == "awaiting_treatment":
-        session["selected_treatment"] = TREATMENT_LABELS.get(message, message)
+    if message in GERMAN_TO_INTERNAL and session.get("stage") == "awaiting_treatment":
+        internal = GERMAN_TO_INTERNAL[message]
+        session["selected_treatment"] = TREATMENT_LABELS[internal]
         session["stage"] = "awaiting_date"
 
         return {
             "reply": (
-                f"Gute Wahl! 🦷 {session['selected_treatment']} ist eine sehr gefragte Behandlung.\n\n"
+                f"Gute Wahl! 🦷 {session['selected_treatment']} gehört zu unseren häufigsten Behandlungen.\n\n"
                 "📅 Welcher Termin passt Ihnen am besten?"
             ),
             "suggestions": ["Morgen", "Diese Woche", "Nächste Woche"]
@@ -117,6 +135,35 @@ def handle_message(user_id, message, session):
         )
 
         return {"reply": confirmation}
+
+    # =========================
+    # OTHER QUESTIONS (ONLY OUTSIDE FLOW)
+    # =========================
+    if not in_flow:
+        if "preis" in message or "kosten" in message:
+            return {
+                "reply": "🦷 Zahnaufhellung beginnt ab 120 € und die Beratung kostet 40 €.\n\nMöchten Sie einen Termin buchen?",
+                "suggestions": ["Termin buchen", "Mit Mitarbeiter sprechen"]
+            }
+
+        if "versicherung" in message:
+            return {
+                "reply": "Ja, wir akzeptieren die meisten gängigen Versicherungen.",
+                "suggestions": ["Termin buchen", "Mit Rezeption sprechen"]
+            }
+
+    # =========================
+    # DEFAULT
+    # =========================
+    return {
+        "reply": "Wie kann ich Ihnen helfen?",
+        "suggestions": [
+            "Termin buchen",
+            "Behandlungen",
+            "Versicherung",
+            "Notfall"
+        ]
+    }
     # =========================
     # NORMAL INTENT HANDLING
     # =========================
