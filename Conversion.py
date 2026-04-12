@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 from concurrent.futures import ThreadPoolExecutor
 from threading import Lock
 
-API_KEY = "AIzaSyB9LiwggTWkr8aL21H7daRYuXwE_sIDzH4"
+API_KEY = "AIzaSyB5IfrYRraQoSWLOLjISbd-KXIlFIzDkUY"
 
 DETAILS_URL = "https://maps.googleapis.com/maps/api/place/details/json"
 

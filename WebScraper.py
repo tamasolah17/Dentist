@@ -117,7 +117,7 @@ for city in switzerland_cities:
         SEARCH_QUERIES.append(f"{query} {city}")
 MIN_REVIEWS = 50
 
-API_KEY = "AIzaSyB9LiwggTWkr8aL21H7daRYuXwE_sIDzH4"
+API_KEY = "AIzaSyB5IfrYRraQoSWLOLjISbd-KXIlFIzDkUY"
 search_url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
 details_url = "https://maps.googleapis.com/maps/api/place/details/json"
 SENT_FILE = "sent_emails.txt"

@@ -25,7 +25,7 @@ SMTP_SERVER = "smtp-relay.brevo.com"
 SMTP_PORT = 587
 SMTP_USERNAME = "9bfe0b001@smtp-brevo.com"
 
-SMTP_PASSWORD = "xsmtpsib-328c74420b4d6f2086fb4c0a37d2cba831b76a4d533c86b299b19b9994f5d2af-I8OX4eiG9ThICsN7"
+SMTP_PASSWORD = "xsmtpsib-328c74420b4d6f2086fb4c0a37d2cba831b76a4d533c86b299b19b9994f5d2af-c0g2FUjuzMNPepla"
 SENDER_EMAIL = "thomas.meier@automationclinics.com"
 
 
@@ -167,7 +167,7 @@ If this isn’t relevant, just let me know and I won’t follow up.
 
 <p>Hallo,</p>
 
-<p>ich habe mir <strong>{clinic_name}</strong> kurz angesehen — mit <strong>{reviews} Bewertungen</strong> gehören Sie definitiv zu den gefragteren Praxen in Ihrer Region.</p>
+<p>Ich habe mir <strong>{clinic_name}</strong> kurz angesehen — mit <strong>{reviews} Bewertungen</strong> gehören Sie definitiv zu den gefragteren Praxen in Ihrer Region.</p>
 
 <p><strong>Kurze Frage:</strong></p>
 
@@ -179,12 +179,14 @@ If this isn’t relevant, just let me know and I won’t follow up.
 
 <p>Wir haben eine Lösung, die solche Anfragen automatisch auffängt und priorisiert, sodass besonders relevante Anliegen direkt im Fokus stehen — ganz ohne zusätzlichen Aufwand.</p>
 
+</p>Hier können Sie sich die Demo ansehen: https://www.automationclinics.com/</p>
+
 <p>Könnte das ggf. auch für den Praxisinhaber interessant sein?</p>
 
 
 <p>Mit freundlichen Grüßen,<br>
 Thomas Meier<br>
-Founder - AutomationClinics</p>
+Gründer - AutomationClinics</p>
 
 <p style="margin-top:0; position: relative;">
   <img src="https://cdn.shopify.com/s/files/1/0930/3893/6393/files/ChatGPT_Image_2026._marc._8._03_47_26_1.png?v=1774406176"
@@ -294,11 +296,10 @@ def send_bulk():
         print("No pending leads.")
         return
     sent_emails = load_sent_emails()
-    counter = 0
+
     for clinic_name, email, reviews, city in leads:
 
-        if counter == 500 :
-            break
+
         if email in sent_emails:
             print(f"Skipping already emailed: {email}")
             continue
@@ -310,11 +311,11 @@ def send_bulk():
         success = send_email(email, subject, body_plain, body_html)
 
         log_status(email, "sent" if success else "failed")
-        counter += 1
+
         if success:
             save_sent_email(email)
         print(f"{clinic_name} → {'Sent' if success else 'Failed'}")
-        print("counter:", counter)
+       
         time.sleep(SEND_DELAY)
 
 
