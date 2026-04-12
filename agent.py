@@ -25,34 +25,50 @@ def handle_message(user_id, message, session):
         "braces": "Zahnspange"
     }
 
-    # =========================
-    # STATE CHECK
-    # =========================
     in_flow = session.get("stage") is not None
 
     # =========================
-    # START BOOKING
+    # SIMPLE INTENT DETECTION
     # =========================
-    if message in ["buchen", "termin", "termin buchen"]:
-        session.clear()
-        session["stage"] = "awaiting_treatment"
+    if not in_flow:
 
-        return {
-            "reply": (
-                "🦷 Wir bieten unter anderem Zahnreinigung, Zahnaufhellung, Implantate und Zahnspangen an.\n\n"
-                "Welche Behandlung möchten Sie buchen?"
-            ),
-            "suggestions": [
-                "Zahnreinigung",
-                "Zahnaufhellung",
-                "Implantat",
-                "Zahnspange"
-            ]
-        }
+        # SICK / PROBLEM
+        if "krank" in message or "schmerzen" in message:
+            return {
+                "reply": "Das tut mir leid zu hören. Möchten Sie einen Termin vereinbaren oder mit unserem Team sprechen?",
+                "suggestions": ["Termin buchen", "Mit Mitarbeiter sprechen"]
+            }
+
+        # BOOKING TRIGGER
+        if message in ["buchen", "termin", "termin buchen"]:
+            session.clear()
+            session["stage"] = "awaiting_treatment"
+
+            return {
+                "reply": (
+                    "🦷 Wir bieten unter anderem Zahnreinigung, Zahnaufhellung, Implantate und Zahnspangen an.\n\n"
+                    "Welche Behandlung möchten Sie buchen?"
+                ),
+                "suggestions": [
+                    "Zahnreinigung",
+                    "Zahnaufhellung",
+                    "Implantat",
+                    "Zahnspange"
+                ]
+            }
+
+        # SHOW TREATMENTS
+        if "behandlung" in message:
+            return {
+                "reply": "Wir bieten Zahnreinigung, Zahnaufhellung, Implantate und Zahnspangen an.",
+                "suggestions": ["Termin buchen"]
+            }
 
     # =========================
-    # TREATMENT SELECTION
+    # BOOKING FLOW
     # =========================
+
+    # TREATMENT
     if message in GERMAN_TO_INTERNAL and session.get("stage") == "awaiting_treatment":
         internal = GERMAN_TO_INTERNAL[message]
         session["selected_treatment"] = TREATMENT_LABELS[internal]
@@ -66,9 +82,7 @@ def handle_message(user_id, message, session):
             "suggestions": ["Morgen", "Diese Woche", "Nächste Woche"]
         }
 
-    # =========================
     # DATE
-    # =========================
     if session.get("stage") == "awaiting_date":
         session["date"] = raw_message
         session["stage"] = "awaiting_appointment"
@@ -78,9 +92,7 @@ def handle_message(user_id, message, session):
             "suggestions": ["Vormittag", "Nachmittag"]
         }
 
-    # =========================
     # TIME PERIOD
-    # =========================
     if session.get("stage") == "awaiting_appointment":
         session["appointment"] = raw_message
         session["stage"] = "awaiting_time"
@@ -95,9 +107,7 @@ def handle_message(user_id, message, session):
             "suggestions": suggestions
         }
 
-    # =========================
     # TIME
-    # =========================
     if session.get("stage") == "awaiting_time":
         session["time"] = raw_message
         session["stage"] = "awaiting_name"
@@ -106,9 +116,7 @@ def handle_message(user_id, message, session):
             "reply": "👤 Wie ist Ihr vollständiger Name?"
         }
 
-    # =========================
     # NAME
-    # =========================
     if session.get("stage") == "awaiting_name":
         session["name"] = raw_message
         session["stage"] = "awaiting_phone"
@@ -117,53 +125,31 @@ def handle_message(user_id, message, session):
             "reply": "📞 Bitte geben Sie Ihre Telefonnummer an, damit wir den Termin bestätigen können."
         }
 
-    # =========================
-    # PHONE + CONFIRMATION
-    # =========================
+    # PHONE → CONFIRMATION
     if session.get("stage") == "awaiting_phone":
         session["phone"] = raw_message
         session["stage"] = None
 
-        confirmation = (
-            f"✅ Vielen Dank, {session['name']}!<br><br>"
-            "🗓️ Ihre Terminanfrage im Überblick:<br><br>"
-            f"• Behandlung: {session.get('selected_treatment', '—')}<br>"
-            f"• Datum: {session.get('date', '—')}<br>"
-            f"• Tageszeit: {session.get('appointment', '—')}<br>"
-            f"• Uhrzeit: {session.get('time', '—')}<br><br>"
-            "📞 Wir prüfen kurz die Verfügbarkeit und bestätigen den Termin in wenigen Minuten."
-        )
-
-        return {"reply": confirmation}
-
-    # =========================
-    # OTHER QUESTIONS (ONLY OUTSIDE FLOW)
-    # =========================
-    if not in_flow:
-        if "preis" in message or "kosten" in message:
-            return {
-                "reply": "🦷 Zahnaufhellung beginnt ab 120 € und die Beratung kostet 40 €.\n\nMöchten Sie einen Termin buchen?",
-                "suggestions": ["Termin buchen", "Mit Mitarbeiter sprechen"]
-            }
-
-        if "versicherung" in message:
-            return {
-                "reply": "Ja, wir akzeptieren die meisten gängigen Versicherungen.",
-                "suggestions": ["Termin buchen", "Mit Rezeption sprechen"]
-            }
+        return {
+            "reply": (
+                f"✅ Vielen Dank, {session['name']}!<br><br>"
+                "🗓️ Ihre Terminanfrage im Überblick:<br><br>"
+                f"• Behandlung: {session.get('selected_treatment', '—')}<br>"
+                f"• Datum: {session.get('date', '—')}<br>"
+                f"• Tageszeit: {session.get('appointment', '—')}<br>"
+                f"• Uhrzeit: {session.get('time', '—')}<br><br>"
+                "📞 Wir prüfen kurz die Verfügbarkeit und bestätigen den Termin in wenigen Minuten."
+            )
+        }
 
     # =========================
-    # DEFAULT
+    # FALLBACK (SMART)
     # =========================
     return {
-        "reply": "Wie kann ich Ihnen helfen?",
-        "suggestions": [
-            "Termin buchen",
-            "Behandlungen",
-            "Versicherung",
-            "Notfall"
-        ]
+        "reply": "Ich bin mir nicht ganz sicher, wie ich Ihnen helfen kann. Möchten Sie einen Termin buchen?",
+        "suggestions": ["Termin buchen", "Mit Mitarbeiter sprechen"]
     }
+
     # =========================
     # NORMAL INTENT HANDLING
     # =========================
