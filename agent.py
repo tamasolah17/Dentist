@@ -11,18 +11,22 @@ def handle_message(user_id, message, session):
     treatments = ["whitening", "implants", "braces", "cleanings"]
     raw_message = message.strip()
     message = raw_message.lower()
+    TREATMENT_LABELS = {
+        "cleanings": "Zahnreinigung",
+        "whitening": "Zahnaufhellung",
+        "implants": "Implantat",
+        "braces": "Zahnspange"
+    }
     if message.lower() in treatments:
-        session["selected_treatment"] = message.capitalize()
-        session["stage"] = "awaiting_treatment"
+        session["selected_treatment"] = TREATMENT_LABELS.get(message, message)
+        session["stage"] = "awaiting_date"  # ✅ go directly to next step
+
         return {
             "reply": (
-                f"Gute Wahl! 🦷 {message.capitalize()} gehört zu unseren häufigsten Behandlungen.\n\n"
-                "Möchten Sie einen Termin buchen oder mit unserem Team sprechen?"
+                f"Gute Wahl! 🦷 {session['selected_treatment']} ist eine sehr gefragte Behandlung.\n\n"
+                "📅 Welcher Termin passt Ihnen am besten?"
             ),
-            "suggestions": [
-                "Termin buchen",
-                "Mit Mitarbeiter sprechen"
-            ]
+            "suggestions": ["Morgen", "Diese Woche", "Nächste Woche"]
         }
 
     # =========================
@@ -86,7 +90,8 @@ def handle_message(user_id, message, session):
             f"✅ Vielen Dank, {session['name']}!<br><br>"
             "🗓️ Ihre Terminanfrage im Überblick:<br><br>"
             f"• Behandlung: {session.get('selected_treatment', '—')}<br>"
-            f"• Datum: {session['appointment']}<br>"
+            f"• Datum: {session.get('date', '—')}<br>"
+            f"• Tageszeit: {session.get('appointment', '—')}<br>"
             f"• Uhrzeit: {session['time']}<br><br>"
             "📞 Unser Team wird sich in Kürze bei Ihnen melden, um den Termin zu bestätigen."
         )
