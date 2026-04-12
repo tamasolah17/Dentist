@@ -17,9 +17,14 @@ def handle_message(user_id, message, session):
     message = raw_message.lower()
 
     # =========================
+    # STATE CHECK
+    # =========================
+    in_flow = session.get("stage") is not None
+
+    # =========================
     # START BOOKING FLOW
     # =========================
-    if message == "termin buchen":
+    if message in ["buchen", "termin", "termin buchen"]:
         session.clear()
         session["stage"] = "awaiting_treatment"
 
@@ -29,12 +34,9 @@ def handle_message(user_id, message, session):
         }
 
     # =========================
-    # TREATMENT SELECTION (SAFE)
+    # TREATMENT SELECTION
     # =========================
-    if (
-        message in treatments
-        and session.get("stage") == "awaiting_treatment"
-    ):
+    if message in treatments and session.get("stage") == "awaiting_treatment":
         session["selected_treatment"] = TREATMENT_LABELS.get(message, message)
         session["stage"] = "awaiting_date"
 
@@ -49,7 +51,7 @@ def handle_message(user_id, message, session):
     # =========================
     # DATE
     # =========================
-    elif session.get("stage") == "awaiting_date":
+    if session.get("stage") == "awaiting_date":
         session["date"] = raw_message
         session["stage"] = "awaiting_appointment"
 
@@ -61,7 +63,7 @@ def handle_message(user_id, message, session):
     # =========================
     # TIME PERIOD
     # =========================
-    elif session.get("stage") == "awaiting_appointment":
+    if session.get("stage") == "awaiting_appointment":
         session["appointment"] = raw_message
         session["stage"] = "awaiting_time"
 
@@ -78,7 +80,7 @@ def handle_message(user_id, message, session):
     # =========================
     # TIME
     # =========================
-    elif session.get("stage") == "awaiting_time":
+    if session.get("stage") == "awaiting_time":
         session["time"] = raw_message
         session["stage"] = "awaiting_name"
 
@@ -89,7 +91,7 @@ def handle_message(user_id, message, session):
     # =========================
     # NAME
     # =========================
-    elif session.get("stage") == "awaiting_name":
+    if session.get("stage") == "awaiting_name":
         session["name"] = raw_message
         session["stage"] = "awaiting_phone"
 
@@ -100,7 +102,7 @@ def handle_message(user_id, message, session):
     # =========================
     # PHONE + CONFIRMATION
     # =========================
-    elif session.get("stage") == "awaiting_phone":
+    if session.get("stage") == "awaiting_phone":
         session["phone"] = raw_message
         session["stage"] = None
 
@@ -115,7 +117,6 @@ def handle_message(user_id, message, session):
         )
 
         return {"reply": confirmation}
-
     # =========================
     # NORMAL INTENT HANDLING
     # =========================
