@@ -30,7 +30,7 @@ ALLOWED_INTENTS = [
 
 Richtlinien:
 - Fragen zu Versicherungen oder Kostenübernahme → insurance
-- Fragen zu Behandlungen → treatments
+- Fragen zu Behandlungen, zumbeispeil : Ich brauche ein Behandlung von... → treatments
 - Fragen zu Zahnbeschwerden, Schmerzen oder Nebenwirkungen → issues
 - Fragen zur Terminvereinbarung → booking
 - Notfälle oder dringende Schmerzen → emergency

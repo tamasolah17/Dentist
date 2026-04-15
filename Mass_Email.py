@@ -25,7 +25,7 @@ SMTP_SERVER = "smtp-relay.brevo.com"
 SMTP_PORT = 587
 SMTP_USERNAME = "9bfe0b001@smtp-brevo.com"
 
-SMTP_PASSWORD = "xsmtpsib-328c74420b4d6f2086fb4c0a37d2cba831b76a4d533c86b299b19b9994f5d2af-c0g2FUjuzMNPepla"
+SMTP_PASSWORD = "xsmtpsib-328c74420b4d6f2086fb4c0a37d2cba831b76a4d533c86b299b19b9994f5d2af-mESwiMRwOgeA8zeH"
 SENDER_EMAIL = "thomas.meier@automationclinics.com"
 
 
@@ -167,22 +167,20 @@ If this isn’t relevant, just let me know and I won’t follow up.
 
 <p>Hallo,</p>
 
-<p>Ich habe mir <strong>{clinic_name}</strong> kurz angesehen — mit <strong>{reviews} Bewertungen</strong> gehören Sie definitiv zu den gefragteren Praxen in Ihrer Region.</p>
+<p>Ich habe mir <strong>{clinic_name}</strong> kurz angesehen – mit <strong>{reviews} Bewertungen</strong> sind Sie gut ausgelastet.</p>
 
 <p><strong>Kurze Frage:</strong></p>
 
-<p>Was passiert bei Ihnen aktuell mit Anfragen, die abends oder am Wochenende reinkommen?</p>
+<p>Wie viele neue Patienten-Anfragen gehen Ihnen aktuell verloren, wenn jemand abends oder am Wochenende schreibt?</p>
 
-<p>Viele Patienten kontaktieren mehrere Praxen gleichzeitig — und entscheiden sich meist für die, die zuerst reagiert.</p>
+<p>Viele Praxen verlieren 20–40% dieser Anfragen, weil Patienten parallel 2–3 Praxen kontaktieren – und die erste Antwort gewinnt.</p>
 
-<p>Genau hier geht bei vielen Praxen ein Teil der Anfragen verloren, ohne dass es im Alltag auffällt — was sich langfristig auch auf die Konkurrenzfähigkeit gegenüber anderen 5-Sterne-Praxen auswirkt.</p>
+<p>Wir haben eine Lösung, die solche Anfragen automatisch beantwortet und qualifiziert – innerhalb von Sekunden.</p>
 
-<p>Wir haben eine Lösung, die solche Anfragen automatisch auffängt und priorisiert, sodass besonders relevante Anliegen direkt im Fokus stehen — ganz ohne zusätzlichen Aufwand.</p>
+<p>Hier sehen Sie eine kurze Demo:<br>
+https://www.automationclinics.com/</p>
 
-</p>Hier können Sie sich die Demo ansehen: https://www.automationclinics.com/</p>
-
-<p>Könnte das ggf. auch für den Praxisinhaber interessant sein?</p>
-
+<p>Wäre das grundsätzlich interessant für Sie?</p>
 
 <p>Mit freundlichen Grüßen,<br>
 Thomas Meier<br>
@@ -298,7 +296,6 @@ def send_bulk():
     sent_emails = load_sent_emails()
 
     for clinic_name, email, reviews, city in leads:
-
 
         if email in sent_emails:
             print(f"Skipping already emailed: {email}")

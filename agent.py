@@ -4,87 +4,42 @@ from flask import Flask, request, jsonify, session
 
 
 def handle_message(user_id, message, session):
+    # =========================
+    # TREATMENT SELECTION FLOW
+    # =========================
 
+    treatments = ["whitening", "implants", "braces", "cleanings"]
     raw_message = message.strip()
     message = raw_message.lower()
+    if message.lower() in treatments:
+        session["selected_treatment"] = message.capitalize()
+        session["stage"] = "awaiting_treatment"
+        return {
+            "reply": (
+                f"Gute Wahl! 🦷 {message.capitalize()} gehört zu unseren häufigsten Behandlungen.\n\n"
+                "Möchten Sie einen Termin buchen oder mit unserem Team sprechen?"
+            ),
+            "suggestions": [
+                "Termin buchen",
+                "Mit Mitarbeiter sprechen"
+            ]
+        }
 
     # =========================
-    # MAPPINGS
-    # =========================
-    GERMAN_TO_INTERNAL = {
-        "zahnreinigung": "cleanings",
-        "zahnaufhellung": "whitening",
-        "implantat": "implants",
-        "zahnspange": "braces"
-    }
-
-    TREATMENT_LABELS = {
-        "cleanings": "Zahnreinigung",
-        "whitening": "Zahnaufhellung",
-        "implants": "Implantat",
-        "braces": "Zahnspange"
-    }
-
-    in_flow = session.get("stage") is not None
-
-    # =========================
-    # SIMPLE INTENT DETECTION
-    # =========================
-    if not in_flow:
-
-        # SICK / PROBLEM
-        if "krank" in message or "schmerzen" in message:
-            return {
-                "reply": "Das tut mir leid zu hören. Möchten Sie einen Termin vereinbaren oder mit unserem Team sprechen?",
-                "suggestions": ["Termin buchen", "Mit Mitarbeiter sprechen"]
-            }
-
-        # BOOKING TRIGGER
-        if message in ["buchen", "termin", "termin buchen"]:
-            session.clear()
-            session["stage"] = "awaiting_treatment"
-
-            return {
-                "reply": (
-                    "🦷 Wir bieten unter anderem Zahnreinigung, Zahnaufhellung, Implantate und Zahnspangen an.\n\n"
-                    "Welche Behandlung möchten Sie buchen?"
-                ),
-                "suggestions": [
-                    "Zahnreinigung",
-                    "Zahnaufhellung",
-                    "Implantat",
-                    "Zahnspange"
-                ]
-            }
-
-        # SHOW TREATMENTS
-        if "behandlung" in message:
-            return {
-                "reply": "Wir bieten Zahnreinigung, Zahnaufhellung, Implantate und Zahnspangen an.",
-                "suggestions": ["Termin buchen"]
-            }
-
-    # =========================
-    # BOOKING FLOW
+    # APPOINTMENT FLOW HANDLER
     # =========================
 
-    # TREATMENT
-    if message in GERMAN_TO_INTERNAL and session.get("stage") == "awaiting_treatment":
-        internal = GERMAN_TO_INTERNAL[message]
-        session["selected_treatment"] = TREATMENT_LABELS[internal]
+    if session.get("stage") == "awaiting_treatment":
+        session["treatment"] = message
         session["stage"] = "awaiting_date"
 
         return {
-            "reply": (
-                f"Gute Wahl! 🦷 {session['selected_treatment']} gehört zu unseren häufigsten Behandlungen.\n\n"
-                "📅 Welcher Termin passt Ihnen am besten?"
-            ),
+            "reply": "Welcher Termin passt Ihnen am besten?",
             "suggestions": ["Morgen", "Diese Woche", "Nächste Woche"]
         }
 
-    # DATE
-    if session.get("stage") == "awaiting_date":
-        session["date"] = raw_message
+    elif session.get("stage") == "awaiting_date":
+        session["date"] = message
         session["stage"] = "awaiting_appointment"
 
         return {
@@ -92,12 +47,12 @@ def handle_message(user_id, message, session):
             "suggestions": ["Vormittag", "Nachmittag"]
         }
 
-    # TIME PERIOD
-    if session.get("stage") == "awaiting_appointment":
-        session["appointment"] = raw_message
+    elif session.get("stage") == "awaiting_appointment":
+        session["appointment"] = message
         session["stage"] = "awaiting_time"
+        choice = message.strip().lower()
 
-        if message == "vormittag":
+        if choice == "vormittag":
             suggestions = ["9:00", "10:30", "11:30"]
         else:
             suggestions = ["12:30", "14:00", "15:30"]
@@ -107,17 +62,15 @@ def handle_message(user_id, message, session):
             "suggestions": suggestions
         }
 
-    # TIME
-    if session.get("stage") == "awaiting_time":
-        session["time"] = raw_message
+    elif session.get("stage") == "awaiting_time":
+        session["time"] = message
         session["stage"] = "awaiting_name"
 
         return {
-            "reply": "👤 Wie ist Ihr vollständiger Name?"
+            "reply": "Wie ist Ihr vollständiger Name?"
         }
 
-    # NAME
-    if session.get("stage") == "awaiting_name":
+    elif session.get("stage") == "awaiting_name":
         session["name"] = raw_message
         session["stage"] = "awaiting_phone"
 
@@ -125,30 +78,22 @@ def handle_message(user_id, message, session):
             "reply": "📞 Bitte geben Sie Ihre Telefonnummer an, damit wir den Termin bestätigen können."
         }
 
-    # PHONE → CONFIRMATION
-    if session.get("stage") == "awaiting_phone":
-        session["phone"] = raw_message
+    elif session.get("stage") == "awaiting_phone":
+        session["phone"] = message
         session["stage"] = None
 
-        return {
-            "reply": (
-                f"✅ Vielen Dank, {session['name']}!<br><br>"
-                "🗓️ Ihre Terminanfrage im Überblick:<br><br>"
-                f"• Behandlung: {session.get('selected_treatment', '—')}<br>"
-                f"• Datum: {session.get('date', '—')}<br>"
-                f"• Tageszeit: {session.get('appointment', '—')}<br>"
-                f"• Uhrzeit: {session.get('time', '—')}<br><br>"
-                "📞 Wir prüfen kurz die Verfügbarkeit und bestätigen den Termin in wenigen Minuten."
-            )
-        }
+        confirmation = (
+            f"✅ Vielen Dank, {session['name']}!<br><br>"
+            "🗓️ Ihre Terminanfrage im Überblick:<br><br>"
+            f"• Behandlung: {session['treatment']}<br>"
+            f"• Datum: {session['appointment']}<br>"
+            f"• Uhrzeit: {session['time']}<br><br>"
+            "📞 Unser Team wird sich in Kürze bei Ihnen melden, um den Termin zu bestätigen."
+        )
 
-    # =========================
-    # FALLBACK (SMART)
-    # =========================
-    return {
-        "reply": "Ich bin mir nicht ganz sicher, wie ich Ihnen helfen kann. Möchten Sie einen Termin buchen?",
-        "suggestions": ["Termin buchen", "Mit Mitarbeiter sprechen"]
-    }
+        add_message(user_id, "assistant", confirmation)
+
+        return {"reply": confirmation}
 
     # =========================
     # NORMAL INTENT HANDLING
@@ -192,7 +137,7 @@ def handle_message(user_id, message, session):
     confidence = result["confidence"]
     print("DEBUG INTENT:", result)
 
-    if confidence < 0.25:
+    if confidence < 0.1:
         intent = "unknown"
 
     if intent == "booking":
