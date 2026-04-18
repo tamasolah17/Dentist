@@ -7,6 +7,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import re
 import pandas as pd
+from email.header import Header
+import smtplib
 
 
 
@@ -25,8 +27,8 @@ SMTP_SERVER = "smtp-relay.brevo.com"
 SMTP_PORT = 587
 SMTP_USERNAME = "9bfe0b001@smtp-brevo.com"
 
-SMTP_PASSWORD = "xsmtpsib-328c74420b4d6f2086fb4c0a37d2cba831b76a4d533c86b299b19b9994f5d2af-mESwiMRwOgeA8zeH"
-SENDER_EMAIL = "thomas.meier@automationclinics.com"
+SMTP_PASSWORD = "xsmtpsib-328c74420b4d6f2086fb4c0a37d2cba831b76a4d533c86b299b19b9994f5d2af-DHf3X0jQfARKHNfo"
+SENDER_EMAIL = "lukas.micheal@automationclinics.com"
 
 
 
@@ -167,23 +169,37 @@ If this isn’t relevant, just let me know and I won’t follow up.
 
 <p>Hallo,</p>
 
-<p>Ich habe mir <strong>{clinic_name}</strong> kurz angesehen – mit <strong>{reviews} Bewertungen</strong> sind Sie gut ausgelastet.</p>
+<p>ich hoffe, es ist in Ordnung, dass ich Sie kurz direkt kontaktiere – ich habe Ihre Praxis online gefunden und möchte Ihnen einen kurzen, hilfreichen Hinweis geben.</p>
 
-<p><strong>Kurze Frage:</strong></p>
+<p>Viele Zahnarztpraxen stehen aktuell vor einem ähnlichen Thema: täglich gehen zahlreiche Anfragen ein (Termine, Rückfragen, etc.), aber ein Teil davon bleibt – vor allem abends, in Stoßzeiten oder am Wochenende – unbeantwortet.</p>
 
-<p>Wie viele neue Patienten-Anfragen gehen Ihnen aktuell verloren, wenn jemand abends oder am Wochenende schreibt?</p>
+<p>Studien zeigen, dass bis zu <strong>30–40% der Anfragen in solchen Zeiten verloren gehen</strong>. Gleichzeitig bevorzugen inzwischen über <strong>70% der Patienten eine Online-Terminbuchung</strong> und erwarten schnelle Rückmeldungen.</p>
 
-<p>Viele Praxen verlieren 20–40% dieser Anfragen, weil Patienten parallel 2–3 Praxen kontaktieren – und die erste Antwort gewinnt.</p>
+<p>Genau hier verlieren viele Praxen unbewusst neue Patienten – nicht wegen der Behandlung, sondern wegen der fehlenden direkten Reaktion.</p>
 
-<p>Wir haben eine Lösung, die solche Anfragen automatisch beantwortet und qualifiziert – innerhalb von Sekunden.</p>
+<p>Ich beschäftige mich mit Lösungen, die genau diesen Bereich unterstützen: Anfragen werden automatisch beantwortet, vorqualifiziert und können direkt in Termine umgewandelt werden – ohne zusätzlichen Aufwand für Ihr Team.</p>
 
-<p>Hier sehen Sie eine kurze Demo:<br>
-https://www.automationclinics.com/</p>
+<p>Zusätzlich zeigen sich in der Praxis oft messbare Effekte wie:</p>
+<p>
+– weniger Telefonaufkommen<br>
+– weniger No-Shows durch automatische Erinnerungen<br>
+– mehr Terminbuchungen, besonders außerhalb der Öffnungszeiten
+</p>
 
-<p>Wäre das grundsätzlich interessant für Sie?</p>
+<p>Ich habe dazu eine kurze Demo (ca. 2 Minuten) vorbereitet:</p>
+
+<p>https://www.automationclinics.com/</p>
+
+<p>Dort sehen Sie konkret, wie Patientenanfragen automatisch verarbeitet werden können – auch abends oder am Wochenende.</p>
+
+<p>Falls das für Sie aktuell kein Thema ist, geben Sie mir bitte kurz Bescheid – dann melde ich mich selbstverständlich nicht weiter.</p>
 
 <p>Mit freundlichen Grüßen,<br>
-Thomas Meier<br>
+Lukas Micheal</p>
+
+
+<p>Mit freundlichen Grüßen,<br>
+Lukas Micheal<br>
 Gründer - AutomationClinics</p>
 
 <p style="margin-top:0; position: relative;">
@@ -193,8 +209,9 @@ Gründer - AutomationClinics</p>
 </p>
 
 <p style="font-size:13px;color:gray;">
-thomas.meier@automationclinics.com<br>
-📍40212 Düsseldorf<br>
+lukas.micheal@automationclinics.com<br>
+https://www.automationclinics.com/
+40212 Düsseldorf<br>
 Germany
 </p>
 
@@ -217,8 +234,10 @@ def send_email(to_address, subject, body_plain, body_html):
         msg["Subject"] = subject
         msg["Reply-To"] = SENDER_EMAIL
 
-        msg.attach(MIMEText(body_plain, "plain"))
-        msg.attach(MIMEText(body_html, "html"))
+        msg["Subject"] = Header(subject, "utf-8")
+
+        msg.attach(MIMEText(body_plain, "plain", "utf-8"))
+        msg.attach(MIMEText(body_html, "html", "utf-8"))
 
         with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
             server.starttls()
@@ -296,7 +315,7 @@ def send_bulk():
     sent_emails = load_sent_emails()
 
     for clinic_name, email, reviews, city in leads:
-
+        
         if email in sent_emails:
             print(f"Skipping already emailed: {email}")
             continue
@@ -309,10 +328,13 @@ def send_bulk():
 
         log_status(email, "sent" if success else "failed")
 
-        if success:
-            save_sent_email(email)
+
         print(f"{clinic_name} → {'Sent' if success else 'Failed'}")
-       
+
+
+
+
+
         time.sleep(SEND_DELAY)
 
 

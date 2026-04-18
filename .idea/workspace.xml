@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="df5d3721-fe21-4195-aaa6-4acb80b7b1ca" name="Changes" comment="My agent" />
+    <list default="true" id="df5d3721-fe21-4195-aaa6-4acb80b7b1ca" name="Changes" comment="My agent">
+      <change afterPath="$PROJECT_DIR$/Filter_emails.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mass_Email.py" beforeDir="false" afterPath="$PROJECT_DIR$/Mass_Email.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dentist_outreach.db" beforeDir="false" afterPath="$PROJECT_DIR$/dentist_outreach.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/widget.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/widget.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +20,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -52,10 +59,14 @@
     &quot;Python.Conversion.executor&quot;: &quot;Run&quot;,
     &quot;Python.Email_Extractor.executor&quot;: &quot;Run&quot;,
     &quot;Python.Email_Generator.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Filter_emails.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Filtering.executor&quot;: &quot;Run&quot;,
     &quot;Python.Mass_Email.executor&quot;: &quot;Run&quot;,
     &quot;Python.WebScraper.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Z.executor&quot;: &quot;Run&quot;,
     &quot;Python.agent.executor&quot;: &quot;Run&quot;,
     &quot;Python.chatbot_detector.executor&quot;: &quot;Run&quot;,
+    &quot;Python.g.executor&quot;: &quot;Run&quot;,
     &quot;Python.intent_classifier.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -124,14 +135,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1770391771205</updated>
-    </task>
-    <task id="LOCAL-00029" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1773083937865</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1773083937865</updated>
     </task>
     <task id="LOCAL-00030" summary="My agent">
       <option name="closed" value="true" />
@@ -517,7 +520,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776256414199</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1776256493224</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1776256493225</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -525,6 +536,17 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.db" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="My agent" />
