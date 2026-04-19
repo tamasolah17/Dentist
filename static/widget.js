@@ -77,7 +77,7 @@ window.addEventListener("DOMContentLoaded", function () {
     </div>
 
     <div style="display:flex;flex-direction:column;">
-    <span style="font-size:16px;font-weight:605;">Digitaler </span>
+    <span style="font-size:16px;font-weight:605;">Digitaler P </span>
     </div>
 
     </div>

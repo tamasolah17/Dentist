@@ -27,7 +27,7 @@ SMTP_SERVER = "smtp-relay.brevo.com"
 SMTP_PORT = 587
 SMTP_USERNAME = "9bfe0b001@smtp-brevo.com"
 
-SMTP_PASSWORD = "xsmtpsib-328c74420b4d6f2086fb4c0a37d2cba831b76a4d533c86b299b19b9994f5d2af-DHf3X0jQfARKHNfo"
+SMTP_PASSWORD = "xsmtpsib-328c74420b4d6f2086fb4c0a37d2cba831b76a4d533c86b299b19b9994f5d2af-5XHlIOZDz5DzvltH"
 SENDER_EMAIL = "lukas.micheal@automationclinics.com"
 
 
@@ -315,7 +315,11 @@ def send_bulk():
     sent_emails = load_sent_emails()
 
     for clinic_name, email, reviews, city in leads:
-        
+
+
+
+
+
         if email in sent_emails:
             print(f"Skipping already emailed: {email}")
             continue
