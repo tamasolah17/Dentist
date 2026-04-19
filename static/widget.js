@@ -77,8 +77,7 @@ window.addEventListener("DOMContentLoaded", function () {
     </div>
 
     <div style="display:flex;flex-direction:column;">
-    <span style="font-size:16px;font-weight:605;">Digitaler Praxisassistent</span>
-    
+    <span style="font-size:16px;font-weight:605;">Digitaler </span>
     </div>
 
     </div>
