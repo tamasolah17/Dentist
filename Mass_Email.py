@@ -25,9 +25,9 @@ CAMPAIGN_NAME = "Berlin_Dentists_Campaign"
 
 SMTP_SERVER = "smtp-relay.brevo.com"
 SMTP_PORT = 587
-SMTP_USERNAME = "9bfe0b001@smtp-brevo.com"
+SMTP_USERNAME = "a8d805001@smtp-brevo.com"
 
-SMTP_PASSWORD = "xsmtpsib-328c74420b4d6f2086fb4c0a37d2cba831b76a4d533c86b299b19b9994f5d2af-5XHlIOZDz5DzvltH"
+SMTP_PASSWORD = "xsmtpsib-f0a8308022e24dc10b7fb687236808043cfaff19171ecde9c188b94fd0ed313c-thKM0R1Dj1p91hDa"
 SENDER_EMAIL = "lukas.micheal@automationclinics.com"
 
 
@@ -169,34 +169,36 @@ If this isn’t relevant, just let me know and I won’t follow up.
 
 <p>Hallo,</p>
 
-<p>ich hoffe, es ist in Ordnung, dass ich Sie kurz direkt kontaktiere – ich habe Ihre Praxis online gefunden und möchte Ihnen einen kurzen, hilfreichen Hinweis geben.</p>
+<p>Ich hoffe, es geht Ihnen gut.<p>
 
-<p>Viele Zahnarztpraxen stehen aktuell vor einem ähnlichen Thema: täglich gehen zahlreiche Anfragen ein (Termine, Rückfragen, etc.), aber ein Teil davon bleibt – vor allem abends, in Stoßzeiten oder am Wochenende – unbeantwortet.</p>
+<p><strong>Die meisten Patienten sind unsicher, wenn sie eine neue Praxis in Betracht ziehen. — sie vertrauen dem Prozess noch nicht vollständig und haben in der Regel mehrere Fragen, bevor sie eine Entscheidung treffen.</p>
 
-<p>Studien zeigen, dass bis zu <strong>30–40% der Anfragen in solchen Zeiten verloren gehen</strong>. Gleichzeitig bevorzugen inzwischen über <strong>70% der Patienten eine Online-Terminbuchung</strong> und erwarten schnelle Rückmeldungen.</p>
+<p>Ein manuelles Terminbuchungssystem setzt jedoch genau diese Sicherheit und unmittelbare Entscheidungsbereitschaft voraus.</p>
 
-<p>Genau hier verlieren viele Praxen unbewusst neue Patienten – nicht wegen der Behandlung, sondern wegen der fehlenden direkten Reaktion.</p>
+<p>In der Realität fühlen sich viele Patienten noch nicht bereit, sofort einen Termin zu buchen.</p>
 
-<p>Ich beschäftige mich mit Lösungen, die genau diesen Bereich unterstützen: Anfragen werden automatisch beantwortet, vorqualifiziert und können direkt in Termine umgewandelt werden – ohne zusätzlichen Aufwand für Ihr Team.</p>
+<p><strong>Unser digitales Buchungssystem bedient den Patienten mit Rekordgeschwindigkeit, sobald er auf der Website ankommt, anstatt sich auf eine manuelle Terminbuchung zu verlassen.</strong></p>
 
-<p>Zusätzlich zeigen sich in der Praxis oft messbare Effekte wie:</p>
-<p>
-– weniger Telefonaufkommen<br>
-– weniger No-Shows durch automatische Erinnerungen<br>
-– mehr Terminbuchungen, besonders außerhalb der Öffnungszeiten
-</p>
+<p>Anstatt den Nutzer direkt in ein Buchungsformular zu drängen, führen wir ihn in ein Echtzeit-Gespräch, das ihn vom ersten Moment an begleitet — mit kontinuierlichen, relevanten Antworten, die Schritt für Schritt Vertrauen aufbauen..</p>
 
-<p>Ich habe dazu eine kurze Demo (ca. 2 Minuten) vorbereitet:</p>
+<p>Durch die sofortige Beantwortung von Fragen und die gezielte Führung des Patienten wird Unsicherheit reduziert und es entstehen schnellere, natürlichere und dynamischere Conversions.</p>
 
-<p>https://www.automationclinics.com/</p>
+<p><strong>Das Ergebnis:</strong></p>
+<ul>
+  <li><strong>Mehr Buchungen</strong></li>
+  <li><strong>Weniger Absprünge</strong></li>
+  <li><strong>Mehr positive Bewertungen</strong></li>
+  <li><strong>Ein deutlich besseres Patientenerlebnis</strong></li>
+</ul>
 
-<p>Dort sehen Sie konkret, wie Patientenanfragen automatisch verarbeitet werden können – auch abends oder am Wochenende.</p>
+<p>Gleichzeitig ist die Implementierung nicht komplex:<br>
+ein einfaches Copy-Paste, und das System ist in unter 5 Minuten live — ohne Änderungen an bestehenden Abläufen.</p>
 
-<p>Falls das für Sie aktuell kein Thema ist, geben Sie mir bitte kurz Bescheid – dann melde ich mich selbstverständlich nicht weiter.</p>
+<p>Um das greifbar zu machen, habe ich eine kurze Demo erstellt.</p>
 
-<p>Mit freundlichen Grüßen,<br>
-Lukas Micheal</p>
+<p>Falls Sie Interesse haben, sende ich Ihnen den Link gerne zu.</p>
 
+<p>Falls das zu irgendeinem Zeitpunkt für Sie relevant wird, können Sie mich jederzeit gerne kontaktieren.</p>
 
 <p>Mit freundlichen Grüßen,<br>
 Lukas Micheal<br>
@@ -316,10 +318,7 @@ def send_bulk():
 
     for clinic_name, email, reviews, city in leads:
 
-
-
-
-
+ 
         if email in sent_emails:
             print(f"Skipping already emailed: {email}")
             continue

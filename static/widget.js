@@ -78,7 +78,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
     <div style="display:flex;flex-direction:column;">
     <span style="font-size:16px;font-weight:605;">Digitaler Praxisassistent </span>
-    <span style="font-size:12px;font-weight:200;">0-24 Erreichbar </span>
+    <span style="font-size:12px;font-weight:600;">0-24 Erreichbar </span>
     </div>
 
     </div>

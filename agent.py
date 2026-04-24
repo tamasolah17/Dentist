@@ -85,7 +85,7 @@ def handle_message(user_id, message, session):
         confirmation = (
             f"✅ Vielen Dank, {session['name']}!<br><br>"
             "🗓️ Ihre Terminanfrage im Überblick:<br><br>"
-            f"• Behandlung: {session['treatment']}<br>"
+            f"• Behandlung: {session['selected_treatment']}<br>"
             f"• Datum: {session['appointment']}<br>"
             f"• Uhrzeit: {session['time']}<br><br>"
             "📞 Unser Team wird sich in Kürze bei Ihnen melden, um den Termin zu bestätigen."
