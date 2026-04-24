@@ -14,6 +14,7 @@ def handle_message(user_id, message, session):
     if message.lower() in treatments:
         session["selected_treatment"] = message.capitalize()
         session["stage"] = "awaiting_treatment"
+        session["behandlung"] = message
         return {
             "reply": (
                 f"Gute Wahl! 🦷 {message.capitalize()} gehört zu unseren häufigsten Behandlungen.\n\n"
@@ -111,10 +112,11 @@ def handle_message(user_id, message, session):
 
     try:
         if "treatment" in message:
-            session["behandlung"] = message
+
             return {
                 "reply": "Wir bieten Zahnaufhellung, Implantate, Zahnspangen und Zahnreinigung an. Wofür interessieren Sie sich?",
-                "suggestions": ["whitening", "implants", "braces", "cleanings"],
+                "suggestions": ["whitening", "implants", "braces", "cleanings"]
+
 
 
             }
@@ -172,7 +174,7 @@ def handle_message(user_id, message, session):
         }
 
     elif intent == "treatments":
-        session["behandlung"] = message
+
         return {
             "reply": (
                 "Wir bieten Zahnaufhellung, Implantate, Zahnspangen und Zahnreinigung an. Wofür interessieren Sie sich?"
