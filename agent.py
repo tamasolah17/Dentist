@@ -85,7 +85,7 @@ def handle_message(user_id, message, session):
         confirmation = (
             f"✅ Vielen Dank, {session['name']}!<br><br>"
             "🗓️ Ihre Terminanfrage im Überblick:<br><br>"
-            f"• Behandlung: {session['selected_treatment']}<br>"
+            f"• Behandlung: {session['behandlung']}<br>"
             f"• Datum: {session['appointment']}<br>"
             f"• Uhrzeit: {session['time']}<br><br>"
             "📞 Unser Team wird sich in Kürze bei Ihnen melden, um den Termin zu bestätigen."
@@ -111,10 +111,15 @@ def handle_message(user_id, message, session):
 
     try:
         if "treatment" in message:
+            session["behandlung"] = message
             return {
                 "reply": "Wir bieten Zahnaufhellung, Implantate, Zahnspangen und Zahnreinigung an. Wofür interessieren Sie sich?",
-                "suggestions": ["whitening", "implants", "braces", "cleanings"]
+                "suggestions": ["whitening", "implants", "braces", "cleanings"],
+
+
             }
+
+
 
         if "price" in message or "cost" in message:
             return {
@@ -167,7 +172,7 @@ def handle_message(user_id, message, session):
         }
 
     elif intent == "treatments":
-
+        session["behandlung"] = message
         return {
             "reply": (
                 "Wir bieten Zahnaufhellung, Implantate, Zahnspangen und Zahnreinigung an. Wofür interessieren Sie sich?"
@@ -178,6 +183,7 @@ def handle_message(user_id, message, session):
                 "braces",
                 "cleanings"
             ]
+
         }
 
     elif intent == "emergency":
