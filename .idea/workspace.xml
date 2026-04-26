@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="df5d3721-fe21-4195-aaa6-4acb80b7b1ca" name="Changes" comment="My agent">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Filtering.py" beforeDir="false" afterPath="$PROJECT_DIR$/Filtering.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mass_Email.py" beforeDir="false" afterPath="$PROJECT_DIR$/Mass_Email.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dentist_outreach.db" beforeDir="false" afterPath="$PROJECT_DIR$/dentist_outreach.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enriched_dentists.csv" beforeDir="false" afterPath="$PROJECT_DIR$/enriched_dentists.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,14 +135,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1770391771205</updated>
-    </task>
-    <task id="LOCAL-00042" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1773108456771</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1773108456771</updated>
     </task>
     <task id="LOCAL-00043" summary="My agent">
       <option name="closed" value="true" />
@@ -525,7 +520,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777060044150</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1777062776736</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1777062776737</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

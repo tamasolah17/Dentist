@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-
+import re
 # === CONFIG ===
 CLIENT_ID = "1000.0U3TECJRGNP5ZTR9U0AH0AAF4EFJ1W"
 CLIENT_SECRET = "8d950bd47174cf7ddce65b45d61b369185ccf87b7a"
@@ -12,6 +12,7 @@ CSV_FILE = "enriched_dentists.csv"
 BAD_KEYWORDS = [
     "entfernen",
     "kein interesse",
+    "kein Interesse",
     "nicht interessiert",
     "kein bedarf",
     "abmelden",
@@ -24,10 +25,10 @@ BAD_KEYWORDS = [
     "behörde für datenschutz",
     "beschwerde",
     "unsubscribe",
-    "lassen Sie mich"
-    "nicht bekommen"
-    "nicht mehr"
-    "zu entfernen"
+    "lassen Sie mich",
+    "nicht bekommen",
+    "nicht mehr",
+    "zu entfernen",
     "stop",
     "remove me"
     "entfernen",
@@ -49,9 +50,16 @@ BAD_KEYWORDS = [
     "nicht mehr",
     "zu entfernen",
     "stop",
-    "remove me"
+    "remove me",
+    "zu unterlassen"
 ]
 
+
+def normalize_email(email):
+    if not email:
+        return ""
+    match = re.search(r'[\w\.-]+@[\w\.-]+', email)
+    return match.group(0).lower() if match else email.lower()
 
 # === STEP 1: GET ACCESS TOKEN ===
 def get_access_token():
@@ -113,7 +121,7 @@ def get_messages(access_token, folder_id):
 
     params = {
         "folderId": folder_id,
-        "limit": 50
+        "limit": 500
     }
 
     response = requests.get(url, headers=headers, params=params)
@@ -141,11 +149,11 @@ def extract_bad_senders(data):
 
     for msg in data["data"]:
         content = (
-            msg.get("subject", "") +
+            msg.get("subject", "") + " " +
             msg.get("summary", "")
         ).lower()
 
-        sender = msg.get("fromAddress")
+        sender = normalize_email(msg.get("fromAddress"))
 
         if sender and any(k in content for k in BAD_KEYWORDS):
             print(f"❌ BAD: {sender} → {content[:80]}")

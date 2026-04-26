@@ -25,9 +25,11 @@ CAMPAIGN_NAME = "Berlin_Dentists_Campaign"
 
 SMTP_SERVER = "smtp-relay.brevo.com"
 SMTP_PORT = 587
-SMTP_USERNAME = "a8d805001@smtp-brevo.com"
 
-SMTP_PASSWORD = "xsmtpsib-f0a8308022e24dc10b7fb687236808043cfaff19171ecde9c188b94fd0ed313c-thKM0R1Dj1p91hDa"
+
+SMTP_USERNAME = "a937f5001@smtp-brevo.com"
+
+SMTP_PASSWORD = "xsmtpsib-c2b7edbd2dcdc1e0d8c281f84cd961b29c6fa4042f8ecc4c272072a4985bbbe2-HtxF8QsGrqrlw9FB"
 SENDER_EMAIL = "lukas.micheal@automationclinics.com"
 
 
@@ -196,9 +198,7 @@ ein einfaches Copy-Paste, und das System ist in unter 5 Minuten live — ohne Ä
 
 <p>Um das greifbar zu machen, habe ich eine kurze Demo erstellt.</p>
 
-<p>Falls Sie Interesse haben, sende ich Ihnen den Link gerne zu.</p>
-
-<p>Falls das zu irgendeinem Zeitpunkt für Sie relevant wird, können Sie mich jederzeit gerne kontaktieren.</p>
+<p>Falls das Thema aktuell für Sie relevant ist, können Sie diese E-Mail gerne an Ihr Webentwicklungs-Team weiterleiten und dann sende Ich Ihnen den Link gerne zu.</p>
 
 <p>Mit freundlichen Grüßen,<br>
 Lukas Micheal<br>
@@ -318,7 +318,7 @@ def send_bulk():
 
     for clinic_name, email, reviews, city in leads:
 
- 
+
         if email in sent_emails:
             print(f"Skipping already emailed: {email}")
             continue

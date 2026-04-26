@@ -31,6 +31,7 @@ def handle_message(user_id, message, session):
     # =========================
 
     if session.get("stage") == "awaiting_treatment":
+        session["behandlung"] = message
         session["treatment"] = message
         session["stage"] = "awaiting_date"
 
