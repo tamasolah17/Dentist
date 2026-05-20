@@ -1,5 +1,16 @@
 window.addEventListener("DOMContentLoaded", function () {
 
+
+    langSelect.addEventListener("change", async (e) => {
+        const lang = e.target.value;
+
+        localStorage.setItem("lang", lang);
+
+        // Send to backend/chatbot
+        currentLanguage = lang;
+
+        reloadBotTexts(lang);
+    });
     // Create floating button
     const button = document.createElement("div");
     button.innerHTML = `
@@ -16,7 +27,7 @@ window.addEventListener("DOMContentLoaded", function () {
     button.style.position = "fixed";
     button.style.bottom = "20px";
     button.style.right = "20px";
-     button.style.width = "60px";
+    button.style.width = "60px";
     button.style.height = "60px";
     button.style.borderRadius = "50%";
 
@@ -83,6 +94,20 @@ window.addEventListener("DOMContentLoaded", function () {
 
     </div>
     `;
+
+    const langSelect = document.createElement("select");
+
+    langSelect.innerHTML = `
+    <option value="de">🇩🇪 DE</option>
+    <option value="en">🇬🇧 EN</option>
+    `;
+
+    langSelect.style.border = "none";
+    langSelect.style.borderRadius = "8px";
+    langSelect.style.padding = "4px 8px";
+    langSelect.style.fontSize = "12px";
+    langSelect.style.cursor = "pointer";
+    langSelect.style.outline = "none";
     header.style.display = "flex";
 
     header.style.padding = "12px";
@@ -92,7 +117,45 @@ window.addEventListener("DOMContentLoaded", function () {
     header.style.padding = "14px";
     header.style.borderBottom = "none";
     chatBox.appendChild(header);
+    const translations = {
+        de: {
+            title: "Digitaler Praxisassistent",
+            status: "0-24 Erreichbar",
+            placeholder: "Nachricht schreiben..."
+        },
 
+        en: {
+            title: "Digital Practice Assistant",
+            status: "Available 24/7",
+            placeholder: "Type a message..."
+        }
+    };
+
+    let currentLanguage = localStorage.getItem("lang") || "de";
+
+    function applyLanguage(lang) {
+
+        localStorage.setItem("lang", lang);
+
+        document.getElementById("botTitle").innerText =
+            translations[lang].title;
+
+        document.getElementById("botStatus").innerText =
+            translations[lang].status;
+
+        input.placeholder =
+            translations[lang].placeholder;
+
+        currentLanguage = lang;
+    }
+
+    langSelect.value = currentLanguage;
+
+    applyLanguage(currentLanguage);
+
+    langSelect.addEventListener("change", (e) => {
+        applyLanguage(e.target.value);
+    });
     // MESSAGES
     const messages = document.createElement("div");
     messages.style.flex = "1";
@@ -232,7 +295,8 @@ window.addEventListener("DOMContentLoaded", function () {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         user_id: "demo_user",
-                        message: ""
+                        message: "",
+                        language: currentLanguage
                     })
                 });
 
@@ -390,7 +454,8 @@ window.addEventListener("DOMContentLoaded", function () {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 user_id: "demo_user",
-                message: text
+                message: text,
+                language: currentLanguage
             })
         });
 
