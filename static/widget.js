@@ -1,16 +1,6 @@
 window.addEventListener("DOMContentLoaded", function () {
 
 
-    langSelect.addEventListener("change", async (e) => {
-        const lang = e.target.value;
-
-        localStorage.setItem("lang", lang);
-
-        // Send to backend/chatbot
-        currentLanguage = lang;
-
-        reloadBotTexts(lang);
-    });
     // Create floating button
     const button = document.createElement("div");
     button.innerHTML = `
@@ -27,7 +17,7 @@ window.addEventListener("DOMContentLoaded", function () {
     button.style.position = "fixed";
     button.style.bottom = "20px";
     button.style.right = "20px";
-    button.style.width = "60px";
+     button.style.width = "60px";
     button.style.height = "60px";
     button.style.borderRadius = "50%";
 
@@ -60,8 +50,7 @@ window.addEventListener("DOMContentLoaded", function () {
     chatBox.style.overflow = "hidden";
     chatBox.style.zIndex = "9999";
     chatBox.style.display = "none";
-    chatBox.style.display = "flex";
-    chatBox.style.visibility = "hidden";
+
     chatBox.style.boxShadow =
      "0 30px 80px rgba(0,0,0,0.25), 0 10px 30px rgba(0,0,0,0.12)";
     chatBox.style.borderRadius = "18px";
@@ -72,29 +61,37 @@ window.addEventListener("DOMContentLoaded", function () {
     const header = document.createElement("div");
     header.innerHTML = `
     <div style="display:flex;align-items:center;gap:8px;">
-
-    <div style="
-    width:28px;
-    height:28px;
-    background:white;
-    border-radius:51%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    ">
-
-    <img src="https://cdn.shopify.com/s/files/1/0930/3893/6393/files/AutoClinicsLogo3.png?v=1773200243"
-    style="width:20px;height:20px;object-fit:contain;">
-    </div>
-
-    <div style="display:flex;flex-direction:column;">
-    <span style="font-size:16px;font-weight:605;">Digitaler Praxisassistent </span>
-    <span style="font-size:12px;font-weight:600;">0-24 Erreichbar </span>
-    </div>
-
+    
+        <div style="
+        width:28px;
+        height:28px;
+        background:white;
+        border-radius:51%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        ">
+    
+        <img src="https://cdn.shopify.com/s/files/1/0930/3893/6393/files/AutoClinicsLogo3.png?v=1773200243"
+        style="width:20px;height:20px;object-fit:contain;">
+        </div>
+    
+        <div style="display:flex;flex-direction:column;">
+            <span id="botTitle" style="font-size:16px;font-weight:605;">
+                Digitaler Praxisassistent
+            </span>
+    
+            <span id="botStatus" style="font-size:12px;font-weight:600;">
+                0-24 Erreichbar
+            </span>
+        </div>
+    
     </div>
     `;
 
+    header.style.display = "flex";
+    header.style.justifyContent = "space-between";
+    header.style.alignItems = "center";
     const langSelect = document.createElement("select");
 
     langSelect.innerHTML = `
@@ -108,14 +105,13 @@ window.addEventListener("DOMContentLoaded", function () {
     langSelect.style.fontSize = "12px";
     langSelect.style.cursor = "pointer";
     langSelect.style.outline = "none";
-    header.style.display = "flex";
-
     header.style.padding = "12px";
     header.style.fontWeight = "bold";
     header.style.background = "linear-gradient(135deg,#2bb673,#16a085)";
     header.style.color = "white";
     header.style.padding = "14px";
     header.style.borderBottom = "none";
+    header.appendChild(langSelect);
     chatBox.appendChild(header);
     const translations = {
         de: {
@@ -156,6 +152,7 @@ window.addEventListener("DOMContentLoaded", function () {
     langSelect.addEventListener("change", (e) => {
         applyLanguage(e.target.value);
     });
+
     // MESSAGES
     const messages = document.createElement("div");
     messages.style.flex = "1";
@@ -281,11 +278,10 @@ window.addEventListener("DOMContentLoaded", function () {
     let welcomeLoaded = false;
 
     button.addEventListener("click", async function () {
+        const isHidden = chatBox.style.display === "none" || !chatBox.style.display;
 
-        const opening = chatBox.style.visibility === "hidden";
-
-        if (opening) {
-            chatBox.style.visibility = "visible";
+        if (isHidden) {
+            chatBox.style.display = "flex";
 
             if (!welcomeLoaded) {
                 welcomeLoaded = true;
@@ -295,8 +291,7 @@ window.addEventListener("DOMContentLoaded", function () {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         user_id: "demo_user",
-                        message: "",
-                        language: currentLanguage
+                        message: ""
                     })
                 });
 
@@ -339,10 +334,10 @@ window.addEventListener("DOMContentLoaded", function () {
 
             }
 
-        } else {
-            chatBox.style.visibility = "hidden";
-        }
-    });
+            } else {
+        chatBox.style.display = "none";
+    }
+});
 
     function showTyping() {
         typingBubble = document.createElement("div");
@@ -454,8 +449,7 @@ window.addEventListener("DOMContentLoaded", function () {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 user_id: "demo_user",
-                message: text,
-                language: currentLanguage
+                message: text
             })
         });
 
