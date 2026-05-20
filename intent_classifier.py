@@ -53,49 +53,13 @@ Format:
 
 
 
-def classify_intent(user_id: str, message: str, language: str = "de") -> dict:
-
+def classify_intent(user_id: str, message: str) -> dict:
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     history = get_history(user_id)
 
-    if language == "en":
-        system_prompt = """
-        You are a conversion-focused digital assistant for a dental clinic.
-
-        Your goal:
-        - Help patients book appointments
-        - Reduce uncertainty and build trust
-        - Convert inquiries into bookings
-
-        Classify the user message into EXACTLY ONE intent category.
-
-        ALLOWED_INTENTS = [
-            "pricing_objection",
-            "trust_objection",
-            "welcome_message",
-            "insurance",
-            "treatments",
-            "booking",
-            "emergency",
-            "issues",
-            "human",
-            "unknown"
-        ]
-
-        Return ONLY JSON.
-
-        Format:
-        {
-          "intent": "<intent>",
-          "confidence": 0.0-1.0
-        }
-        """
-    else:
-        system_prompt = SYSTEM_PROMPT
-
     messages = [
-        {"role": "system", "content": system_prompt},
+        {"role": "system", "content": SYSTEM_PROMPT},
         *history,
         {"role": "user", "content": message}
     ]
@@ -108,12 +72,15 @@ def classify_intent(user_id: str, message: str, language: str = "de") -> dict:
     )
 
     raw = response.choices[0].message.content.strip()
+    print("RAW OPENAI RESPONSE:", raw)
 
     try:
         data = json.loads(raw)
+        print("PARSED:", data)
     except json.JSONDecodeError:
         data = {"intent": "unknown", "confidence": 0.0}
 
+    # store user message in memory
     add_message(user_id, "user", message)
 
     return data
