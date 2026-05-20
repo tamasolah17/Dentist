@@ -1,6 +1,6 @@
 window.addEventListener("DOMContentLoaded", function () {
 
-
+    console.log("WIDGET SCRIPT LOADED");
     // Create floating button
     const button = document.createElement("div");
     button.innerHTML = `
@@ -88,7 +88,8 @@ window.addEventListener("DOMContentLoaded", function () {
     
     </div>
     `;
-
+    console.log("SCRIPT START");
+    console.log(button);
     header.style.display = "flex";
     header.style.justifyContent = "space-between";
     header.style.alignItems = "center";
