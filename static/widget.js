@@ -38,6 +38,9 @@ window.addEventListener("DOMContentLoaded", function () {
 
     // Create chat box
     const chatBox = document.createElement("div");
+    chatBox.style.display = "none";
+    chatBox.style.pointerEvents = "none";
+    chatBox.style.zIndex = "999999";
     chatBox.style.position = "fixed";
     chatBox.style.bottom = "90px";
     chatBox.style.right = "20px";
@@ -48,7 +51,7 @@ window.addEventListener("DOMContentLoaded", function () {
     chatBox.style.display = "none";
     chatBox.style.flexDirection = "column";
     chatBox.style.overflow = "hidden";
-    chatBox.style.zIndex = "9999";
+
     chatBox.style.display = "none";
 
     chatBox.style.boxShadow =
@@ -114,45 +117,6 @@ window.addEventListener("DOMContentLoaded", function () {
     header.style.borderBottom = "none";
     header.appendChild(langSelect);
     chatBox.appendChild(header);
-    const translations = {
-        de: {
-            title: "Digitaler Praxisassistent",
-            status: "0-24 Erreichbar",
-            placeholder: "Nachricht schreiben..."
-        },
-
-        en: {
-            title: "Digital Practice Assistant",
-            status: "Available 24/7",
-            placeholder: "Type a message..."
-        }
-    };
-
-    let currentLanguage = localStorage.getItem("lang") || "de";
-
-    function applyLanguage(lang) {
-
-        localStorage.setItem("lang", lang);
-
-        document.getElementById("botTitle").innerText =
-            translations[lang].title;
-
-        document.getElementById("botStatus").innerText =
-            translations[lang].status;
-
-        input.placeholder =
-            translations[lang].placeholder;
-
-        currentLanguage = lang;
-    }
-
-    langSelect.value = currentLanguage;
-
-    applyLanguage(currentLanguage);
-
-    langSelect.addEventListener("change", (e) => {
-        applyLanguage(e.target.value);
-    });
 
     // MESSAGES
     const messages = document.createElement("div");
@@ -237,6 +201,46 @@ window.addEventListener("DOMContentLoaded", function () {
 
     const input = document.createElement("input");
     input.placeholder = "Type a message...";
+    const translations = {
+        de: {
+            title: "Digitaler Praxisassistent",
+            status: "0-24 Erreichbar",
+            placeholder: "Nachricht schreiben..."
+        },
+
+        en: {
+            title: "Digital Practice Assistant",
+            status: "Available 24/7",
+            placeholder: "Type a message..."
+        }
+    };
+
+    let currentLanguage = localStorage.getItem("lang") || "de";
+
+    function applyLanguage(lang) {
+
+        localStorage.setItem("lang", lang);
+
+        document.getElementById("botTitle").innerText =
+            translations[lang].title;
+
+        document.getElementById("botStatus").innerText =
+            translations[lang].status;
+
+        input.placeholder =
+            translations[lang].placeholder;
+
+        currentLanguage = lang;
+    }
+
+    langSelect.value = currentLanguage;
+
+    applyLanguage(currentLanguage);
+
+    langSelect.addEventListener("change", (e) => {
+        applyLanguage(e.target.value);
+    });
+
 
     input.style.flex = "1";
     input.style.height = "50px";
@@ -278,12 +282,16 @@ window.addEventListener("DOMContentLoaded", function () {
 
     let welcomeLoaded = false;
 
+    let isOpen = false;
+
     button.addEventListener("click", async function () {
-        const isHidden = chatBox.style.display === "none" || !chatBox.style.display;
+        isOpen = !isOpen;
 
-        if (isHidden) {
+        if (isOpen) {
             chatBox.style.display = "flex";
+            chatBox.style.pointerEvents = "auto";
 
+            // FIRST TIME WELCOME MESSAGE
             if (!welcomeLoaded) {
                 welcomeLoaded = true;
 
@@ -292,53 +300,43 @@ window.addEventListener("DOMContentLoaded", function () {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         user_id: "demo_user",
-                        message: ""
+                        message: "",
+                        language: currentLanguage
                     })
                 });
 
                 const data = await res.json();
 
                 const botMsg = document.createElement("div");
-
                 botMsg.style.display = "flex";
                 botMsg.style.alignItems = "flex-start";
                 botMsg.style.gap = "8px";
                 botMsg.style.margin = "8px 0";
 
                 botMsg.innerHTML = `
-                <img src="https://cdn.shopify.com/s/files/1/0930/3893/6393/files/AutoClinicsLogo3.png?v=1773200243"
-                style="
-                width:28px;
-                height:28px;
-                border-radius:50%;
-                object-fit:contain;
-                flex-shrink:0;
-                ">
-
-                <div style="
-                background:#f1f3f7;
-                padding:10px 14px;
-                border-radius:16px;
-                border:1px solid #e5e7eb;
-                color:black;
-                max-width:100%;
-                font-size:14px;
-                line-height:1.4;
-                word-break:break-word;
-                ">
-                ${data.reply || "No response."}
-                </div>
+                    <img src="https://cdn.shopify.com/s/files/1/0930/3893/6393/files/AutoClinicsLogo3.png?v=1773200243"
+                    style="width:28px;height:28px;border-radius:50%;object-fit:contain;">
+    
+                    <div style="
+                        background:#f1f3f7;
+                        padding:10px 14px;
+                        border-radius:16px;
+                        border:1px solid #e5e7eb;
+                        color:black;
+                        font-size:14px;
+                    ">
+                        ${data.reply || "No response."}
+                    </div>
                 `;
 
                 messages.appendChild(botMsg);
-                messages.scrollTop = messages.scrollHeight;
-
             }
 
-            } else {
-        chatBox.style.display = "none";
-    }
-});
+        } else {
+            chatBox.style.display = "none";
+            chatBox.style.pointerEvents = "none";
+        }
+    });
 
     function showTyping() {
         typingBubble = document.createElement("div");
@@ -450,7 +448,8 @@ window.addEventListener("DOMContentLoaded", function () {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 user_id: "demo_user",
-                message: text
+                message: text,
+                language: currentLanguage
             })
         });
 

@@ -3,7 +3,7 @@ from memory import add_message
 from flask import Flask, request, jsonify, session
 
 
-def handle_message(user_id, message, session):
+def handle_message(user_id, message, session,language):
     # =========================
     # TREATMENT SELECTION FLOW
     # =========================
@@ -101,26 +101,44 @@ def handle_message(user_id, message, session):
     # NORMAL INTENT HANDLING
     # =========================
     if not message:
-        return {
-            "reply": "Wie kann ich Ihnen helfen?",
-            "suggestions": [
-                "Termin buchen",
-                "Behandlungen",
-                "Versicherung",
-                "Notfall"
-            ]
-        }
+        if language == "de":
+            return {
+                "reply": "Wie kann ich Ihnen helfen?",
+                "suggestions": [
+                    "Termin buchen",
+                    "Behandlungen",
+                    "Versicherung",
+                    "Notfall"
+                ]
+            }
+        else:
+            return {
+                "reply": "How can i help you today?",
+                "suggestions": [
+                    "Book Appointment",
+                    "Treatments",
+                    "Insurance"
+
+                ]
+            }
+
 
     try:
         if "treatment" in message:
+            if language == "de":
+                return {
+                    "reply": "Wir bieten Zahnaufhellung, Implantate, Zahnspangen und Zahnreinigung an. Wofür interessieren Sie sich?",
+                    "suggestions": ["whitening","implants","braces","cleanings"]
 
-            return {
-                "reply": "Wir bieten Zahnaufhellung, Implantate, Zahnspangen und Zahnreinigung an. Wofür interessieren Sie sich?",
-                "suggestions": ["whitening", "implants", "braces", "cleanings"]
 
+                }
+            else:
+                return {
+                    "reply": "We offer whitening, implants, braces, and dental cleanings. Which treatment are you interested in?",
+                    "suggestions": ["whitening", "implants", "braces", "cleanings"]
 
+                }
 
-            }
 
 
 
@@ -140,7 +158,7 @@ def handle_message(user_id, message, session):
         print("Classifier error:", e)
         return {"reply": "Entschuldigung, das habe ich nicht verstanden. Können Sie es bitte anders formulieren?"}
 
-    result = classify_intent(user_id, message)
+    result = classify_intent(user_id, message,language)
     intent = result["intent"]
     confidence = result["confidence"]
     print("DEBUG INTENT:", result)
@@ -175,19 +193,25 @@ def handle_message(user_id, message, session):
         }
 
     elif intent == "treatments":
+        if language == "de":
+            return {
+                "reply": (
+                    "Wir bieten Zahnaufhellung, Implantate, Zahnspangen und Zahnreinigung an. Wofür interessieren Sie sich?"
+                ),
+                "suggestions": [
+                    "whitening",
+                    "implants",
+                    "braces",
+                    "cleanings"
+                ]
 
-        return {
-            "reply": (
-                "Wir bieten Zahnaufhellung, Implantate, Zahnspangen und Zahnreinigung an. Wofür interessieren Sie sich?"
-            ),
-            "suggestions": [
-                "whitening",
-                "implants",
-                "braces",
-                "cleanings"
-            ]
+            }
+        else:
+            return {
+                "reply": "We offer whitening, implants, braces, and dental cleanings. Which treatment are you interested in?",
+                "suggestions": ["whitening", "implants", "braces", "cleanings"]
 
-        }
+            }
 
     elif intent == "emergency":
 

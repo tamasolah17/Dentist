@@ -30,7 +30,7 @@ def chat():
         }
 
         )
-    result = handle_message(user_id, message, session)
+    result = handle_message(user_id, message, session,language)
     return jsonify(result)
 
 @app2.route("/")
