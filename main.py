@@ -11,6 +11,10 @@ def chat():
     data = request.get_json()
     user_id = data.get("user_id")
     message = data.get("message", "").strip()
+    language = data.get("language", "de")
+
+
+
 
     if user_id not in user_sessions:
         user_sessions[user_id] = {}
@@ -26,7 +30,7 @@ def chat():
         }
 
         )
-    result = handle_message(user_id, message, session)
+    result = handle_message(user_id, message, session,language)
     return jsonify(result)
 
 @app2.route("/")

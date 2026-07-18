@@ -1,5 +1,6 @@
 window.addEventListener("DOMContentLoaded", function () {
 
+    console.log("WIDGET SCRIPT LOADED");
     // Create floating button
     const button = document.createElement("div");
     button.innerHTML = `
@@ -37,6 +38,9 @@ window.addEventListener("DOMContentLoaded", function () {
 
     // Create chat box
     const chatBox = document.createElement("div");
+    chatBox.style.display = "none";
+    chatBox.style.pointerEvents = "none";
+    chatBox.style.zIndex = "999999";
     chatBox.style.position = "fixed";
     chatBox.style.bottom = "90px";
     chatBox.style.right = "20px";
@@ -47,10 +51,9 @@ window.addEventListener("DOMContentLoaded", function () {
     chatBox.style.display = "none";
     chatBox.style.flexDirection = "column";
     chatBox.style.overflow = "hidden";
-    chatBox.style.zIndex = "9999";
+
     chatBox.style.display = "none";
-    chatBox.style.display = "flex";
-    chatBox.style.visibility = "hidden";
+
     chatBox.style.boxShadow =
      "0 30px 80px rgba(0,0,0,0.25), 0 10px 30px rgba(0,0,0,0.12)";
     chatBox.style.borderRadius = "18px";
@@ -61,36 +64,58 @@ window.addEventListener("DOMContentLoaded", function () {
     const header = document.createElement("div");
     header.innerHTML = `
     <div style="display:flex;align-items:center;gap:8px;">
-
-    <div style="
-    width:28px;
-    height:28px;
-    background:white;
-    border-radius:51%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    ">
-
-    <img src="https://cdn.shopify.com/s/files/1/0930/3893/6393/files/AutoClinicsLogo3.png?v=1773200243"
-    style="width:20px;height:20px;object-fit:contain;">
-    </div>
-
-    <div style="display:flex;flex-direction:column;">
-    <span style="font-size:16px;font-weight:605;">Digitaler Praxisassistent </span>
-    <span style="font-size:12px;font-weight:600;">0-24 Erreichbar </span>
-    </div>
-
+    
+        <div style="
+        width:28px;
+        height:28px;
+        background:white;
+        border-radius:51%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        ">
+    
+        <img src="https://cdn.shopify.com/s/files/1/0930/3893/6393/files/AutoClinicsLogo3.png?v=1773200243"
+        style="width:20px;height:20px;object-fit:contain;">
+        </div>
+    
+        <div style="display:flex;flex-direction:column;">
+            <span id="botTitle" style="font-size:16px;font-weight:605;">
+                Digitaler Praxisassistent
+            </span>
+    
+            <span id="botStatus" style="font-size:12px;font-weight:600;">
+                0-24 Erreichbar
+            </span>
+        </div>
+    
     </div>
     `;
+    console.log("SCRIPT START");
+    console.log(button);
     header.style.display = "flex";
+    header.style.justifyContent = "space-between";
+    header.style.alignItems = "center";
+    const langSelect = document.createElement("select");
 
+    langSelect.innerHTML = `
+    <option value="de">🇩🇪 DE</option>
+    <option value="en">🇬🇧 EN</option>
+    `;
+
+    langSelect.style.border = "none";
+    langSelect.style.borderRadius = "8px";
+    langSelect.style.padding = "4px 8px";
+    langSelect.style.fontSize = "12px";
+    langSelect.style.cursor = "pointer";
+    langSelect.style.outline = "none";
     header.style.padding = "12px";
     header.style.fontWeight = "bold";
     header.style.background = "linear-gradient(135deg,#2bb673,#16a085)";
     header.style.color = "white";
     header.style.padding = "14px";
     header.style.borderBottom = "none";
+    header.appendChild(langSelect);
     chatBox.appendChild(header);
 
     // MESSAGES
@@ -176,6 +201,46 @@ window.addEventListener("DOMContentLoaded", function () {
 
     const input = document.createElement("input");
     input.placeholder = "Type a message...";
+    const translations = {
+        de: {
+            title: "Digitaler Praxisassistent",
+            status: "0-24 Erreichbar",
+            placeholder: "Nachricht schreiben..."
+        },
+
+        en: {
+            title: "Digital Practice Assistant",
+            status: "Available 24/7",
+            placeholder: "Type a message..."
+        }
+    };
+
+    let currentLanguage = localStorage.getItem("lang") || "de";
+
+    function applyLanguage(lang) {
+
+        localStorage.setItem("lang", lang);
+
+        document.getElementById("botTitle").innerText =
+            translations[lang].title;
+
+        document.getElementById("botStatus").innerText =
+            translations[lang].status;
+
+        input.placeholder =
+            translations[lang].placeholder;
+
+        currentLanguage = lang;
+    }
+
+    langSelect.value = currentLanguage;
+
+    applyLanguage(currentLanguage);
+
+    langSelect.addEventListener("change", (e) => {
+        applyLanguage(e.target.value);
+    });
+
 
     input.style.flex = "1";
     input.style.height = "50px";
@@ -217,13 +282,16 @@ window.addEventListener("DOMContentLoaded", function () {
 
     let welcomeLoaded = false;
 
+    let isOpen = false;
+
     button.addEventListener("click", async function () {
+        isOpen = !isOpen;
 
-        const opening = chatBox.style.visibility === "hidden";
+        if (isOpen) {
+            chatBox.style.display = "flex";
+            chatBox.style.pointerEvents = "auto";
 
-        if (opening) {
-            chatBox.style.visibility = "visible";
-
+            // FIRST TIME WELCOME MESSAGE
             if (!welcomeLoaded) {
                 welcomeLoaded = true;
 
@@ -232,51 +300,41 @@ window.addEventListener("DOMContentLoaded", function () {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         user_id: "demo_user",
-                        message: ""
+                        message: "",
+                        language: currentLanguage
                     })
                 });
 
                 const data = await res.json();
 
                 const botMsg = document.createElement("div");
-
                 botMsg.style.display = "flex";
                 botMsg.style.alignItems = "flex-start";
                 botMsg.style.gap = "8px";
                 botMsg.style.margin = "8px 0";
 
                 botMsg.innerHTML = `
-                <img src="https://cdn.shopify.com/s/files/1/0930/3893/6393/files/AutoClinicsLogo3.png?v=1773200243"
-                style="
-                width:28px;
-                height:28px;
-                border-radius:50%;
-                object-fit:contain;
-                flex-shrink:0;
-                ">
-
-                <div style="
-                background:#f1f3f7;
-                padding:10px 14px;
-                border-radius:16px;
-                border:1px solid #e5e7eb;
-                color:black;
-                max-width:100%;
-                font-size:14px;
-                line-height:1.4;
-                word-break:break-word;
-                ">
-                ${data.reply || "No response."}
-                </div>
+                    <img src="https://cdn.shopify.com/s/files/1/0930/3893/6393/files/AutoClinicsLogo3.png?v=1773200243"
+                    style="width:28px;height:28px;border-radius:50%;object-fit:contain;">
+    
+                    <div style="
+                        background:#f1f3f7;
+                        padding:10px 14px;
+                        border-radius:16px;
+                        border:1px solid #e5e7eb;
+                        color:black;
+                        font-size:14px;
+                    ">
+                        ${data.reply || "No response."}
+                    </div>
                 `;
 
                 messages.appendChild(botMsg);
-                messages.scrollTop = messages.scrollHeight;
-
             }
 
         } else {
-            chatBox.style.visibility = "hidden";
+            chatBox.style.display = "none";
+            chatBox.style.pointerEvents = "none";
         }
     });
 
@@ -390,7 +448,8 @@ window.addEventListener("DOMContentLoaded", function () {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 user_id: "demo_user",
-                message: text
+                message: text,
+                language: currentLanguage
             })
         });
 
