@@ -9,8 +9,18 @@ import re
 import pandas as pd
 from email.header import Header
 import smtplib
+import socket
+import requests
+
+print(socket.getaddrinfo("smtp-relay.brevo.com", 587))
+print(requests.get("https://api.ipify.org").text)
 
 
+
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.connect(("8.8.8.8", 80))
+print("OUTGOING IP:", s.getsockname()[0])
+s.close()
 
 from datetime import datetime
 
@@ -27,9 +37,12 @@ SMTP_SERVER = "smtp-relay.brevo.com"
 SMTP_PORT = 587
 
 
-SMTP_USERNAME = "a937f5001@smtp-brevo.com"
 
-SMTP_PASSWORD = "xsmtpsib-c2b7edbd2dcdc1e0d8c281f84cd961b29c6fa4042f8ecc4c272072a4985bbbe2-HtxF8QsGrqrlw9FB"
+
+SMTP_USERNAME = "aa13fb001@smtp-brevo.com"
+
+
+SMTP_PASSWORD = "xsmtpsib-6f20d26c56c3953808069a4747ecb8eca63509a435a58185cfce89e430b73bfd-6vkNDqldbKC3ePrV"
 SENDER_EMAIL = "lukas.micheal@automationclinics.com"
 
 
@@ -173,6 +186,8 @@ If this isn’t relevant, just let me know and I won’t follow up.
 
 <p>Ich hoffe, es geht Ihnen gut.<p>
 
+<p>Ich arbeite aktuell mit Zahnarztpraxen zusammen und mir ist ein Muster aufgefallen:<p>
+
 <p><strong>Die meisten Patienten sind unsicher, wenn sie eine neue Praxis in Betracht ziehen. — sie vertrauen dem Prozess noch nicht vollständig und haben in der Regel mehrere Fragen, bevor sie eine Entscheidung treffen.</p>
 
 <p>Ein manuelles Terminbuchungssystem setzt jedoch genau diese Sicherheit und unmittelbare Entscheidungsbereitschaft voraus.</p>
@@ -196,7 +211,8 @@ If this isn’t relevant, just let me know and I won’t follow up.
 <p>Gleichzeitig ist die Implementierung nicht komplex:<br>
 ein einfaches Copy-Paste, und das System ist in unter 5 Minuten live — ohne Änderungen an bestehenden Abläufen.</p>
 
-<p>Um das greifbar zu machen, habe ich eine kurze Demo erstellt.</p>
+<p>Um das greifbar zu machen, habe ich eine kurze Demo erstellt:
+https://www.automationclinics.com/</p>
 
 <p>Falls das Thema aktuell für Sie relevant ist, können Sie diese E-Mail gerne an Ihr Webentwicklungs-Team weiterleiten und dann sende Ich Ihnen den Link gerne zu.</p>
 

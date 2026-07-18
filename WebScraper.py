@@ -57,12 +57,13 @@ germany_cities = [
 # ]
 switzerland_cities = [
     # Major cities
-
-     "Zurich","Geneva","Basel","Bern","Lausanne",
-
-    # Wealthy / high-income areas
      "Zug","Lucerne","Winterthur","St. Gallen","Lugano",
      "Biel","Thun","Schaffhausen","Fribourg","Neuchatel",
+
+
+    # Wealthy / high-income areas
+     "Zurich","Geneva","Basel","Bern","Lausanne",
+
 
     # Zurich region (VERY IMPORTANT)
      "Kloten","Uster","Dübendorf","Wetzikon","Dietikon",
@@ -82,16 +83,30 @@ BAD_KEYWORDS = [
     "mvz",
     "zahnzentrum",
     "group",
-    "clinic group"
+    "clinic group",
+    "chain",
+
+
+    "dental group",
+    "corporate"
 ]
 HIGH_INTENT_QUERIES = [
     "Zahnarzt Implantologie",
     "Zahnarzt Notdienst",
     "Zahnarzt ästhetisch",
     "Kieferorthopäde",
-    "Zahnarzt Invisalign"
+    "Zahnarzt Invisalign",
     "Zahnarzt",
-    "Dentist"
+    "Dentist",
+    "Zahnarzt Implantologie Zürich",
+    "Ästhetische Zahnmedizin Zürich",
+    "Invisalign Zürich",
+    "Zahnarzt in",
+    "Dentist in",
+    "Zahnarzt Praxis",
+    "Dental Praxis",
+    "Zahnarzt Schweiz",
+    "Dentist Switzerland"
 
 ]
 SEARCH_QUERIES = []
@@ -115,9 +130,14 @@ for city in switzerland_cities:
 for city in switzerland_cities:
     for query in HIGH_INTENT_QUERIES:
         SEARCH_QUERIES.append(f"{query} {city}")
-MIN_REVIEWS = 50
 
-API_KEY = "AIzaSyB5IfrYRraQoSWLOLjISbd-KXIlFIzDkUY"
+SEARCH_QUERIES = list(set(SEARCH_QUERIES))
+
+print("TOTAL QUERIES:", len(SEARCH_QUERIES))
+print(SEARCH_QUERIES[:20])
+MIN_REVIEWS = 20
+
+API_KEY = "AIzaSyDpaKoegCAWmcHNgsXR_YEfFX3gSZAVrG0"
 search_url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
 details_url = "https://maps.googleapis.com/maps/api/place/details/json"
 SENT_FILE = "sent_emails.txt"
@@ -164,43 +184,49 @@ for SEARCH_QUERY in SEARCH_QUERIES:
 
         if next_page_token:
             params["pagetoken"] = next_page_token
-            time.sleep(2)  # Required by Google before using next_page_token
+            time.sleep(2.5)  # Required by Google before using next_page_token
 
         response = requests.get(search_url, params=params)
         data = response.json()
         print(data)
 
         for place in data.get("results", []):
+
             place_id = place["place_id"]
+
             if place_id in scraped_places:
-                print(f"Skipping already scraped clinic: {place_id}")
                 continue
+
+            name = place.get("name", "").lower()
+
+            if any(bad in name for bad in BAD_KEYWORDS):
+                continue
+
+
+
+            scraped_places.add(place_id)
+
 
             details_params = {
                 "place_id": place_id,
                 "fields": "name,rating,user_ratings_total,website,formatted_phone_number,formatted_address",
                 "key": API_KEY
             }
-
             details_response = requests.get(details_url, params=details_params)
-            details = details_response.json().get("result", {})
-            print(details.get("name"), details.get("user_ratings_total"))
+
+            details_json = details_response.json()
+
+            if details_json.get("status") != "OK":
+                continue
+
+            details = details_json.get("result", {})
+
             reviews = details.get("user_ratings_total", 0)
             website = details.get("website")
 
+            print(details.get("name"), reviews)
+
             if reviews >= MIN_REVIEWS and website:
-
-                skip = False
-
-                for domain in sent_domains:
-                    if domain in website.lower():
-                        skip = True
-                        break
-
-                if skip:
-                    print(f"Skipping already contacted clinic: {website}")
-                    continue
-
                 dentists.append({
                     "name": details.get("name"),
                     "rating": details.get("rating"),
@@ -211,12 +237,21 @@ for SEARCH_QUERY in SEARCH_QUERIES:
                     "place_id": place_id
                 })
 
-                save_scraped_place(place_id)
+            time.sleep(0.5)
+
+            save_scraped_place(place_id)
 
         next_page_token = data.get("next_page_token")
         if not next_page_token:
             break
 
+
+with open("scraped_places2.txt", "r") as f:
+    unique_ids = sorted(set(line.strip() for line in f))
+
+with open("scraped_places2.txt", "w") as f:
+    for pid in unique_ids:
+        f.write(pid + "\n")
 if dentists:
     with open("high_value_dentists.csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=dentists[0].keys())

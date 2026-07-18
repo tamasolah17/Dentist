@@ -7,7 +7,7 @@ def handle_message(user_id, message, session):
     # =========================
     # TREATMENT SELECTION FLOW
     # =========================
-
+    
     treatments = ["whitening", "implants", "braces", "cleanings"]
     raw_message = message.strip()
     message = raw_message.lower()

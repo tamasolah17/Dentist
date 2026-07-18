@@ -121,7 +121,7 @@ def get_messages(access_token, folder_id):
 
     params = {
         "folderId": folder_id,
-        "limit": 500
+        "limit": 1000
     }
 
     response = requests.get(url, headers=headers, params=params)

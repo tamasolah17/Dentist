@@ -6,12 +6,12 @@ import os
 from urllib.parse import urlparse
 from concurrent.futures import ThreadPoolExecutor
 from threading import Lock
+API_KEY = "AIzaSyDpaKoegCAWmcHNgsXR_YEfFX3gSZAVrG0"
 
-API_KEY = "AIzaSyB5IfrYRraQoSWLOLjISbd-KXIlFIzDkUY"
 
 DETAILS_URL = "https://maps.googleapis.com/maps/api/place/details/json"
 
-INPUT_FILE = "scraped_places.txt"
+INPUT_FILE = "scraped_places2.txt"
 OUTPUT_FILE = "enriched_dentists.csv"
 FAILED_FILE = "enriched_failed.csv"
 PROGRESS_FILE = "progress.txt"
@@ -22,7 +22,7 @@ HEADERS = {
 
 MAX_WORKERS = 1
 REQUEST_DELAY = 0.5
-MIN_REVIEWS = 20
+MIN_REVIEWS = 10
 
 write_lock = Lock()
 progress_lock = Lock()
