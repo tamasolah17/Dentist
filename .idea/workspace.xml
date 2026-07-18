@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="df5d3721-fe21-4195-aaa6-4acb80b7b1ca" name="Changes" comment="My agent">
-      <change beforePath="$PROJECT_DIR$/.idea/Agent.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Agent.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Conversion.py" beforeDir="false" afterPath="$PROJECT_DIR$/Conversion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Filtering.py" beforeDir="false" afterPath="$PROJECT_DIR$/Filtering.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mass_Email.py" beforeDir="false" afterPath="$PROJECT_DIR$/Mass_Email.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebScraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/WebScraper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dentist_outreach.db" beforeDir="false" afterPath="$PROJECT_DIR$/dentist_outreach.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enriched_dentists.csv" beforeDir="false" afterPath="$PROJECT_DIR$/enriched_dentists.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enriched_failed.csv" beforeDir="false" afterPath="$PROJECT_DIR$/enriched_failed.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processed_ids.txt" beforeDir="false" afterPath="$PROJECT_DIR$/processed_ids.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/progress.txt" beforeDir="false" afterPath="$PROJECT_DIR$/progress.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scraped_places.txt" beforeDir="false" afterPath="$PROJECT_DIR$/scraped_places.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scraped_places2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/scraped_places2.txt" afterDir="false" />
-    </list>
+    <list default="true" id="df5d3721-fe21-4195-aaa6-4acb80b7b1ca" name="Changes" comment="My agent" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,12 +27,12 @@
     &quot;assignee&quot;: &quot;tamasolah17&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/tamasolah17/Dentist.git",
-    "accountId": "3932d5c9-c6a1-45c1-b03d-446265bfaecd"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/tamasolah17/Dentist.git&quot;,
+    &quot;accountId&quot;: &quot;3932d5c9-c6a1-45c1-b03d-446265bfaecd&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/main.py" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -170,14 +155,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1770391771205</updated>
-    </task>
-    <task id="LOCAL-00045" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1773111033267</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1773111033267</updated>
     </task>
     <task id="LOCAL-00046" summary="My agent">
       <option name="closed" value="true" />
@@ -563,7 +540,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777221643770</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1784393583526</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1784393583527</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
