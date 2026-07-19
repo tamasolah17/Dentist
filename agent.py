@@ -2,19 +2,22 @@ from intent_classifier import classify_intent
 from memory import add_message
 from flask import Flask, request, jsonify, session
 
-
+temp = ""
 def handle_message(user_id, message, session,language):
     # =========================
     # TREATMENT SELECTION FLOW
     # =========================
-    
+
     treatments = ["whitening", "implants", "braces", "cleanings"]
     raw_message = message.strip()
     message = raw_message.lower()
+
     if message.lower() in treatments:
         session["selected_treatment"] = message.capitalize()
         session["stage"] = "awaiting_treatment"
         session["behandlung"] = message
+        session["treat"] = message
+        temp = message.capitalize()
         return {
             "reply": (
                 f"Gute Wahl! 🦷 {message.capitalize()} gehört zu unseren häufigsten Behandlungen.\n\n"
@@ -85,9 +88,10 @@ def handle_message(user_id, message, session,language):
         session["stage"] = None
 
         confirmation = (
+
             f"✅ Vielen Dank, {session['name']}!<br><br>"
             "🗓️ Ihre Terminanfrage im Überblick:<br><br>"
-            f"• Behandlung: {session['behandlung']}<br>"
+            f"• Behandlung: {session['treat']} <br>"
             f"• Datum: {session['appointment']}<br>"
             f"• Uhrzeit: {session['time']}<br><br>"
             "📞 Unser Team wird sich in Kürze bei Ihnen melden, um den Termin zu bestätigen."
