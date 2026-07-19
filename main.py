@@ -1,4 +1,6 @@
 from flask import Flask, request, jsonify, render_template
+from openai.resources.audio import translations
+from translations import TRANSLATIONS
 from agent import handle_message
 from flask_cors import CORS
 app2 = Flask(__name__)
@@ -15,18 +17,20 @@ def chat():
 
 
 
-
     if user_id not in user_sessions:
         user_sessions[user_id] = {}
 
     session = user_sessions[user_id]
+
+    reply = TRANSLATIONS.get(language, TRANSLATIONS["de"])["welcome"]
+
 
 
     if message == "":
         return jsonify({
             "intent": "welcome_message",
             "confidence": 1.0,
-            "reply": "Hallo und herzlich willkommen in unserer Praxis 😊 Ich bin Ihr digitaler Assistent. Wie kann ich Ihnen helfen?"
+            "reply": reply
         }
 
         )
