@@ -237,9 +237,53 @@ window.addEventListener("DOMContentLoaded", function () {
 
     applyLanguage(currentLanguage);
 
-    langSelect.addEventListener("change", (e) => {
-        applyLanguage(e.target.value);
+    langSelect.addEventListener("change", async (e) => {
+
+    applyLanguage(e.target.value);
+
+    // Clear the chat
+    messages.innerHTML = "";
+
+    // Get a new welcome message in the selected language
+    const res = await fetch("https://bot.automationclinics.com/chat", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            user_id: "demo_user",
+            message: "",
+            language: currentLanguage
+        })
     });
+
+    const data = await res.json();
+
+    const botMsg = document.createElement("div");
+
+    botMsg.style.display = "flex";
+    botMsg.style.alignItems = "flex-start";
+    botMsg.style.gap = "8px";
+    botMsg.style.margin = "8px 0";
+
+    botMsg.innerHTML = `
+        <img src="https://cdn.shopify.com/s/files/1/0930/3893/6393/files/AutoClinicsLogo3.png?v=1773200243"
+        style="width:28px;height:28px;border-radius:50%;object-fit:contain;">
+
+        <div style="
+            background:#f1f3f7;
+            padding:10px 14px;
+            border-radius:16px;
+            border:1px solid #e5e7eb;
+            color:black;
+            font-size:14px;
+        ">
+            ${data.reply}
+        </div>
+    `;
+
+    messages.appendChild(botMsg);
+});
 
 
     input.style.flex = "1";
