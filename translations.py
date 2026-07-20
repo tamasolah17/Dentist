@@ -172,7 +172,7 @@ TRANSLATIONS = {
             "Sorry, I didn't understand that. Could you please rephrase your question?"
     },
 
-    "hu": {
+    "hun": {
 
         "welcome": "Üdvözöljük rendelőnkben! 😊 Digitális asszisztense vagyok. Miben segíthetek?",
 
