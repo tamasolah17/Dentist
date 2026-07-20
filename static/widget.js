@@ -101,6 +101,7 @@ window.addEventListener("DOMContentLoaded", function () {
     langSelect.innerHTML = `
     <option value="de">🇩🇪 DE</option>
     <option value="en">🇬🇧 EN</option>
+    <option value="hun">hu HUN</option>
     `;
 
     langSelect.style.border = "none";
@@ -212,6 +213,12 @@ window.addEventListener("DOMContentLoaded", function () {
             title: "Digital Practice Assistant",
             status: "Available 24/7",
             placeholder: "Type a message..."
+        },
+        hun: {
+
+            title: "Digitális Asszisztens",
+            status: "Elérhető 24/7",
+            placeholder: "Írj egy üzenetet..."
         }
     };
 
