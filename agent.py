@@ -142,10 +142,13 @@ def handle_message(user_id, message, session,language):
             "kezelés",
             "kezelések"
         ]:
+            print("🔥 TREATMENT MATCHED")
+
             return {
                 "reply": T["treatments_reply"],
-                "suggestions": T["treatments"]
+                "suggestions": list(T["treatments"])
             }
+
 
         if "price" in message or "cost" in message:
             return {
