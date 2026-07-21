@@ -6,61 +6,32 @@ from translations import TRANSLATIONS
 def tr(language):
     return TRANSLATIONS.get(language, TRANSLATIONS["de"])
 temp = ""
-def handle_message(user_id, message, session, language):
-
-    T = tr(language)
-
+def handle_message(user_id, message, session,language):
     # =========================
     # TREATMENT SELECTION FLOW
     # =========================
+    T = tr(language)
 
     treatments = T["treatments"]
-
     raw_message = message.strip()
     message = raw_message.lower()
 
-    treatments = T["treatments"]
-
-    treatment_map = {
-        translated_name.lower(): translated_name
-        for translated_name in treatments.values()
-    }
-
-    if message in treatment_map:
-
-        selected_treatment = treatment_map[message]
-
-        session["selected_treatment"] = selected_treatment
+    if message.lower() in treatments:
+        session["selected_treatment"] = message.capitalize()
         session["stage"] = "awaiting_treatment"
-        session["behandlung"] = selected_treatment
-        session["treat"] = selected_treatment
+        session["behandlung"] = message
+        session["treat"] = message
+        temp = message.capitalize()
+
+
 
         return {
             "reply": T["great_choice"].format(
-                treatment=selected_treatment
+                treatment=message.capitalize()
             ),
             "suggestions": [
                 T["book"],
                 T["human"]
-            ]
-        }
-
-    # =========================
-    # APPOINTMENT FLOW
-    # =========================
-
-    if session.get("stage") == "awaiting_treatment":
-
-        session["behandlung"] = raw_message
-        session["treatment"] = raw_message
-        session["stage"] = "awaiting_date"
-
-        return {
-            "reply": T["which_date"],
-            "suggestions": [
-                T["tomorrow"],
-                T["this_week"],
-                T["next_week"]
             ]
         }
 
@@ -159,7 +130,12 @@ def handle_message(user_id, message, session, language):
         if "treatment" in message:
             return {
                 "reply": T["treatments_reply"],
-                "suggestions": T["treatments"]
+                "suggestions": [
+                    "whiteninggg",
+                    "implants",
+                    "braces",
+                    "cleanings"
+                ]
             }
 
         if "price" in message or "cost" in message:
@@ -233,7 +209,17 @@ def handle_message(user_id, message, session, language):
 
             "reply": T["treatments_reply"],
 
-            "suggestions": T["treatments"]
+            "suggestions": [
+
+                "whiteninggg",
+
+                "implants",
+
+                "braces",
+
+                "cleanings"
+
+            ]
 
         }
 
