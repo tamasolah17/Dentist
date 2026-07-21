@@ -3,7 +3,10 @@ TRANSLATIONS = {
     "de": {
 
     "welcome": "Hallo und herzlich willkommen in unserer Praxis 😊 Ich bin Ihr digitaler Assistent. Wie kann ich Ihnen helfen?",
-
+    "treatments": ["Zahnaufhellung",
+                    "Implantate",
+                    "Zahnspangen",
+                    "Zahnreinigung"],
     "great_choice": "Gute Wahl! 🦷 {treatment} gehört zu unseren häufigsten Behandlungen.\n\nMöchten Sie einen Termin buchen oder mit unserem Team sprechen?",
 
     "book": "Termin buchen",
@@ -89,7 +92,7 @@ TRANSLATIONS = {
     "en": {
 
         "welcome": "Hello and welcome to our practice 😊 I am your digital assistant. How can I help you today?",
-
+        "treatments": ["whitening", "implants", "braces", "cleanings"],
         "great_choice": "Great choice! 🦷 {treatment} is one of our most popular treatments.\n\nWould you like to book an appointment or speak with our staff?",
 
         "book": "Book Appointment",
@@ -175,7 +178,7 @@ TRANSLATIONS = {
     "hun": {
 
         "welcome": "Üdvözöljük rendelőnkben! 😊 Digitális asszisztense vagyok. Miben segíthetek?",
-
+        "treatments": ["Fogtisztítás", "Implantátum", "Fogszabályozás", "Fogfehérítés"],
         "great_choice": "Remek választás! 🦷 A(z) {treatment} az egyik legnépszerűbb kezelésünk.\n\nSzeretne időpontot foglalni vagy munkatársunkkal beszélni?",
 
         "book": "Időpontfoglalás",

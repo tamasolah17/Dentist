@@ -10,11 +10,12 @@ def handle_message(user_id, message, session,language):
     # =========================
     # TREATMENT SELECTION FLOW
     # =========================
-
-    treatments = ["whitening", "implants", "braces", "cleanings"]
+    T = tr(language)
+    #treatments = ["whitening", "implants", "braces", "cleanings"]
+    treatments = T["treatments"]
     raw_message = message.strip()
     message = raw_message.lower()
-    T = tr(language)
+
     if message.lower() in treatments:
         session["selected_treatment"] = message.capitalize()
         session["stage"] = "awaiting_treatment"
