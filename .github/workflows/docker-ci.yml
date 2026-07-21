@@ -2,14 +2,16 @@ name: Docker CI/CD
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - master
 
 jobs:
   docker:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -19,10 +21,14 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/dentist:latest .
+          docker build \
+            -t ${{ secrets.DOCKER_USERNAME }}/dentist:${{ github.sha }} \
+            -t ${{ secrets.DOCKER_USERNAME }}/dentist:latest \
+            .
+
+          docker push ${{ secrets.DOCKER_USERNAME }}/dentist:${{ github.sha }}
           docker push ${{ secrets.DOCKER_USERNAME }}/dentist:latest
 
-       # THIS IS THE MISSING PART
       - name: Deploy to Ubuntu server
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -31,15 +37,25 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           timeout: 60s
           command_timeout: 10m
+
           script: |
-            docker pull ${{ secrets.DOCKER_USERNAME }}/dentist:latest
+            set -e
+
+            docker pull ${{ secrets.DOCKER_USERNAME }}/dentist:${{ github.sha }}
+
             docker stop dentist || true
             docker rm dentist || true
+
             docker run -d \
               --name dentist \
               --restart unless-stopped \
               -p 5000:5000 \
-              -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
-              ${{ secrets.DOCKER_USERNAME }}/dentist:latest
-          
+              -e OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}" \
+              ${{ secrets.DOCKER_USERNAME }}/dentist:${{ github.sha }}
 
+            sleep 5
+
+            docker ps
+            docker logs dentist --tail 50
+
+            docker image prune -f
