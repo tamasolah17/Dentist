@@ -186,7 +186,7 @@ TRANSLATIONS = {
     },
 
 
-    "hu": {
+    "hun": {
 
         "welcome": "Üdvözöljük rendelőnkben! 😊 Digitális asszisztense vagyok. Miben segíthetek?",
 
