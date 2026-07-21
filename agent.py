@@ -11,24 +11,23 @@ def handle_message(user_id, message, session,language):
     # TREATMENT SELECTION FLOW
     # =========================
     T = tr(language)
-    treatments = T["treatments"]
+    treatments = ["whitening", "implants", "braces", "cleanings"]
 
-    treatment_map = {
-        treatment.lower(): treatment
-        for treatment in treatments.values()
-    }
+    raw_message = message.strip()
+    message = raw_message.lower()
 
-    if message in treatment_map:
-        selected_treatment = treatment_map[message]
-
-        session["selected_treatment"] = selected_treatment
+    if message.lower() in treatments:
+        session["selected_treatment"] = message.capitalize()
         session["stage"] = "awaiting_treatment"
-        session["behandlung"] = selected_treatment
-        session["treat"] = selected_treatment
+        session["behandlung"] = message
+        session["treat"] = message
+        temp = message.capitalize()
+
+
 
         return {
             "reply": T["great_choice"].format(
-                treatment=selected_treatment
+                treatment=message.capitalize()
             ),
             "suggestions": [
                 T["book"],
@@ -138,7 +137,7 @@ def handle_message(user_id, message, session,language):
         ]:
             return {
                 "reply": T["treatments_reply"],
-                "suggestions": list(T["treatments"].values())
+                "suggestions": T["treatments"]
             }
 
         if "price" in message or "cost" in message:
@@ -212,10 +211,7 @@ def handle_message(user_id, message, session,language):
 
             "reply": T["treatments_reply"],
 
-            "suggestions": list(T["treatments"].values())
-
-            
-
+            "suggestions": T["treatments"]
 
         }
 

@@ -5,10 +5,10 @@ TRANSLATIONS = {
         "welcome": "Halloooss und herzlich willkommen in unserer Praxis 😊 Ich bin Ihr digitaler Assistent. Wie kann ich Ihnen helfen?",
 
         "treatments": {
-            "whitening": "Zahnaufhellung",
-            "implants": "Implantate",
-            "braces": "Zahnspangen",
-            "cleanings": "Zahnreinigung"
+            "Zahnaufhellung",
+             "Implantate",
+             "Zahnspangen",
+             "Zahnreinigung"
         },
 
         "great_choice": "Gute Wahl! 🦷 {treatment} gehört zu unseren häufigsten Behandlungen.\n\nMöchten Sie einen Termin buchen oder mit unserem Team sprechen?",
@@ -98,10 +98,10 @@ TRANSLATIONS = {
         "welcome": "Hello and welcome to our practice 😊 I am your digital assistant. How can I help you today?",
 
         "treatments": {
-            "whitening": "Whitening",
-            "implants": "Implants",
-            "braces": "Braces",
-            "cleanings": "Cleanings"
+            "Whitening",
+             "Implants",
+             "Braces",
+             "Cleanings"
         },
 
         "great_choice": "Great choice! 🦷 {treatment} is one of our most popular treatments.\n\nWould you like to book an appointment or speak with our staff?",
@@ -191,10 +191,10 @@ TRANSLATIONS = {
         "welcome": "Üdvözöljük rendelőnkben! 😊 Digitális asszisztense vagyok. Miben segíthetek?",
 
         "treatments": {
-            "whitening": "Fogfehérítés",
-            "implants": "Implantátum",
-            "braces": "Fogszabályozás",
-            "cleanings": "Fogtisztítás"
+             "Fogfehérítés",
+            "Implantátum",
+             "Fogszabályozás",
+             "Fogtisztítás"
         },
 
         "great_choice": "Remek választás! 🦷 A(z) {treatment} az egyik legnépszerűbb kezelésünk.\n\nSzeretne időpontot foglalni vagy munkatársunkkal beszélni?",
