@@ -130,12 +130,7 @@ def handle_message(user_id, message, session,language):
         if "treatment" in message:
             return {
                 "reply": T["treatments_reply"],
-                "suggestions": [
-                    "whitening",
-                    "implants",
-                    "braces",
-                    "cleanings"
-                ]
+                "suggestions": T["treatments"]
             }
 
         if "price" in message or "cost" in message:
@@ -209,17 +204,7 @@ def handle_message(user_id, message, session,language):
 
             "reply": T["treatments_reply"],
 
-            "suggestions": [
-
-                "whitening",
-
-                "implants",
-
-                "braces",
-
-                "cleanings"
-
-            ]
+            "suggestions": T["treatments"]
 
         }
 
