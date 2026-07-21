@@ -11,7 +11,7 @@ def handle_message(user_id, message, session,language):
     # TREATMENT SELECTION FLOW
     # =========================
     T = tr(language)
-
+    #treatments = ["whitening", "implants", "braces", "cleanings"]
     treatments = T["treatments"]
     raw_message = message.strip()
     message = raw_message.lower()
@@ -130,7 +130,12 @@ def handle_message(user_id, message, session,language):
         if "treatment" in message:
             return {
                 "reply": T["treatments_reply"],
-                "suggestions": T["treatments"]
+                "suggestions": [
+                    "whitening",
+                    "implants",
+                    "braces",
+                    "cleanings"
+                ]
             }
 
         if "price" in message or "cost" in message:
@@ -204,7 +209,17 @@ def handle_message(user_id, message, session,language):
 
             "reply": T["treatments_reply"],
 
-            "suggestions": T["treatments"]
+            "suggestions": [
+
+                "whitening",
+
+                "implants",
+
+                "braces",
+
+                "cleanings"
+
+            ]
 
         }
 
