@@ -92,7 +92,7 @@ TRANSLATIONS = {
     "en": {
 
         "welcome": "Hello and welcome to our practice 😊 I am your digital assistant. How can I help you today?",
-        "treatments": ["whitening", "implants", "braces", "cleanings"],
+        "treatments": ["whiteninggg", "implants", "braces", "cleanings"],
         "great_choice": "Great choice! 🦷 {treatment} is one of our most popular treatments.\n\nWould you like to book an appointment or speak with our staff?",
 
         "book": "Book Appointment",
