@@ -1,33 +1,40 @@
 from intent_classifier import classify_intent
 from memory import add_message
-from flask import Flask, request, jsonify, session
 from translations import TRANSLATIONS
+
 
 def tr(language):
     return TRANSLATIONS.get(language, TRANSLATIONS["de"])
-temp = ""
-def handle_message(user_id, message, session,language):
-    # =========================
-    # TREATMENT SELECTION FLOW
-    # =========================
+
+
+def handle_message(user_id, message, session, language):
+
     T = tr(language)
 
-    treatments = T["treatments"]
     raw_message = message.strip()
     message = raw_message.lower()
 
-    if message.lower() in treatments:
-        session["selected_treatment"] = message.capitalize()
+    # =====================================
+    # 1. TREATMENT SELECTION
+    # =====================================
+
+    treatment_map = {
+        treatment.lower(): treatment
+        for treatment in T["treatments"]
+    }
+
+    if message in treatment_map:
+
+        selected_treatment = treatment_map[message]
+
+        session["selected_treatment"] = selected_treatment
         session["stage"] = "awaiting_treatment"
-        session["behandlung"] = message
-        session["treat"] = message
-        temp = message.capitalize()
-
-
+        session["behandlung"] = selected_treatment
+        session["treat"] = selected_treatment
 
         return {
             "reply": T["great_choice"].format(
-                treatment=message.capitalize()
+                treatment=selected_treatment
             ),
             "suggestions": [
                 T["book"],
@@ -35,18 +42,14 @@ def handle_message(user_id, message, session,language):
             ]
         }
 
-
-    # =========================
-    # APPOINTMENT FLOW HANDLER
-    # =========================
-
-    # =========================
-    # APPOINTMENT FLOW HANDLER
-    # =========================
+    # =====================================
+    # 2. APPOINTMENT FLOW
+    # =====================================
 
     if session.get("stage") == "awaiting_treatment":
-        session["behandlung"] = message
-        session["treatment"] = message
+
+        session["behandlung"] = raw_message
+        session["treatment"] = raw_message
         session["stage"] = "awaiting_date"
 
         return {
@@ -59,7 +62,8 @@ def handle_message(user_id, message, session,language):
         }
 
     elif session.get("stage") == "awaiting_date":
-        session["date"] = message
+
+        session["date"] = raw_message
         session["stage"] = "awaiting_appointment"
 
         return {
@@ -71,13 +75,25 @@ def handle_message(user_id, message, session,language):
         }
 
     elif session.get("stage") == "awaiting_appointment":
-        session["appointment"] = message
+
+        session["appointment"] = raw_message
         session["stage"] = "awaiting_time"
 
-        if message.lower() == T["morning"].lower():
-            suggestions = ["9:00", "10:30", "11:30"]
+        if message == T["morning"].lower():
+
+            suggestions = [
+                "9:00",
+                "10:30",
+                "11:30"
+            ]
+
         else:
-            suggestions = ["12:30", "14:00", "15:30"]
+
+            suggestions = [
+                "12:30",
+                "14:00",
+                "15:30"
+            ]
 
         return {
             "reply": T["which_time"],
@@ -85,7 +101,8 @@ def handle_message(user_id, message, session,language):
         }
 
     elif session.get("stage") == "awaiting_time":
-        session["time"] = message
+
+        session["time"] = raw_message
         session["stage"] = "awaiting_name"
 
         return {
@@ -93,6 +110,7 @@ def handle_message(user_id, message, session,language):
         }
 
     elif session.get("stage") == "awaiting_name":
+
         session["name"] = raw_message
         session["stage"] = "awaiting_phone"
 
@@ -101,84 +119,131 @@ def handle_message(user_id, message, session,language):
         }
 
     elif session.get("stage") == "awaiting_phone":
-        session["phone"] = message
+
+        session["phone"] = raw_message
         session["stage"] = None
 
         confirmation = T["confirmation"].format(
             name=session["name"],
             treatment=session["treat"],
-            date=session["appointment"],
+            date=session["date"],
             time=session["time"]
         )
 
-        add_message(user_id, "assistant", confirmation)
+        add_message(
+            user_id,
+            "assistant",
+            confirmation
+        )
 
         return {
             "reply": confirmation
         }
 
-    # =========================
-    # NORMAL INTENT HANDLING
-    # =========================
+    # =====================================
+    # 3. EMPTY MESSAGE
+    # =====================================
+
     if not message:
+
         return {
             "reply": T["how_can_i_help"],
             "suggestions": T["main_suggestions"]
         }
 
-    try:
+    # =====================================
+    # 4. SIMPLE KEYWORD HANDLING
+    # =====================================
+
+    if language == "de":
+
+        if "behandlung" in message:
+
+            return {
+                "reply": T["treatments_reply"],
+                "suggestions": T["treatments"]
+            }
+
+        if "preis" in message or "kosten" in message:
+
+            return {
+                "reply": T["pricing_reply"],
+                "suggestions": T["pricing_suggestions"]
+            }
+
+        if "versicherung" in message:
+
+            return {
+                "reply": T["insurance_reply"],
+                "suggestions": T["insurance_suggestions"]
+            }
+
+    elif language == "en":
+
         if "treatment" in message:
+
             return {
                 "reply": T["treatments_reply"],
                 "suggestions": T["treatments"]
             }
 
         if "price" in message or "cost" in message:
+
             return {
                 "reply": T["pricing_reply"],
                 "suggestions": T["pricing_suggestions"]
             }
 
         if "insurance" in message:
+
             return {
                 "reply": T["insurance_reply"],
                 "suggestions": T["insurance_suggestions"]
             }
 
-    except Exception as e:
-        print("Classifier error:", e)
-        return {
-            "reply": T["error_reply"]
-        }
+    elif language == "hun":
 
+        if "kezelés" in message or "kezelések" in message:
 
-
-
-        if "price" in message or "cost" in message:
             return {
-                "reply": "🦷 Zahnaufhellung beginnt ab 120 € und die Beratung kostet 40 €.\n\nMöchten Sie einen Termin buchen?",
-                "suggestions": ["Termin buchen", "Mit Mitarbeiter sprechen"]
+                "reply": T["treatments_reply"],
+                "suggestions": T["treatments"]
             }
 
-        if "insurance" in message:
+        if "ár" in message or "árak" in message or "költség" in message:
+
             return {
-                "reply": "Ja, wir akzeptieren die meisten gängigen Versicherungen.",
-                "suggestions": ["Termin buchen", "Mit Rezeption sprechen"]
+                "reply": T["pricing_reply"],
+                "suggestions": T["pricing_suggestions"]
             }
 
-    except Exception as e:
-        print("Classifier error:", e)
-        return {"reply": "Entschuldigung, das habe ich nicht verstanden. Können Sie es bitte anders formulieren?"}
+        if "biztosítás" in message:
 
-    result = classify_intent(user_id, message,language)
+            return {
+                "reply": T["insurance_reply"],
+                "suggestions": T["insurance_suggestions"]
+            }
+
+    # =====================================
+    # 5. AI INTENT CLASSIFIER
+    # =====================================
+
+    result = classify_intent(
+        user_id,
+        message,
+        language
+    )
+
     intent = result["intent"]
     confidence = result["confidence"]
+
     print("DEBUG INTENT:", result)
 
     if confidence < 0.1:
         intent = "unknown"
 
     if intent == "booking":
+
         session["stage"] = "awaiting_treatment"
 
         return {
@@ -186,70 +251,55 @@ def handle_message(user_id, message, session,language):
             "suggestions": T["booking_treatments"]
         }
 
-
     elif intent == "pricing_objection":
 
         return {
-
             "reply": T["pricing_reply"],
-
             "suggestions": T["pricing_suggestions"]
-
         }
-
 
     elif intent == "treatments":
 
         return {
-
             "reply": T["treatments_reply"],
-
             "suggestions": T["treatments"]
-
         }
-
-
 
     elif intent == "emergency":
 
         return {
-
             "reply": T["emergency_reply"]
-
         }
-
 
     elif intent == "insurance":
 
         return {
-
             "reply": T["insurance_reply"],
-
             "suggestions": T["insurance_suggestions"]
-
         }
-
 
     elif intent == "Location_Hours":
 
         reply = T["location_reply"]
 
-
     elif intent == "Human":
 
         reply = T["human_reply"]
-
 
     elif intent == "welcome_message":
 
         reply = T["welcome"]
 
-
     else:
 
         reply = T["unknown_reply"]
 
-    add_message(user_id, "assistant", reply)
-    print("l")
+    add_message(
+        user_id,
+        "assistant",
+        reply
+    )
 
-    return {"reply": reply}
+    return {
+        "reply": reply
+    }
