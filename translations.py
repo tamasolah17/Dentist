@@ -2,97 +2,108 @@ TRANSLATIONS = {
 
     "de": {
 
-    "welcome": "Hallo und herzlich willkommen in unserer Praxis 😊 Ich bin Ihr digitaler Assistent. Wie kann ich Ihnen helfen?",
-    "treatments": ["Zahnaufhellung",
-                    "Implantate",
-                    "Zahnspangen",
-                    "Zahnreinigung"],
-    "great_choice": "Gute Wahl! 🦷 {treatment} gehört zu unseren häufigsten Behandlungen.\n\nMöchten Sie einen Termin buchen oder mit unserem Team sprechen?",
+        "welcome": "Hallo und herzlich willkommen in unserer Praxis 😊 Ich bin Ihr digitaler Assistent. Wie kann ich Ihnen helfen?",
 
-    "book": "Termin buchen",
-    "human": "Mit Mitarbeiter sprechen",
+        "treatments": {
+            "whitening": "Zahnaufhellung",
+            "implants": "Implantate",
+            "braces": "Zahnspangen",
+            "cleanings": "Zahnreinigung"
+        },
 
-    "which_date": "Welcher Termin passt Ihnen am besten?",
-    "tomorrow": "Morgen",
-    "this_week": "Diese Woche",
-    "next_week": "Nächste Woche",
+        "great_choice": "Gute Wahl! 🦷 {treatment} gehört zu unseren häufigsten Behandlungen.\n\nMöchten Sie einen Termin buchen oder mit unserem Team sprechen?",
 
-    "morning_afternoon": "Bevorzugen Sie einen Termin am Vormittag oder Nachmittag?",
-    "morning": "Vormittag",
-    "afternoon": "Nachmittag",
+        "book": "Termin buchen",
+        "human": "Mit Mitarbeiter sprechen",
 
-    "which_time": "Welche Uhrzeit passt Ihnen am besten?",
+        "which_date": "Welcher Termin passt Ihnen am besten?",
+        "tomorrow": "Morgen",
+        "this_week": "Diese Woche",
+        "next_week": "Nächste Woche",
 
-    "your_name": "Wie ist Ihr vollständiger Name?",
+        "morning_afternoon": "Bevorzugen Sie einen Termin am Vormittag oder Nachmittag?",
+        "morning": "Vormittag",
+        "afternoon": "Nachmittag",
 
-    "phone": "📞 Bitte geben Sie Ihre Telefonnummer an, damit wir den Termin bestätigen können.",
+        "which_time": "Welche Uhrzeit passt Ihnen am besten?",
+        "your_name": "Wie ist Ihr vollständiger Name?",
 
-    "confirmation":
-        "✅ Vielen Dank, {name}!<br><br>"
-        "🗓️ Ihre Terminanfrage im Überblick:<br><br>"
-        "• Behandlung: {treatment}<br>"
-        "• Datum: {date}<br>"
-        "• Uhrzeit: {time}<br><br>"
-        "📞 Unser Team wird sich in Kürze bei Ihnen melden, um den Termin zu bestätigen.",
+        "phone": "📞 Bitte geben Sie Ihre Telefonnummer an, damit wir den Termin bestätigen können.",
 
-    "how_can_i_help": "Wie kann ich Ihnen helfen?",
+        "confirmation":
+            "✅ Vielen Dank, {name}!<br><br>"
+            "🗓️ Ihre Terminanfrage im Überblick:<br><br>"
+            "• Behandlung: {treatment}<br>"
+            "• Datum: {date}<br>"
+            "• Uhrzeit: {time}<br><br>"
+            "📞 Unser Team wird sich in Kürze bei Ihnen melden, um den Termin zu bestätigen.",
 
-    "main_suggestions": [
-        "Termin buchen",
-        "Behandlungen",
-        "Versicherung",
-        "Notfall"
-    ],
+        "how_can_i_help": "Wie kann ich Ihnen helfen?",
 
-    "treatments_reply":
-        "Wir bieten Zahnaufhellung, Implantate, Zahnspangen und Zahnreinigung an. Wofür interessieren Sie sich?",
+        "main_suggestions": [
+            "Termin buchen",
+            "Behandlungen",
+            "Versicherung",
+            "Notfall"
+        ],
 
-    "pricing_reply":
-        "🦷 Zahnaufhellung beginnt ab 120 € und die Beratung kostet 40 €.\n\nMöchten Sie einen Termin buchen?",
+        "treatments_reply":
+            "Wir bieten Zahnaufhellung, Implantate, Zahnspangen und Zahnreinigung an. Wofür interessieren Sie sich?",
 
-    "pricing_suggestions": [
-        "Termin buchen",
-        "Mit Mitarbeiter sprechen"
-    ],
+        "pricing_reply":
+            "🦷 Zahnaufhellung beginnt ab 120 € und die Beratung kostet 40 €.\n\nMöchten Sie einen Termin buchen?",
 
-    "insurance_reply":
-        "Ja, wir akzeptieren die meisten gängigen Versicherungen.",
+        "pricing_suggestions": [
+            "Termin buchen",
+            "Mit Mitarbeiter sprechen"
+        ],
 
-    "insurance_suggestions": [
-        "Termin buchen",
-        "Mit Rezeption sprechen"
-    ],
+        "insurance_reply":
+            "Ja, wir akzeptieren die meisten gängigen Versicherungen.",
 
-    "booking_question":
-        "🦷 Welche Behandlung möchten Sie buchen?",
+        "insurance_suggestions": [
+            "Termin buchen",
+            "Mit Rezeption sprechen"
+        ],
 
-    "booking_treatments": [
-        "Zahnreinigung",
-        "Zahnaufhellung",
-        "Implantat",
-        "Kontrolluntersuchung"
-    ],
+        "booking_question":
+            "🦷 Welche Behandlung möchten Sie buchen?",
 
-    "emergency_reply":
-        "🚨 Bitte rufen Sie uns im Notfall direkt an. Möchten Sie unsere Telefonnummer?",
+        "booking_treatments": [
+            "Zahnreinigung",
+            "Zahnaufhellung",
+            "Implantat",
+            "Kontrolluntersuchung"
+        ],
 
-    "location_reply":
-        "📍 Musterstraße 123. Mo–Fr 9:00–18:00 Uhr.",
+        "emergency_reply":
+            "🚨 Bitte rufen Sie uns im Notfall direkt an. Möchten Sie unsere Telefonnummer?",
 
-    "human_reply":
-        "Bitte hinterlassen Sie Ihren Namen und Ihre Telefonnummer, wir rufen Sie zurück.",
+        "location_reply":
+            "📍 Musterstraße 123. Mo–Fr 9:00–18:00 Uhr.",
 
-    "unknown_reply":
-        "Ich kann Ihnen bei Terminen, Behandlungen, Versicherungen oder Notfällen helfen.",
+        "human_reply":
+            "Bitte hinterlassen Sie Ihren Namen und Ihre Telefonnummer, wir rufen Sie zurück.",
 
-    "error_reply":
-        "Entschuldigung, das habe ich nicht verstanden. Können Sie es bitte anders formulieren?"
+        "unknown_reply":
+            "Ich kann Ihnen bei Terminen, Behandlungen, Versicherungen oder Notfällen helfen.",
+
+        "error_reply":
+            "Entschuldigung, das habe ich nicht verstanden. Können Sie es bitte anders formulieren?"
     },
+
 
     "en": {
 
         "welcome": "Hello and welcome to our practice 😊 I am your digital assistant. How can I help you today?",
-        "treatments": ["whiteninggg", "implants", "braces", "cleanings"],
+
+        "treatments": {
+            "whitening": "Whitening",
+            "implants": "Implants",
+            "braces": "Braces",
+            "cleanings": "Cleanings"
+        },
+
         "great_choice": "Great choice! 🦷 {treatment} is one of our most popular treatments.\n\nWould you like to book an appointment or speak with our staff?",
 
         "book": "Book Appointment",
@@ -108,7 +119,6 @@ TRANSLATIONS = {
         "afternoon": "Afternoon",
 
         "which_time": "Which time suits you best?",
-
         "your_name": "What is your full name?",
 
         "phone": "📞 Please enter your phone number so we can confirm your appointment.",
@@ -175,10 +185,18 @@ TRANSLATIONS = {
             "Sorry, I didn't understand that. Could you please rephrase your question?"
     },
 
-    "hun": {
+
+    "hu": {
 
         "welcome": "Üdvözöljük rendelőnkben! 😊 Digitális asszisztense vagyok. Miben segíthetek?",
-        "treatments": ["Fogtisztítás", "Implantátum", "Fogszabályozás", "Fogfehérítés"],
+
+        "treatments": {
+            "whitening": "Fogfehérítés",
+            "implants": "Implantátum",
+            "braces": "Fogszabályozás",
+            "cleanings": "Fogtisztítás"
+        },
+
         "great_choice": "Remek választás! 🦷 A(z) {treatment} az egyik legnépszerűbb kezelésünk.\n\nSzeretne időpontot foglalni vagy munkatársunkkal beszélni?",
 
         "book": "Időpontfoglalás",
@@ -194,7 +212,6 @@ TRANSLATIONS = {
         "afternoon": "Délután",
 
         "which_time": "Melyik időpont megfelelő Önnek?",
-
         "your_name": "Mi a teljes neve?",
 
         "phone": "📞 Kérjük adja meg telefonszámát az időpont megerősítéséhez.",
