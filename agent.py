@@ -19,9 +19,11 @@ def handle_message(user_id, message, session, language):
     raw_message = message.strip()
     message = raw_message.lower()
 
+    treatments = T["treatments"]
+
     treatment_map = {
-        treatment.lower(): treatment
-        for treatment in treatments
+        translated_name.lower(): translated_name
+        for translated_name in treatments.values()
     }
 
     if message in treatment_map:
