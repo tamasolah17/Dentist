@@ -127,7 +127,14 @@ def handle_message(user_id, message, session,language):
         }
 
     try:
-        if "treatment" in message:
+        if message in [
+            "treatment",
+            "treatments",
+            "behandlung",
+            "behandlungen",
+            "kezelés",
+            "kezelések"
+        ]:
             return {
                 "reply": T["treatments_reply"],
                 "suggestions": [
