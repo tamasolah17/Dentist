@@ -28,7 +28,7 @@ def handle_message(user_id, message, session,language):
         selected_treatment = translated_treatments[message]
 
         session["selected_treatment"] = selected_treatment
-        session["stage"] = "treatment_selected"
+        session["stage"] = "awaiting_treatment"
         session["behandlung"] = selected_treatment
         session["treat"] = selected_treatment
 
