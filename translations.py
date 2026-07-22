@@ -2,7 +2,7 @@ TRANSLATIONS = {
 
     "de": {
 
-        "welcome": "Halloooss und herzlich willkommen in unserer Praxis 😊 Ich bin Ihr digitaler Assistent. Wie kann ich Ihnen helfen?",
+        "welcome": "Hallo und herzlich willkommen in unserer Praxis 😊 Ich bin Ihr digitaler Assistent. Wie kann ich Ihnen helfen?",
 
         "treatments": {
             "Zahnaufhellung",

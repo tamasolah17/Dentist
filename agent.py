@@ -134,14 +134,14 @@ def handle_message(user_id, message, session,language):
         }
 
     try:
-        if message in [
-            "treatment",
-            "treatments",
-            "behandlung",
-            "behandlungen",
-            "kezelés",
-            "kezelések"
-        ]:
+        if "treatment" or "treatments" or "behandlungen" or "kezelés" or "kezelések" in  message :
+
+
+
+
+
+
+
             print("🔥 TREATMENT MATCHED")
 
             return {
