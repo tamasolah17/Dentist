@@ -51,16 +51,14 @@ TRANSLATIONS = {
             "Wir bieten Zahnaufhellung, Implantate, Zahnspangen und Zahnreinigung an. Wofür interessieren Sie sich?",
 
         "pricing_reply":
-            """Unsere Preise beginnen ab:
-
-            🦷 Professionelle Zahnreinigung – ab 89 €
-            ✨ Zahnaufhellung – ab 349 €
-            🦷 Zahnimplantate – ab 1.790 € pro Implantat
-            😁 Zahnspangen / Kieferorthopädie – ab 2.490 €
-    
-            Der endgültige Preis hängt von Ihrer individuellen Behandlung ab. Gerne erstellen wir Ihnen nach einer Untersuchung einen persönlichen Kostenvoranschlag.
-    
-            Möchten Sie einen Termin vereinbaren?""",
+        """Unsere Preise ab:
+        
+        🦷 Zahnreinigung — 89 €
+        ✨ Zahnaufhellung — 349 €
+        🦷 Implantat — ab 1.790 €
+        😁 Zahnspange — ab 2.490 €
+        
+        Für welche Behandlung interessieren Sie sich?""",
 
         "pricing_suggestions": [
             "Termin buchen",
@@ -153,16 +151,12 @@ TRANSLATIONS = {
             "We offer teeth whitening, implants, braces and professional cleanings. Which treatment are you interested in?",
 
         "pricing_reply":
-            """Our prices start from:
-
-            🦷 Professional Cleaning – from €89
-            ✨ Teeth Whitening – from €349
-            🦷 Dental Implants – from €1,790 per implant
-            😁 Braces / Orthodontics – from €2,490
-    
-            The final price depends on your individual treatment plan. We'd be happy to provide you with a personalized quote after your consultation.
-    
-            Would you like to book an appointment?""",
+        """Our starting prices:
+        
+        🦷 Professional Cleaning — €89
+        ✨ Teeth Whitening — €349
+        🦷 Dental Implant — from €1,790
+        😁 Braces — from €2,490 """,
 
         "pricing_suggestions": [
             "Book Appointment",
@@ -255,16 +249,15 @@ TRANSLATIONS = {
             "Fogfehérítést, implantátumokat, fogszabályozást és professzionális fogtisztítást kínálunk. Melyik kezelés érdekli?",
 
         "pricing_reply":
-            """Áraink az alábbi összegektől indulnak:
+        """Áraink:
         
-        🦷 Professzionális fogtisztítás – 89 €-tól
-        ✨ Fogfehérítés – 349 €-tól
-        🦷 Fogimplantátum – 1.790 €-tól implantátumonként
-        😁 Fogszabályozás – 2.490 €-tól
+        🦷 Fogtisztítás — 89 €
+        ✨ Fogfehérítés — 349 €
+        🦷 Implantátum — 1.790 €-tól
+        😁 Fogszabályozás — 2.490 €-tól
         
-        A végleges ár az Ön egyéni kezelési tervétől függ. Konzultáció után személyre szabott árajánlatot készítünk.
-        
-        Szeretne időpontot foglalni?""",
+        Melyik kezelés érdekli?""",
+
 
         "pricing_suggestions": [
             "Időpontfoglalás",
