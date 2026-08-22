@@ -39,11 +39,16 @@ SMTP_PORT = 587
 
 
 
-SMTP_USERNAME = "aa13fb001@smtp-brevo.com"
+
+SMTP_USERNAME = ["a937f5001@smtp-brevo.com","aa13fb001@smtp-brevo.com",
+"a994af001@smtp-brevo.com"]
 
 
-SMTP_PASSWORD = "xsmtpsib-6f20d26c56c3953808069a4747ecb8eca63509a435a58185cfce89e430b73bfd-6vkNDqldbKC3ePrV"
-SENDER_EMAIL = "lukas.micheal@automationclinics.com"
+
+
+SMTP_PASSWORD = ["xsmtpsib-c2b7edbd2dcdc1e0d8c281f84cd961b29c6fa4042f8ecc4c272072a4985bbbe2-MbZtCZHRtfxwFFy5",
+                 "xsmtpsib-6f20d26c56c3953808069a4747ecb8eca63509a435a58185cfce89e430b73bfd-vtQOiCZgTNaUFPxL","xsmtpsib-7d93eb08d571249d4718c253eb818cd92b0d36ca4d7523bc4b9c2b06b507469b-SjnAtxHJ9q7v5saT"]
+SENDER_EMAIL = ["lukas.micheal@automationclinics.com", "thomas.meier@automationclinics.com","lukas.micheal@automationclinics.com"]
 
 
 
@@ -179,56 +184,42 @@ If this isn’t relevant, just let me know and I won’t follow up.
 """
 
     body_html = f"""
-<html><html>
+<html>
 <body>
 
 <p>Hallo,</p>
 
-<p>Ich hoffe, es geht Ihnen gut.<p>
+<p>ich bin Lukas Micheal, Gründer von AutomationClinics.</p>
 
-<p>Ich arbeite aktuell mit Zahnarztpraxen zusammen und mir ist ein Muster aufgefallen:<p>
+<p>Viele Zahnarztpraxen verlieren potenzielle Patienten, obwohl diese bereits die Website besuchen. Besonders abends und am Wochenende entstehen Fragen zu Kosten, Behandlungen oder freien Terminen – und wenn niemand sofort antwortet, verlassen viele Interessenten die Seite wieder.</p>
 
-<p><strong>Die meisten Patienten sind unsicher, wenn sie eine neue Praxis in Betracht ziehen. — sie vertrauen dem Prozess noch nicht vollständig und haben in der Regel mehrere Fragen, bevor sie eine Entscheidung treffen.</p>
+<p>Dafür haben wir einen <strong>mehrsprachigen KI-Assistenten</strong> entwickelt, der direkt auf der Praxis-Website arbeitet.</p>
 
-<p>Ein manuelles Terminbuchungssystem setzt jedoch genau diese Sicherheit und unmittelbare Entscheidungsbereitschaft voraus.</p>
+<p>Er beantwortet Patientenfragen in <strong>Deutsch, Englisch und einer weiteren Sprache</strong> rund um die Uhr, führt Besucher durch ein natürliches Gespräch und begleitet interessierte Patienten bis zur Terminanfrage. Dadurch wird die Rezeption von wiederkehrenden Fragen entlastet und aus bestehenden Website-Besuchern können mehr qualifizierte Anfragen entstehen.</p>
 
-<p>In der Realität fühlen sich viele Patienten noch nicht bereit, sofort einen Termin zu buchen.</p>
+<p>Die Integration ist unkompliziert: Ein kurzer Code-Snippet genügt, und der Assistent kann <strong>innerhalb weniger Minuten</strong> auf der bestehenden Website eingebunden werden – ohne die bisherigen Praxisabläufe zu verändern.</p>
 
-<p><strong>Unser digitales Buchungssystem bedient den Patienten mit Rekordgeschwindigkeit, sobald er auf der Website ankommt, anstatt sich auf eine manuelle Terminbuchung zu verlassen.</strong></p>
+<p>Eine kurze Demo finden Sie hier:</p>
 
-<p>Anstatt den Nutzer direkt in ein Buchungsformular zu drängen, führen wir ihn in ein Echtzeit-Gespräch, das ihn vom ersten Moment an begleitet — mit kontinuierlichen, relevanten Antworten, die Schritt für Schritt Vertrauen aufbauen..</p>
+<p>
+<a href="https://www.automationclinics.com/" target="_blank">
+https://www.automationclinics.com/
+</a>
+</p>
 
-<p>Durch die sofortige Beantwortung von Fragen und die gezielte Führung des Patienten wird Unsicherheit reduziert und es entstehen schnellere, natürlichere und dynamischere Conversions.</p>
+<p>Falls das Thema für Ihre Praxis grundsätzlich interessant ist, zeige ich Ihnen gerne in einem kurzen <strong>10-minütigen Gespräch</strong>, wie der Assistent konkret auf Ihrer Website aussehen könnte.</p>
 
-<p><strong>Das Ergebnis:</strong></p>
-<ul>
-  <li><strong>Mehr Buchungen</strong></li>
-  <li><strong>Weniger Absprünge</strong></li>
-  <li><strong>Mehr positive Bewertungen</strong></li>
-  <li><strong>Ein deutlich besseres Patientenerlebnis</strong></li>
-</ul>
+<p>Wäre ein kurzer Austausch nächste Woche für Sie interessant?</p>
 
-<p>Gleichzeitig ist die Implementierung nicht komplex:<br>
-ein einfaches Copy-Paste, und das System ist in unter 5 Minuten live — ohne Änderungen an bestehenden Abläufen.</p>
-
-<p>Um das greifbar zu machen, habe ich eine kurze Demo erstellt:
-https://www.automationclinics.com/</p>
-
-<p>Falls das Thema aktuell für Sie relevant ist, können Sie diese E-Mail gerne an Ihr Webentwicklungs-Team weiterleiten und dann sende Ich Ihnen den Link gerne zu.</p>
-
-<p>Mit freundlichen Grüßen,<br>
-Lukas Micheal<br>
-Gründer - AutomationClinics</p>
-
-<p style="margin-top:0; position: relative;">
-  <img src="https://cdn.shopify.com/s/files/1/0930/3893/6393/files/ChatGPT_Image_2026._marc._8._03_47_26_1.png?v=1774406176"
-       width="120"
-       style="position: relative; left: 25px;">
+<p>
+Mit freundlichen Grüßen,<br><br>
+<strong>Lukas Micheal</strong><br>
+Gründer, AutomationClinics
 </p>
 
 <p style="font-size:13px;color:gray;">
 lukas.micheal@automationclinics.com<br>
-https://www.automationclinics.com/
+https://www.automationclinics.com/<br>
 40212 Düsseldorf<br>
 Germany
 </p>
@@ -244,23 +235,28 @@ Germany
 # SEND EMAIL
 # =========================
 
-def send_email(to_address, subject, body_plain, body_html):
+def send_email(to_address, subject, body_plain, body_html, account_index):
     try:
         msg = MIMEMultipart("alternative")
-        msg["From"] = SENDER_EMAIL
+        msg["From"] = SENDER_EMAIL[account_index]
         msg["To"] = to_address
-        msg["Subject"] = subject
-        msg["Reply-To"] = SENDER_EMAIL
-
         msg["Subject"] = Header(subject, "utf-8")
+        msg["Reply-To"] = SENDER_EMAIL[account_index]
 
         msg.attach(MIMEText(body_plain, "plain", "utf-8"))
         msg.attach(MIMEText(body_html, "html", "utf-8"))
 
         with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
             server.starttls()
-            server.login(SMTP_USERNAME, SMTP_PASSWORD)
-            server.sendmail(SENDER_EMAIL, to_address, msg.as_string())
+            server.login(
+                SMTP_USERNAME[account_index],
+                SMTP_PASSWORD[account_index]
+            )
+            server.sendmail(
+                SENDER_EMAIL[account_index],
+                to_address,
+                msg.as_string()
+            )
 
         return True
 
@@ -331,7 +327,7 @@ def send_bulk():
         print("No pending leads.")
         return
     sent_emails = load_sent_emails()
-
+    sent_count = len(sent_emails)
     for clinic_name, email, reviews, city in leads:
 
 
@@ -342,10 +338,20 @@ def send_bulk():
             print(f"Skipping invalid email: {email}")
             continue
         subject, body_plain, body_html = generate_email(clinic_name, reviews, city)
+        account_index = (sent_count // 300) % len(SMTP_USERNAME)
 
-        success = send_email(email, subject, body_plain, body_html)
+        print(f"Using account #{account_index + 1}: {SENDER_EMAIL[account_index]}")
+        success = send_email(
+            email,
+            subject,
+            body_plain,
+            body_html,
+            account_index
+        )
 
         log_status(email, "sent" if success else "failed")
+        if success:
+            sent_count += 1
 
 
         print(f"{clinic_name} → {'Sent' if success else 'Failed'}")
