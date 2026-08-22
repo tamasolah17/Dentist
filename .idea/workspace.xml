@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df5d3721-fe21-4195-aaa6-4acb80b7b1ca" name="Changes" comment="My agent">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mass_Email.py" beforeDir="false" afterPath="$PROJECT_DIR$/Mass_Email.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dentist_outreach.db" beforeDir="false" afterPath="$PROJECT_DIR$/dentist_outreach.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enriched_dentists.csv" beforeDir="false" afterPath="$PROJECT_DIR$/enriched_dentists.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sent_emails.txt" beforeDir="false" afterPath="$PROJECT_DIR$/sent_emails.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,45 +49,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.Automate_Bulk_Emails.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Automate_Bulk_Emails1.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Conversion.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Email_Extractor.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Email_Generator.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Filter_emails.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Filtering.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Mass_Email.executor&quot;: &quot;Run&quot;,
-    &quot;Python.New_scrape.executor&quot;: &quot;Run&quot;,
-    &quot;Python.WebScraper.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Z.executor&quot;: &quot;Run&quot;,
-    &quot;Python.agent.executor&quot;: &quot;Run&quot;,
-    &quot;Python.chatbot_detector.executor&quot;: &quot;Run&quot;,
-    &quot;Python.g.executor&quot;: &quot;Run&quot;,
-    &quot;Python.intent_classifier.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/Dentist&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.Automate_Bulk_Emails.executor": "Run",
+    "Python.Automate_Bulk_Emails1.executor": "Run",
+    "Python.Conversion.executor": "Run",
+    "Python.Email_Extractor.executor": "Run",
+    "Python.Email_Generator.executor": "Run",
+    "Python.Filter_emails.executor": "Run",
+    "Python.Filtering.executor": "Run",
+    "Python.Mass_Email.executor": "Run",
+    "Python.New_scrape.executor": "Run",
+    "Python.WebScraper.executor": "Run",
+    "Python.Z.executor": "Run",
+    "Python.agent.executor": "Run",
+    "Python.chatbot_detector.executor": "Run",
+    "Python.g.executor": "Run",
+    "Python.intent_classifier.executor": "Run",
+    "Python.lol.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.test.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/User/Dentist",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "vcs.Git"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;ChangesTree.GroupingKeys&quot;: [
-      &quot;repository&quot;
+  "keyToStringList": {
+    "ChangesTree.GroupingKeys": [
+      "repository"
     ],
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;Python&quot;
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "Python"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\nnavo\PycharmProjects\Dentist" />
@@ -158,38 +162,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1770391771205</updated>
-    </task>
-    <task id="LOCAL-00089" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1777058929452</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1777058929458</updated>
-    </task>
-    <task id="LOCAL-00090" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1777060044150</created>
-      <option name="number" value="00090" />
-      <option name="presentableId" value="LOCAL-00090" />
-      <option name="project" value="LOCAL" />
-      <updated>1777060044150</updated>
-    </task>
-    <task id="LOCAL-00091" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1777062776736</created>
-      <option name="number" value="00091" />
-      <option name="presentableId" value="LOCAL-00091" />
-      <option name="project" value="LOCAL" />
-      <updated>1777062776737</updated>
-    </task>
-    <task id="LOCAL-00092" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1777221577244</created>
-      <option name="number" value="00092" />
-      <option name="presentableId" value="LOCAL-00092" />
-      <option name="project" value="LOCAL" />
-      <updated>1777221577249</updated>
     </task>
     <task id="LOCAL-00093" summary="My agent">
       <option name="closed" value="true" />
@@ -551,7 +523,39 @@
       <option name="project" value="LOCAL" />
       <updated>1784733241857</updated>
     </task>
-    <option name="localTasksCounter" value="138" />
+    <task id="LOCAL-00138" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1784733680174</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1784733680175</updated>
+    </task>
+    <task id="LOCAL-00139" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1784734646706</created>
+      <option name="number" value="00139" />
+      <option name="presentableId" value="LOCAL-00139" />
+      <option name="project" value="LOCAL" />
+      <updated>1784734646722</updated>
+    </task>
+    <task id="LOCAL-00140" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1784736066570</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
+      <option name="project" value="LOCAL" />
+      <updated>1784736066570</updated>
+    </task>
+    <task id="LOCAL-00141" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1784736464780</created>
+      <option name="number" value="00141" />
+      <option name="presentableId" value="LOCAL-00141" />
+      <option name="project" value="LOCAL" />
+      <updated>1784736464780</updated>
+    </task>
+    <option name="localTasksCounter" value="142" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
