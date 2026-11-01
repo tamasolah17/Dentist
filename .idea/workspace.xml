@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df5d3721-fe21-4195-aaa6-4acb80b7b1ca" name="Changes" comment="My agent">
-      <change beforePath="$PROJECT_DIR$/Mass_Email.py" beforeDir="false" afterPath="$PROJECT_DIR$/Mass_Email.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dentist_outreach.db" beforeDir="false" afterPath="$PROJECT_DIR$/dentist_outreach.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enriched_dentists.csv" beforeDir="false" afterPath="$PROJECT_DIR$/enriched_dentists.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sent_emails.txt" beforeDir="false" afterPath="$PROJECT_DIR$/sent_emails.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/intent_classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/intent_classifier.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,47 +47,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.Automate_Bulk_Emails.executor": "Run",
-    "Python.Automate_Bulk_Emails1.executor": "Run",
-    "Python.Conversion.executor": "Run",
-    "Python.Email_Extractor.executor": "Run",
-    "Python.Email_Generator.executor": "Run",
-    "Python.Filter_emails.executor": "Run",
-    "Python.Filtering.executor": "Run",
-    "Python.Mass_Email.executor": "Run",
-    "Python.New_scrape.executor": "Run",
-    "Python.WebScraper.executor": "Run",
-    "Python.Z.executor": "Run",
-    "Python.agent.executor": "Run",
-    "Python.chatbot_detector.executor": "Run",
-    "Python.g.executor": "Run",
-    "Python.intent_classifier.executor": "Run",
-    "Python.lol.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.test.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/User/Dentist",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "vcs.Git"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.Automate_Bulk_Emails.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Automate_Bulk_Emails1.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Conversion.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Email_Extractor.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Email_Generator.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Filter_emails.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Filtering.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Mass_Email.executor&quot;: &quot;Run&quot;,
+    &quot;Python.New_scrape.executor&quot;: &quot;Run&quot;,
+    &quot;Python.WebScraper.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Z.executor&quot;: &quot;Run&quot;,
+    &quot;Python.agent.executor&quot;: &quot;Run&quot;,
+    &quot;Python.chatbot_detector.executor&quot;: &quot;Run&quot;,
+    &quot;Python.g.executor&quot;: &quot;Run&quot;,
+    &quot;Python.intent_classifier.executor&quot;: &quot;Run&quot;,
+    &quot;Python.lol.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/Dentist&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;
   },
-  "keyToStringList": {
-    "ChangesTree.GroupingKeys": [
-      "repository"
+  &quot;keyToStringList&quot;: {
+    &quot;ChangesTree.GroupingKeys&quot;: [
+      &quot;repository&quot;
     ],
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "Python"
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;Python&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\nnavo\PycharmProjects\Dentist" />
@@ -99,6 +97,30 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="Agent" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="Agent" />
       <option name="ENV_FILES" value="" />
@@ -162,38 +184,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1770391771205</updated>
-    </task>
-    <task id="LOCAL-00093" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1777221643770</created>
-      <option name="number" value="00093" />
-      <option name="presentableId" value="LOCAL-00093" />
-      <option name="project" value="LOCAL" />
-      <updated>1777221643770</updated>
-    </task>
-    <task id="LOCAL-00094" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1784393583526</created>
-      <option name="number" value="00094" />
-      <option name="presentableId" value="LOCAL-00094" />
-      <option name="project" value="LOCAL" />
-      <updated>1784393583527</updated>
-    </task>
-    <task id="LOCAL-00095" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1784393745457</created>
-      <option name="number" value="00095" />
-      <option name="presentableId" value="LOCAL-00095" />
-      <option name="project" value="LOCAL" />
-      <updated>1784393745458</updated>
-    </task>
-    <task id="LOCAL-00096" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1784393793556</created>
-      <option name="number" value="00096" />
-      <option name="presentableId" value="LOCAL-00096" />
-      <option name="project" value="LOCAL" />
-      <updated>1784393793556</updated>
     </task>
     <task id="LOCAL-00097" summary="My agent">
       <option name="closed" value="true" />
@@ -555,7 +545,39 @@
       <option name="project" value="LOCAL" />
       <updated>1784736464780</updated>
     </task>
-    <option name="localTasksCounter" value="142" />
+    <task id="LOCAL-00142" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1787425917709</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
+      <option name="project" value="LOCAL" />
+      <updated>1787425917710</updated>
+    </task>
+    <task id="LOCAL-00143" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1787425966891</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
+      <option name="project" value="LOCAL" />
+      <updated>1787425966891</updated>
+    </task>
+    <task id="LOCAL-00144" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1787426012944</created>
+      <option name="number" value="00144" />
+      <option name="presentableId" value="LOCAL-00144" />
+      <option name="project" value="LOCAL" />
+      <updated>1787426012944</updated>
+    </task>
+    <task id="LOCAL-00145" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1787426071621</created>
+      <option name="number" value="00145" />
+      <option name="presentableId" value="LOCAL-00145" />
+      <option name="project" value="LOCAL" />
+      <updated>1787426071622</updated>
+    </task>
+    <option name="localTasksCounter" value="146" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
