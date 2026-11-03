@@ -233,21 +233,7 @@ def handle_message(user_id, message, session,language):
 
 
 
-        if "price" in message or "cost" in message:
-            return {
-                "reply": "🦷 Zahnaufhellung beginnt ab 120 € und die Beratung kostet 40 €.\n\nMöchten Sie einen Termin buchen?",
-                "suggestions": ["Termin buchen", "Mit Mitarbeiter sprechen"]
-            }
-
-        if "insurance" in message:
-            return {
-                "reply": "Ja, wir akzeptieren die meisten gängigen Versicherungen.",
-                "suggestions": ["Termin buchen", "Mit Rezeption sprechen"]
-            }
-
-    except Exception as e:
-        print("Classifier error:", e)
-        return {"reply": "Entschuldigung, das habe ich nicht verstanden. Können Sie es bitte anders formulieren?"}
+        
 
     result = classify_intent(user_id, message,language)
     intent = result["intent"]
