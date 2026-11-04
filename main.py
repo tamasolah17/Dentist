@@ -3,7 +3,15 @@ from openai.resources.audio import translations
 from translations import TRANSLATIONS
 from agent import handle_message
 from flask_cors import CORS
+from google_auth import google_auth
+import os
 app2 = Flask(__name__)
+app2.secret_key = os.environ.get("FLASK_SECRET_KEY")
+
+if not app2.secret_key:
+    raise RuntimeError("FLASK_SECRET_KEY is missing")
+
+app2.register_blueprint(google_auth)
 CORS(app2)
 user_sessions = {}
 @app2.route("/chat", methods=["POST","OPTIONS"])
