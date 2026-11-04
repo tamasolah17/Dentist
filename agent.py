@@ -100,7 +100,7 @@ def handle_message(user_id, message, session, language):
             )
 
         except Exception as e:
-            print("Google Calendar availability error:", e)
+            print("Google Calendar availability error:", e,"err")
 
             return {
                 "reply": (
