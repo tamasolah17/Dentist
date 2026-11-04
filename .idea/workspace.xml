@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df5d3721-fe21-4195-aaa6-4acb80b7b1ca" name="Changes" comment="My agent">
-      <change afterPath="$PROJECT_DIR$/google_auth.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/google_calendar.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_google_calendar.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,38 +184,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1770391771205</updated>
-    </task>
-    <task id="LOCAL-00102" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1784481335503</created>
-      <option name="number" value="00102" />
-      <option name="presentableId" value="LOCAL-00102" />
-      <option name="project" value="LOCAL" />
-      <updated>1784481335503</updated>
-    </task>
-    <task id="LOCAL-00103" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1784500298168</created>
-      <option name="number" value="00103" />
-      <option name="presentableId" value="LOCAL-00103" />
-      <option name="project" value="LOCAL" />
-      <updated>1784500298168</updated>
-    </task>
-    <task id="LOCAL-00104" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1784501524645</created>
-      <option name="number" value="00104" />
-      <option name="presentableId" value="LOCAL-00104" />
-      <option name="project" value="LOCAL" />
-      <updated>1784501524646</updated>
-    </task>
-    <task id="LOCAL-00105" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1784502354399</created>
-      <option name="number" value="00105" />
-      <option name="presentableId" value="LOCAL-00105" />
-      <option name="project" value="LOCAL" />
-      <updated>1784502354399</updated>
     </task>
     <task id="LOCAL-00106" summary="My agent">
       <option name="closed" value="true" />
@@ -582,7 +545,39 @@
       <option name="project" value="LOCAL" />
       <updated>1793720504848</updated>
     </task>
-    <option name="localTasksCounter" value="151" />
+    <task id="LOCAL-00151" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1793813244528</created>
+      <option name="number" value="00151" />
+      <option name="presentableId" value="LOCAL-00151" />
+      <option name="project" value="LOCAL" />
+      <updated>1793813244528</updated>
+    </task>
+    <task id="LOCAL-00152" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1793813400562</created>
+      <option name="number" value="00152" />
+      <option name="presentableId" value="LOCAL-00152" />
+      <option name="project" value="LOCAL" />
+      <updated>1793813400563</updated>
+    </task>
+    <task id="LOCAL-00153" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1793813477045</created>
+      <option name="number" value="00153" />
+      <option name="presentableId" value="LOCAL-00153" />
+      <option name="project" value="LOCAL" />
+      <updated>1793813477045</updated>
+    </task>
+    <task id="LOCAL-00154" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1793813535082</created>
+      <option name="number" value="00154" />
+      <option name="presentableId" value="LOCAL-00154" />
+      <option name="project" value="LOCAL" />
+      <updated>1793813535084</updated>
+    </task>
+    <option name="localTasksCounter" value="155" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
