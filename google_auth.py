@@ -1,115 +1,259 @@
+"""Clinic-specific Google OAuth. Each clinic gets its own token file."""
 
 import os
-import json
-
 from pathlib import Path
-from flask import Blueprint, redirect, request, session, jsonify
+
+from flask import (
+    Blueprint,
+    redirect,
+    request,
+    session,
+    jsonify
+)
+
 from google_auth_oauthlib.flow import Flow
 
-google_auth = Blueprint("google_auth", __name__)
+from clinics import (
+    clinic_exists,
+    get_clinic
+)
 
-SCOPES = [
-    "https://www.googleapis.com/auth/calendar.events.freebusy",
-    "https://www.googleapis.com/auth/calendar.events.owned",
-]
+from google_calendar import (
+    token_path,
+    SCOPES
+)
 
-REDIRECT_URI = "http://localhost:5000/google/callback"
 
-TOKEN_PATH = Path(__file__).parent / "instance" / "google_token.json"
+google_auth = Blueprint(
+    "google_auth",
+    __name__
+)
+
+
+REDIRECT_URI = os.getenv(
+    "GOOGLE_REDIRECT_URI",
+    "http://localhost:5000/google/callback"
+)
 
 
 def get_client_config():
+
     client_id = os.getenv("GOOGLE_CLIENT_ID")
+
     client_secret = os.getenv("GOOGLE_CLIENT_SECRET")
 
     if not client_id or not client_secret:
-        raise RuntimeError("Google OAuth environment variables are missing")
+
+        raise RuntimeError(
+            "GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET "
+            "environment variables are required"
+        )
 
     return {
         "web": {
+
             "client_id": client_id,
+
             "client_secret": client_secret,
-            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-            "token_uri": "https://oauth2.googleapis.com/token",
-            "redirect_uris": [REDIRECT_URI],
+
+            "auth_uri": (
+                "https://accounts.google.com/o/oauth2/auth"
+            ),
+
+            "token_uri": (
+                "https://oauth2.googleapis.com/token"
+            ),
+
+            "redirect_uris": [
+                REDIRECT_URI
+            ]
+
         }
     }
 
 
-@google_auth.route("/google/login")
+@google_auth.get("/google/login")
 def google_login():
-    flow = Flow.from_client_config(
-        get_client_config(),
-        scopes=SCOPES,
-        redirect_uri=REDIRECT_URI
-    )
 
-    authorization_url, state = flow.authorization_url(
-        access_type="offline",
-        prompt="consent",
-        code_challenge_method="S256"
-    )
+    clinic_id = request.args.get(
+        "clinic_id",
+        ""
+    ).strip()
 
-    session["google_code_verifier"] = flow.code_verifier
+    if not clinic_exists(clinic_id):
+
+        return jsonify({
+            "error": "Valid clinic_id is required"
+        }), 400
+
+    try:
+
+        flow = Flow.from_client_config(
+            get_client_config(),
+            scopes=SCOPES,
+            redirect_uri=REDIRECT_URI
+        )
+
+        authorization_url, state = flow.authorization_url(
+
+            access_type="offline",
+
+            prompt="consent",
+
+            include_granted_scopes="true",
+
+            code_challenge_method="S256"
+
+        )
+
+        pending = session.get(
+            "google_oauth_pending",
+            {}
+        )
+
+        pending[state] = {
+
+            "clinic_id": clinic_id,
+
+            "code_verifier": flow.code_verifier
+
+        }
+
+        session["google_oauth_pending"] = pending
+
+        session.modified = True
+
+        return redirect(
+            authorization_url
+        )
+
+    except Exception as exc:
+
+        return jsonify({
+
+            "error": "Could not start Google OAuth",
+
+            "details": str(exc)
+
+        }), 500
 
 
-    session["google_oauth_state"] = state
-
-    return redirect(authorization_url)
-
-
-@google_auth.route("/google/callback")
+@google_auth.get("/google/callback")
 def google_callback():
-    saved_state = session.get("google_oauth_state")
-    returned_state = request.args.get("state")
 
-    if not saved_state or saved_state != returned_state:
-        return jsonify({"error": "Invalid OAuth state"}), 400
+    state = request.args.get(
+        "state",
+        ""
+    )
+
+    pending = session.get(
+        "google_oauth_pending",
+        {}
+    )
+
+    oauth_data = pending.pop(
+        state,
+        None
+    )
+
+    session["google_oauth_pending"] = pending
+
+    session.modified = True
+
+    if not oauth_data:
+
+        return jsonify({
+
+            "error": (
+                "Invalid or expired OAuth state. "
+                "Restart /google/login?clinic_id=..."
+            )
+
+        }), 400
 
     if request.args.get("error"):
+
         return jsonify({
+
             "error": "Google authorization failed",
+
             "details": request.args.get("error")
+
         }), 400
 
-    code = request.args.get("code")
+    if not request.args.get("code"):
 
-    if not code:
-        return jsonify({"error": "Authorization code missing"}), 400
-
-    code_verifier = session.get("google_code_verifier")
-
-    if not code_verifier:
         return jsonify({
-            "error": "Missing PKCE code verifier. Please restart Google login."
+
+            "error": "Authorization code missing"
+
         }), 400
 
-    flow = Flow.from_client_config(
-        get_client_config(),
-        scopes=SCOPES,
-        state=saved_state,
-        redirect_uri=REDIRECT_URI,
-        code_verifier=code_verifier
-    )
+    clinic_id = oauth_data["clinic_id"]
 
-    flow.fetch_token(code=code)
+    try:
 
-    credentials = flow.credentials
+        get_clinic(clinic_id)
 
-    TOKEN_PATH.parent.mkdir(parents=True, exist_ok=True)
+        flow = Flow.from_client_config(
 
-    if not credentials.refresh_token and TOKEN_PATH.exists():
-        with open(TOKEN_PATH, "r", encoding="utf-8") as file:
-            old_credentials = json.load(file)
-        credentials.refresh_token = old_credentials.get("refresh_token")
+            get_client_config(),
 
-    with open(TOKEN_PATH, "w", encoding="utf-8") as file:
-        file.write(credentials.to_json())
+            scopes=SCOPES,
 
-    session.pop("google_code_verifier", None)
-    session.pop("google_oauth_state", None)
+            state=state,
 
-    return """
-    <h2>Google Calendar connected successfully!</h2>
-    <p>AutomationClinics is now connected to Google Calendar.</p>
-    """
+            redirect_uri=REDIRECT_URI,
+
+            code_verifier=oauth_data.get(
+                "code_verifier"
+            )
+
+        )
+
+        flow.fetch_token(
+            code=request.args["code"]
+        )
+
+        credentials = flow.credentials
+
+        path = token_path(clinic_id)
+
+        path.parent.mkdir(
+            parents=True,
+            exist_ok=True
+        )
+
+        # Google may omit refresh_token on subsequent
+        # consent flows. Preserve the old one.
+
+        if not credentials.refresh_token and path.exists():
+
+            from google.oauth2.credentials import Credentials
+
+            old = Credentials.from_authorized_user_file(
+                str(path),
+                scopes=SCOPES
+            )
+
+            credentials.refresh_token = old.refresh_token
+
+        path.write_text(
+            credentials.to_json(),
+            encoding="utf-8"
+        )
+
+        return (
+            f"<h2>Google Calendar connected successfully</h2>"
+            f"<p>Clinic: {clinic_id}</p>"
+        )
+
+    except Exception as exc:
+
+        return jsonify({
+
+            "error": "Google Calendar connection failed",
+
+            "details": str(exc)
+
+        }), 500

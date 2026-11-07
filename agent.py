@@ -1,3 +1,4 @@
+"""Clinic-aware chatbot flow. Keeps translations.py, intent_classifier.py and memory.py."""
 
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
@@ -5,188 +6,322 @@ from zoneinfo import ZoneInfo
 from intent_classifier import classify_intent
 from memory import add_message
 from translations import TRANSLATIONS
-from google_calendar import get_available_slots, book_appointment
 
-
-TIMEZONE = ZoneInfo("Europe/Budapest")
+from google_calendar import (
+    get_available_slots,
+    book_appointment
+)
 
 
 def tr(language):
-    return TRANSLATIONS.get(language, TRANSLATIONS["de"])
+    return TRANSLATIONS.get(
+        language,
+        TRANSLATIONS.get("de", {})
+    )
 
 
-def get_date_suggestions():
-    today = datetime.now(TIMEZONE).date()
+def clinic_treatments(clinic, language):
+
+    result = []
+
+    for key, treatment in clinic.get("treatments", {}).items():
+
+        names = treatment.get("names", {})
+
+        name = (
+            names.get(language)
+            or names.get("de")
+            or key
+        )
+
+        result.append((name, treatment))
+
+    return result
+
+
+def no_clinic_data(language):
+
+    return {
+        "de": "Für diese Praxis sind noch keine Behandlungen hinterlegt.",
+        "en": "No treatments have been configured for this clinic yet.",
+        "hun": "Ehhez a klinikához még nincsenek kezelések beállítva."
+    }.get(
+        language,
+        "No treatments have been configured for this clinic yet."
+    )
+
+
+def _text(T, key, fallback):
+    return T.get(key, fallback)
+
+
+def _date_suggestions(clinic):
+
+    tz = ZoneInfo(
+        clinic.get("timezone", "Europe/Budapest")
+    )
+
+    today = datetime.now(tz).date()
 
     return [
-        (today + timedelta(days=1)).isoformat(),
-        (today + timedelta(days=2)).isoformat(),
-        (today + timedelta(days=7)).isoformat()
+        (today + timedelta(days=n)).isoformat()
+        for n in (1, 2, 7)
     ]
 
 
-def handle_message(user_id, message, session, language):
+def _price_reply(clinic_data, language):
+
+    lines = [
+        f"🦷 {name} — {data.get('price')}"
+        for name, data in clinic_data
+        if data.get("price")
+    ]
+
+    heading = {
+        "de": "Unsere Preise:",
+        "en": "Our prices:",
+        "hun": "Áraink:"
+    }.get(language, "Our prices:")
+
+    return heading + (
+        "\n\n" + "\n".join(lines)
+        if lines else ""
+    )
+
+
+def handle_message(
+    user_id,
+    message,
+    session,
+    language,
+    clinic,
+    clinic_id
+):
+
     T = tr(language)
 
-    raw_message = message.strip()
-    message = raw_message.lower()
+    clinic_data = clinic_treatments(
+        clinic,
+        language
+    )
+
+    treatment_names = [
+        name for name, _ in clinic_data
+    ]
+
+    raw = (message or "").strip()
+    text = raw.lower()
 
     # =================================
-    # TREATMENT SELECTION
+    # APPOINTMENT STAGES
     # =================================
 
-    translated_treatments = {
-        treatment.lower(): treatment
-        for treatment in T["treatments"]
-    }
+    stage = session.get("stage")
 
-    if message in translated_treatments:
-        selected_treatment = translated_treatments[message]
+    if stage == "awaiting_treatment":
 
-        session["selected_treatment"] = selected_treatment
-        session["behandlung"] = selected_treatment
-        session["treat"] = selected_treatment
-        session["treatment"] = selected_treatment
-        session["stage"] = "awaiting_date"
+        match = next(
+            (
+                (name, data)
+                for name, data in clinic_data
+                if name.lower() == text
+            ),
+            None
+        )
+
+        if not match:
+
+            return {
+                "reply": _text(
+                    T,
+                    "booking_question",
+                    "Which treatment would you like to book?"
+                ),
+                "suggestions": treatment_names
+            }
+
+        name, data = match
+
+        session.update({
+            "treatment": name,
+            "treat": name,
+            "duration_minutes": int(
+                data.get("duration") or 30
+            ),
+            "stage": "awaiting_date"
+        })
 
         return {
-            "reply": T["which_date"],
-            "suggestions": get_date_suggestions()
+            "reply": _text(
+                T,
+                "which_date",
+                "Please choose a date (YYYY-MM-DD)."
+            ),
+            "suggestions": _date_suggestions(clinic)
         }
 
     # =================================
-    # APPOINTMENT FLOW
+    # DATE SELECTION
     # =================================
 
-    if session.get("stage") == "awaiting_treatment":
+    if stage == "awaiting_date":
 
-        session["behandlung"] = raw_message
-        session["treatment"] = raw_message
-        session["treat"] = raw_message
-
-        session["stage"] = "awaiting_date"
-
-        return {
-            "reply": T["which_date"],
-            "suggestions": get_date_suggestions()
-        }
-
-    elif session.get("stage") == "awaiting_date":
-
-        # Expect YYYY-MM-DD
         try:
-            selected_date = datetime.strptime(
-                raw_message, "%Y-%m-%d"
+
+            selected = datetime.strptime(
+                raw,
+                "%Y-%m-%d"
             ).date()
 
         except ValueError:
+
             return {
                 "reply": (
-                    "Please enter the date in YYYY-MM-DD format. "
-                    "Example: 2026-11-10"
+                    "Please enter the date in YYYY-MM-DD format, "
+                    "e.g. 2026-11-10."
                 )
             }
 
-        if selected_date < datetime.now(TIMEZONE).date():
+        tz = ZoneInfo(
+            clinic.get("timezone", "Europe/Budapest")
+        )
+
+        if selected < datetime.now(tz).date():
+
             return {
                 "reply": "Please choose a future date."
             }
 
-        session["date"] = selected_date.isoformat()
+        duration = int(
+            session.get("duration_minutes", 30)
+        )
 
         try:
-            available_slots = get_available_slots(
-                session["date"]
+
+            slots = get_available_slots(
+                selected.isoformat(),
+                clinic_id,
+                duration
             )
 
-        except Exception as e:
-            print("Google Calendar availability error:", e,"error")
+        except Exception as exc:
+
+            print(
+                "Calendar availability error:",
+                clinic_id,
+                repr(exc)
+            )
 
             return {
                 "reply": (
-                    "Sorry, I could not check the calendar. "
-                    "Please try again later."
+                    "Sorry, I could not check this clinic's calendar. "
+                    "Please try again later or contact the clinic."
                 )
             }
 
-        if not available_slots:
+        if not slots:
+
             return {
                 "reply": (
                     "Sorry, there are no available appointments "
                     "on this date. Please choose another date."
                 ),
-                "suggestions": get_date_suggestions()
+                "suggestions": _date_suggestions(clinic)
             }
 
-        # Map displayed times to full ISO datetime values
-        slot_map = {}
-
-        for slot in available_slots:
-            start_datetime = datetime.fromisoformat(
+        slot_map = {
+            datetime.fromisoformat(
                 slot["start"]
-            )
-
-            display_time = start_datetime.strftime("%H:%M")
-
-            slot_map[display_time] = slot["start"]
-
-        session["slot_map"] = slot_map
-        session["stage"] = "awaiting_time"
-
-        return {
-            "reply": f"Available appointments on {session['date']}:",
-            "suggestions": list(slot_map.keys())
+            ).strftime("%H:%M"): slot["start"]
+            for slot in slots
         }
 
-    elif session.get("stage") == "awaiting_time":
+        session.update({
+            "date": selected.isoformat(),
+            "slot_map": slot_map,
+            "stage": "awaiting_time"
+        })
 
-        selected_time = raw_message.strip()
+        return {
+            "reply": (
+                f"Available appointments on {selected.isoformat()}:"
+            ),
+            "suggestions": list(slot_map)
+        }
+
+    # =================================
+    # TIME SELECTION
+    # =================================
+
+    if stage == "awaiting_time":
 
         slot_map = session.get("slot_map", {})
 
-        if selected_time not in slot_map:
+        if raw not in slot_map:
+
             return {
                 "reply": (
                     "This time is not available. "
                     "Please select one of the available times."
                 ),
-                "suggestions": list(slot_map.keys())
+                "suggestions": list(slot_map)
             }
 
-        session["time"] = selected_time
-        session["start_time"] = slot_map[selected_time]
-
-        session["stage"] = "awaiting_name"
+        session.update({
+            "time": raw,
+            "start_time": slot_map[raw],
+            "stage": "awaiting_name"
+        })
 
         return {
-            "reply": T["your_name"]
+            "reply": _text(
+                T,
+                "your_name",
+                "Please enter your full name."
+            )
         }
 
-    elif session.get("stage") == "awaiting_name":
+    # =================================
+    # NAME
+    # =================================
 
-        if len(raw_message) < 2:
+    if stage == "awaiting_name":
+
+        if len(raw) < 2:
+
             return {
                 "reply": "Please enter your full name."
             }
 
-        session["name"] = raw_message
-        session["stage"] = "awaiting_phone"
+        session.update({
+            "name": raw,
+            "stage": "awaiting_phone"
+        })
 
         return {
-            "reply": T["phone"]
+            "reply": _text(
+                T,
+                "phone",
+                "Please enter your phone number."
+            )
         }
 
-    elif session.get("stage") == "awaiting_phone":
+    # =================================
+    # PHONE + GOOGLE CALENDAR BOOKING
+    # =================================
 
-        if len(raw_message) < 5:
+    if stage == "awaiting_phone":
+
+        if len(raw) < 5:
+
             return {
                 "reply": "Please enter a valid phone number."
             }
 
-        session["phone"] = raw_message
+        session["phone"] = raw
 
-        # Create a real Google Calendar event
         try:
+
             result = book_appointment(
                 start_time=session["start_time"],
                 patient_name=session["name"],
@@ -194,27 +329,38 @@ def handle_message(user_id, message, session, language):
                 treatment=session.get(
                     "treatment",
                     "Consultation"
+                ),
+                clinic_id=clinic_id,
+                duration_minutes=int(
+                    session.get("duration_minutes", 30)
                 )
             )
 
-            print("GOOGLE CALENDAR BOOKING:", result)
+        except Exception as exc:
 
-        except Exception as e:
-            print("Google Calendar booking error:", e)
+            print(
+                "Calendar booking error:",
+                clinic_id,
+                repr(exc)
+            )
 
             session["stage"] = "awaiting_date"
 
             return {
                 "reply": (
-                    "Sorry, this appointment could not be booked. "
+                    "Sorry, the appointment could not be booked. "
                     "Please choose another date."
                 ),
-                "suggestions": get_date_suggestions()
+                "suggestions": _date_suggestions(clinic)
             }
 
         session["stage"] = None
 
-        confirmation = T["confirmation"].format(
+        confirmation = _text(
+            T,
+            "confirmation",
+            "Appointment confirmed for {name}: {treatment}, {date} at {time}."
+        ).format(
             name=session["name"],
             treatment=session.get(
                 "treatment",
@@ -224,7 +370,11 @@ def handle_message(user_id, message, session, language):
             time=session["time"]
         )
 
-        add_message(user_id, "assistant", confirmation)
+        add_message(
+            user_id,
+            "assistant",
+            confirmation
+        )
 
         return {
             "reply": confirmation,
@@ -236,92 +386,209 @@ def handle_message(user_id, message, session, language):
     # NORMAL INTENT HANDLING
     # =================================
 
-    if not message:
+    if not text:
+
         return {
-            "reply": T["how_can_i_help"],
-            "suggestions": T["main_suggestions"]
+            "reply": _text(
+                T,
+                "how_can_i_help",
+                "How can I help you?"
+            ),
+            "suggestions": T.get(
+                "main_suggestions",
+                []
+            )
         }
+
+    # Treatments
+
+    if any(
+        word in text
+        for word in (
+            "treatment",
+            "treatments",
+            "behandlungen",
+            "behandlung",
+            "kezelés",
+            "kezelések"
+        )
+    ):
+
+        if not clinic_data:
+            return {
+                "reply": no_clinic_data(language)
+            }
+
+        return {
+            "reply": _text(
+                T,
+                "treatments_reply",
+                "We offer the following treatments:"
+            ),
+            "suggestions": treatment_names
+        }
+
+    # Prices
+
+    if any(
+        word in text
+        for word in (
+            "price",
+            "prices",
+            "cost",
+            "preis",
+            "preise",
+            "ár",
+            "árak"
+        )
+    ):
+
+        if not clinic_data:
+            return {
+                "reply": no_clinic_data(language)
+            }
+
+        return {
+            "reply": _price_reply(
+                clinic_data,
+                language
+            ),
+            "suggestions": treatment_names
+        }
+
+    # Insurance
 
     if (
-        "treatment" in message
-        or "treatments" in message
-        or "behandlungen" in message
-        or "kezelés" in message
-        or "kezelések" in message
+        "insurance" in text
+        or "versicherung" in text
+        or "biztosítás" in text
     ):
+
         return {
-            "reply": T["treatments_reply"],
-            "suggestions": list(T["treatments"])
+            "reply": _text(
+                T,
+                "insurance_reply",
+                "Please contact the clinic for insurance information."
+            ),
+            "suggestions": T.get(
+                "insurance_suggestions",
+                []
+            )
         }
 
-    if "price" in message or "cost" in message:
+    # Intent classifier
+
+    try:
+
+        classified = classify_intent(
+            user_id,
+            text,
+            language
+        )
+
+    except Exception as exc:
+
+        print(
+            "Intent classifier error:",
+            repr(exc)
+        )
+
         return {
-            "reply": T["pricing_reply"],
-            "suggestions": T["pricing_suggestions"]
+            "reply": _text(
+                T,
+                "error_reply",
+                "Sorry, something went wrong. Please try again."
+            )
         }
 
-    if "insurance" in message:
-        return {
-            "reply": T["insurance_reply"],
-            "suggestions": T["insurance_suggestions"]
-        }
+    intent = classified.get(
+        "intent",
+        "unknown"
+    )
 
-    result = classify_intent(user_id, message, language)
-
-    intent = result["intent"]
-    confidence = result["confidence"]
-
-    print("DEBUG INTENT:", result)
-
-    if confidence < 0.1:
+    if classified.get("confidence", 0) < 0.1:
         intent = "unknown"
 
     if intent == "booking":
 
+        if not treatment_names:
+            return {
+                "reply": no_clinic_data(language)
+            }
+
         session["stage"] = "awaiting_treatment"
 
         return {
-            "reply": T["booking_question"],
-            "suggestions": T["booking_treatments"]
+            "reply": _text(
+                T,
+                "booking_question",
+                "Which treatment would you like to book?"
+            ),
+            "suggestions": treatment_names
         }
 
-    elif intent == "pricing_objection":
-        reply = T["pricing_reply"]
-        suggestions = T["pricing_suggestions"]
+    if intent == "pricing_objection":
 
-    elif intent == "treatments":
-        reply = T["treatments_reply"]
-        suggestions = T["treatments"]
+        return {
+            "reply": (
+                _price_reply(clinic_data, language)
+                if clinic_data
+                else no_clinic_data(language)
+            ),
+            "suggestions": treatment_names
+        }
 
-    elif intent == "emergency":
-        reply = T["emergency_reply"]
-        suggestions = None
+    if intent == "treatments":
 
-    elif intent == "insurance":
-        reply = T["insurance_reply"]
-        suggestions = T["insurance_suggestions"]
+        return {
+            "reply": (
+                _text(
+                    T,
+                    "treatments_reply",
+                    "We offer the following treatments:"
+                )
+                if treatment_names
+                else no_clinic_data(language)
+            ),
+            "suggestions": treatment_names
+        }
 
-    elif intent == "Location_Hours":
-        reply = T["location_reply"]
-        suggestions = None
+    key_by_intent = {
+        "emergency": "emergency_reply",
+        "insurance": "insurance_reply",
+        "Location_Hours": "location_reply",
+        "Human": "human_reply",
+        "welcome_message": "welcome",
+        "unknown": "unknown_reply"
+    }
 
-    elif intent == "Human":
-        reply = T["human_reply"]
-        suggestions = None
+    key = key_by_intent.get(
+        intent,
+        "unknown_reply"
+    )
 
-    elif intent == "welcome_message":
-        reply = T["welcome"]
-        suggestions = None
+    reply = _text(
+        T,
+        key,
+        "Sorry, I did not understand. Could you rephrase that?"
+    )
 
-    else:
-        reply = T["unknown_reply"]
-        suggestions = None
+    add_message(
+        user_id,
+        "assistant",
+        reply
+    )
 
-    add_message(user_id, "assistant", reply)
+    response = {
+        "reply": reply
+    }
 
-    response = {"reply": reply}
+    suggestions_key = {
+        "insurance": "insurance_suggestions"
+    }.get(intent)
 
-    if suggestions is not None:
-        response["suggestions"] = suggestions
+    if suggestions_key and T.get(suggestions_key):
+
+        response["suggestions"] = T[suggestions_key]
 
     return response
