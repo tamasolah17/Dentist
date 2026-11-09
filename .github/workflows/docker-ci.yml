@@ -46,12 +46,14 @@ jobs:
             docker stop dentist || true
             docker rm dentist || true
 
+            
             docker run -d \
               --name dentist \
               --restart unless-stopped \
+              --env-file /home/ubuntu/Dentist/.env \
               -p 5000:5000 \
-              -e OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}" \
               ${{ secrets.DOCKER_USERNAME }}/dentist:${{ github.sha }}
+
 
             sleep 5
 
