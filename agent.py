@@ -113,6 +113,65 @@ def handle_message(
     text = raw.lower()
 
     # =================================
+    # FAQ INTERRUPTS - WORK DURING BOOKING
+    # =================================
+
+    # Treatments
+    if any(word in text for word in (
+        "treatment",
+        "treatments",
+        "behandlung",
+        "behandlungen",
+        "kezelés",
+        "kezelések"
+    )):
+        if not clinic_data:
+            return {"reply": no_clinic_data(language)}
+
+        return {
+            "reply": _text(
+                T,
+                "treatments_reply",
+                "We offer the following treatments:"
+            ),
+            "suggestions": treatment_names
+        }
+
+    # Prices
+    if any(word in text for word in (
+        "price",
+        "prices",
+        "cost",
+        "preis",
+        "preise",
+        "ár",
+        "árak"
+    )):
+        if not clinic_data:
+            return {"reply": no_clinic_data(language)}
+
+        return {
+            "reply": _price_reply(clinic_data, language),
+            "suggestions": treatment_names
+        }
+
+    # Insurance
+    if (
+        "insurance" in text
+        or "versicherung" in text
+        or "biztosítás" in text
+    ):
+        return {
+            "reply": _text(
+                T,
+                "insurance_reply",
+                "Please contact the clinic for insurance information."
+            ),
+            "suggestions": T.get("insurance_suggestions", [])
+        }
+
+
+    # =================================
     # APPOINTMENT STAGES
     # =================================
 
