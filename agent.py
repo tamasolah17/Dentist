@@ -324,6 +324,58 @@ def handle_message(
 
     raw = (message or "").strip()
     text = raw.lower()
+    stage = session.get("stage")
+
+    # ========================================================
+    # DIRECT TREATMENT SELECTION
+    # A clicked treatment button starts the booking process.
+    # ========================================================
+
+    if stage is None:
+
+        normalized_input = _normalize(raw)
+
+        selected_treatment = next(
+            (
+                (name, data)
+                for name, data in clinic_data
+                if _normalize(name) == normalized_input
+            ),
+            None
+        )
+
+        if selected_treatment:
+
+            name, data = selected_treatment
+
+            try:
+                duration = int(data.get("duration") or 30)
+            except (TypeError, ValueError):
+                duration = 30
+
+            if duration <= 0:
+                duration = 30
+
+            session.update({
+                "treatment": name,
+                "treat": name,
+                "duration_minutes": duration,
+                "stage": "awaiting_date"
+            })
+
+            return {
+                "reply": _text(
+                    T,
+                    "which_date",
+                    _localized(
+                        language,
+                        "Bitte wählen Sie ein Datum.",
+                        "Please choose a date.",
+                        "Kérem, válasszon egy dátumot."
+                    )
+                ),
+                "suggestions": _date_suggestions(clinic)
+            }
 
     stage = session.get("stage")
 
