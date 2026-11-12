@@ -433,7 +433,7 @@ def handle_message(
 
     # ========================================================
     # FAQ INTERRUPTS
-    #
+    #*
     # These questions can be answered during booking.
     # The current booking stage is preserved.
     # ========================================================

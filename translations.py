@@ -30,13 +30,15 @@ TRANSLATIONS = {
 
         "phone": "📞 Bitte geben Sie Ihre Telefonnummer an, damit wir den Termin bestätigen können.",
 
-        "confirmation":
-            "✅ Vielen Dank, {name}!<br><br>"
-            "🗓️ Ihre Terminanfrage im Überblick:<br><br>"
-            "• Behandlung: {treatment}<br>"
-            "• Datum: {date}<br>"
-            "• Uhrzeit: {time}<br><br>"
-            "📞 Unser Team wird sich in Kürze bei Ihnen melden, um den Termin zu bestätigen.",
+        "confirmation": (
+            "✅ Vielen Dank, {name}!\n\n"
+            "🗓️ Ihre Terminanfrage im Überblick:\n\n"
+            "• Behandlung: {treatment}\n"
+            "• Datum: {date}\n"
+            "• Uhrzeit: {time}\n\n"
+            "📞 Unser Team wird sich in Kürze bei Ihnen melden, "
+            "um den Termin zu bestätigen."
+        ),
 
         "how_can_i_help": "Wie kann ich Ihnen helfen?",
 
@@ -130,14 +132,15 @@ TRANSLATIONS = {
 
         "phone": "📞 Please enter your phone number so we can confirm your appointment.",
 
-        "confirmation":
-            "✅ Thank you, {name}!<br><br>"
-            "🗓️ Appointment request:<br><br>"
-            "• Treatment: {treatment}<br>"
-            "• Date: {date}<br>"
-            "• Time: {time}<br><br>"
-            "📞 Our team will contact you shortly to confirm your appointment.",
-
+        "confirmation": (
+            "✅ Thank you, {name}!\n\n"
+            "🗓️ Appointment request:\n\n"
+            "• Treatment: {treatment}\n"
+            "• Date: {date}\n"
+            "• Time: {time}\n\n"
+            "📞 Our team will contact you shortly to confirm "
+            "your appointment."
+        ),
         "how_can_i_help": "How can I help you today?",
 
         "main_suggestions": [
@@ -228,13 +231,15 @@ TRANSLATIONS = {
 
         "phone": "📞 Kérjük adja meg telefonszámát az időpont megerősítéséhez.",
 
-        "confirmation":
-            "✅ Köszönjük, {name}!<br><br>"
-            "🗓️ Időpontigénylés:<br><br>"
-            "• Kezelés: {treatment}<br>"
-            "• Dátum: {date}<br>"
-            "• Időpont: {time}<br><br>"
-            "📞 Munkatársunk hamarosan felveszi Önnel a kapcsolatot az időpont megerősítéséhez.",
+        "confirmation": (
+            "✅ Köszönjük, {name}!\n\n"
+            "🗓️ Időpontigénylés:\n\n"
+            "• Kezelés: {treatment}\n"
+            "• Dátum: {date}\n"
+            "• Időpont: {time}\n\n"
+            "📞 Munkatársunk hamarosan felveszi Önnel a kapcsolatot "
+            "az időpont megerősítéséhez."
+        ),
 
         "how_can_i_help": "Miben segíthetek?",
 
