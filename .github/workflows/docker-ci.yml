@@ -29,6 +29,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/dentist:${{ github.sha }}
           docker push ${{ secrets.DOCKER_USERNAME }}/dentist:latest
 
+
       - name: Deploy to Ubuntu server
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -46,18 +47,24 @@ jobs:
             docker stop dentist || true
             docker rm dentist || true
 
-            
             docker run -d \
               --name dentist \
               --restart unless-stopped \
               --env-file /home/ubuntu/Dentist/.env \
+              -v /home/ubuntu/Dentist/instance:/app2/instance \
               -p 5000:5000 \
               ${{ secrets.DOCKER_USERNAME }}/dentist:${{ github.sha }}
 
-
             sleep 5
 
+            echo "=== CONTAINER STATUS ==="
             docker ps
+
+            echo "=== GOOGLE TOKEN FILES ==="
+            ls -lah /home/ubuntu/Dentist/instance/google_tokens/
+
+            echo "=== APPLICATION LOGS ==="
             docker logs dentist --tail 50
 
             docker image prune -f
+      
