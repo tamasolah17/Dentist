@@ -232,7 +232,7 @@ TRANSLATIONS = {
 
         "phone": "📞 Kérjük adja meg telefonszámát az időpont megerősítéséhez.",
 
-        "confirmation_hu": (
+        "confirmation": (
             "<div>"
             "<p>✅ Köszönjük, {name}!</p>"
             "<p>🗓️ Az időpontfoglalási kérelmed:</p>"
