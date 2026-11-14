@@ -3,6 +3,8 @@
 from datetime import datetime, timedelta, time
 from pathlib import Path
 from zoneinfo import ZoneInfo
+import os
+import json
 
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
@@ -19,11 +21,7 @@ TOKEN_DIR = (
     / "google_tokens"
 )
 
-LEGACY_TOKEN_PATH = (
-    BASE_DIR
-    / "instance"
-    / "google_token.json"
-)
+
 
 SCOPES = [
     "https://www.googleapis.com/auth/calendar.events"
@@ -38,47 +36,38 @@ def token_path(clinic_id: str) -> Path:
     return TOKEN_DIR / f"{clinic_id}.json"
 
 
+
 def get_calendar_service(clinic_id: str):
-
     clinic = get_clinic(clinic_id)
-
     path = token_path(clinic_id)
 
-    # Backward compatibility:
-    # Use the old single-clinic token for clinic_001.
+    client_id = os.environ.get("GOOGLE_CLIENT_ID")
+    client_secret = os.environ.get("GOOGLE_CLIENT_SECRET")
 
-    if (
-        clinic_id == "clinic_001"
-        and not path.exists()
-        and LEGACY_TOKEN_PATH.exists()
-    ):
-
-        path.parent.mkdir(
-            parents=True,
-            exist_ok=True
-        )
-
-        path.write_text(
-            LEGACY_TOKEN_PATH.read_text(
-                encoding="utf-8"
-            ),
-            encoding="utf-8"
+    if not client_id or not client_secret:
+        raise RuntimeError(
+            "GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET is missing."
         )
 
     if not path.exists():
-
         raise RuntimeError(
             f"Google Calendar is not connected for {clinic_id}. "
             f"Visit /google/login?clinic_id={clinic_id}"
         )
 
-    credentials = Credentials.from_authorized_user_file(
-        str(path),
+    with open(path, "r", encoding="utf-8") as f:
+        token_info = json.load(f)
+
+    # Mindig az aktuális .env OAuth-adatait használjuk.
+    token_info["client_id"] = client_id
+    token_info["client_secret"] = client_secret
+
+    credentials = Credentials.from_authorized_user_info(
+        token_info,
         scopes=SCOPES
     )
 
     if credentials.expired and credentials.refresh_token:
-
         credentials.refresh(Request())
 
         path.write_text(
@@ -87,7 +76,6 @@ def get_calendar_service(clinic_id: str):
         )
 
     if not credentials.valid:
-
         raise RuntimeError(
             f"Google credentials are invalid for {clinic_id}. "
             "Reconnect Google Calendar."
@@ -99,6 +87,7 @@ def get_calendar_service(clinic_id: str):
         credentials=credentials,
         cache_discovery=False
     )
+
 
 
 def _local_day_bounds(date_string: str, clinic: dict):
