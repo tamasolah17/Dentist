@@ -31,11 +31,11 @@ TRANSLATIONS = {
         "phone": "📞 Bitte geben Sie Ihre Telefonnummer an, damit wir den Termin bestätigen können.",
 
         "confirmation": (
-            "✅ Vielen Dank, {name}!\n\n"
-            "🗓️ Ihre Terminanfrage:\n\n"
-            "1. Behandlung: {treatment}\n"
-            "2. Datum: {date}\n"
-            "3. Uhrzeit: {time}\n\n"
+            "✅ Vielen Dank, {name}!<br><br>"
+            "🗓️ Ihre Terminanfrage:<br><br>"
+            "<b>1. Behandlung:</b> {treatment}<br>"
+            "<b>2. Datum:</b> {date}<br>"
+            "<b>3. Uhrzeit:</b> {time}<br><br>"
             "📞 Unser Team wird sich in Kürze bei Ihnen melden, "
             "um Ihren Termin zu bestätigen."
         ),
@@ -131,6 +131,7 @@ TRANSLATIONS = {
         "your_name": "What is your full name?",
 
         "phone": "📞 Please enter your phone number so we can confirm your appointment.",
+
 
         "confirmation": (
             "✅ Thank you, {name}!\n\n"
@@ -231,15 +232,16 @@ TRANSLATIONS = {
 
         "phone": "📞 Kérjük adja meg telefonszámát az időpont megerősítéséhez.",
 
-        "confirmation": (
+        "confirmation_hu": (
             "✅ Köszönjük, {name}!\n\n"
-            "🗓️ Időpontfoglalási összesítő:\n\n"
+            "🗓️ Az időpontfoglalási kérelmed:\n\n"
             "1. Kezelés: {treatment}\n"
             "2. Dátum: {date}\n"
             "3. Időpont: {time}\n\n"
-            "📞 Munkatársunk hamarosan felveszi Önnel a kapcsolatot "
+            "📞 Munkatársunk hamarosan felveszi veled a kapcsolatot "
             "az időpont véglegesítéséhez."
         ),
+
 
         "how_can_i_help": "Miben segíthetek?",
 
