@@ -233,13 +233,17 @@ TRANSLATIONS = {
         "phone": "📞 Kérjük adja meg telefonszámát az időpont megerősítéséhez.",
 
         "confirmation_hu": (
-            "✅ Köszönjük, {name}!\n\n"
-            "🗓️ Az időpontfoglalási kérelmed:\n\n"
-            "1. Kezelés: {treatment}\n"
-            "2. Dátum: {date}\n"
-            "3. Időpont: {time}\n\n"
-            "📞 Munkatársunk hamarosan felveszi veled a kapcsolatot "
-            "az időpont véglegesítéséhez."
+            "<div>"
+            "<p>✅ Köszönjük, {name}!</p>"
+            "<p>🗓️ Az időpontfoglalási kérelmed:</p>"
+            "<ul>"
+            "<li><b>Kezelés:</b> {treatment}</li>"
+            "<li><b>Dátum:</b> {date}</li>"
+            "<li><b>Időpont:</b> {time}</li>"
+            "</ul>"
+            "<p>📞 Munkatársunk hamarosan felveszi veled a kapcsolatot "
+            "az időpont véglegesítéséhez.</p>"
+            "</div>"
         ),
 
 
