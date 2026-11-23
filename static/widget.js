@@ -1,3 +1,6 @@
+// AutoClinics multi-clinic widget.
+// Requires GET /clinic-config?clinic_id=... on Flask backend.
+
 // Capture the script element before DOMContentLoaded.
 const widgetScript = document.currentScript;
 const clinicId = widgetScript?.dataset?.clinicId || "clinic_001";
@@ -147,43 +150,14 @@ window.addEventListener("DOMContentLoaded", function () {
 
     chatBox.appendChild(messages);
 
+    // GOOGLE TRUST BAR
     const trust = document.createElement("div");
 
     trust.style.padding = "8px 10px";
     trust.style.fontSize = "12px";
     trust.style.borderBottom = "1px solid #eee";
 
-    trust.innerHTML = `
-        <a
-            href="https://www.google.com/search?sca_esv=9ce3d57fdcda1de3&sxsrf=ANbL-n6DqEvg87iOMZDz8WdC93wH-W_8OQ:1772814769449&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOeTzmr5ms6dri2xHS6PT5qGUkyImPz6oNxudOTDwZplGuyPPvLRL3OLCOUYQxi1mwsxPg547vODwAiXmTSVpvbbR9Ate_QQfF0VbyBxThtd3jSot7iCSa42bJiW3U4D1hEWr7TaecTIAnoYvmFRC0TY8zwQdsRicRibUo10T25n_-YeYTA%3D%3D&q=Zahnarzt+Berlin+Sch%C3%B6neberg+-+Dental21+%28ehemals+Dentalzentrum+Plus%29+Reviews&sa=X&ved=2ahUKEwjyqdfU2YuTAxW-1wIHHe3KAOIQ0bkNegQINBAH&biw=1280&bih=593&dpr=1.5"
-            target="_blank"
-            style="
-                display:flex;
-                align-items:center;
-                gap:8px;
-                text-decoration:none;
-                font-family:Arial, sans-serif;
-            "
-        >
-            <span style="font-size:12px;color:#666;">Google</span>
-
-            <span style="
-                color:#f59e0b;
-                font-size:14px;
-                letter-spacing:1px;
-            ">★★★★★</span>
-
-            <span style="
-                font-weight:600;
-                color:#111;
-                font-size:13px;
-            ">4.9</span>
-
-            <span style="color:#666;font-size:12px;">
-                (3,600 reviews)
-            </span>
-        </a>
-    `;
+    trust.innerHTML = "";
 
     trust.style.background = "#ecfdf5";
     trust.style.color = "#15803d";
@@ -193,6 +167,128 @@ window.addEventListener("DOMContentLoaded", function () {
     trust.style.borderBottom = "1px solid #e5e7eb";
 
     chatBox.insertBefore(trust, messages);
+
+    // Load the correct clinic name and Google rating for this widget's clinic_id.
+    async function loadClinicGoogleInfo() {
+        try {
+            const response = await fetch(
+                "https://bot.automationclinics.com/clinic-config?clinic_id=" +
+                    encodeURIComponent(clinicId),
+                {
+                    method: "GET",
+                    headers: {
+                        "Accept": "application/json"
+                    }
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(`Clinic config error: ${response.status}`);
+            }
+
+            const config = await response.json();
+
+            // Do not display placeholder or unverified Google data.
+            if (config.google_verified === false) {
+                trust.style.display = "none";
+                return;
+            }
+
+            const clinicName = config.clinic_name || "";
+            const rating = Number(config.google_rating);
+            const reviewCount = Number(config.google_review_count);
+            const mapsUrl = config.google_maps_uri || config.google_maps_url || "";
+
+            trust.replaceChildren();
+
+            const wrapper = document.createElement("div");
+            wrapper.style.display = "flex";
+            wrapper.style.flexDirection = "column";
+            wrapper.style.gap = "3px";
+
+            if (clinicName) {
+                const name = document.createElement("strong");
+                name.textContent = clinicName;
+                name.style.color = "#111827";
+                name.style.fontSize = "12px";
+                wrapper.appendChild(name);
+            }
+
+            if (
+                Number.isFinite(rating) &&
+                rating > 0 &&
+                Number.isFinite(reviewCount) &&
+                reviewCount >= 0
+            ) {
+                const ratingRow = document.createElement("div");
+                ratingRow.style.display = "flex";
+                ratingRow.style.alignItems = "center";
+                ratingRow.style.gap = "7px";
+
+                const googleLabel = document.createElement("span");
+                googleLabel.textContent = "Google";
+                googleLabel.style.color = "#666";
+                googleLabel.style.fontSize = "12px";
+
+                const stars = document.createElement("span");
+                stars.textContent = "★★★★★";
+                stars.style.color = "#f59e0b";
+                stars.style.fontSize = "14px";
+                stars.style.letterSpacing = "1px";
+
+                const score = document.createElement("strong");
+                score.textContent = rating.toFixed(1);
+                score.style.color = "#111";
+                score.style.fontSize = "13px";
+
+                const count = document.createElement("span");
+                count.textContent =
+                    `(${reviewCount.toLocaleString()} reviews)`;
+                count.style.color = "#666";
+                count.style.fontSize = "12px";
+
+                ratingRow.append(
+                    googleLabel,
+                    stars,
+                    score,
+                    count
+                );
+
+                wrapper.appendChild(ratingRow);
+            }
+
+            if (mapsUrl) {
+                const link = document.createElement("a");
+
+                link.href = mapsUrl;
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                link.textContent = "Google Maps";
+                link.style.color = "#15803d";
+                link.style.fontSize = "11px";
+                link.style.textDecoration = "underline";
+
+                wrapper.appendChild(link);
+            }
+
+            if (wrapper.childElementCount > 0) {
+                trust.appendChild(wrapper);
+                trust.style.display = "block";
+            } else {
+                trust.style.display = "none";
+            }
+
+        } catch (error) {
+            console.error(
+                "Unable to load clinic Google information:",
+                error
+            );
+
+            trust.style.display = "none";
+        }
+    }
+
+    loadClinicGoogleInfo();
 
     // INPUT AREA
     const inputArea = document.createElement("div");

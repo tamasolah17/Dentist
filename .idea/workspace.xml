@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="df5d3721-fe21-4195-aaa6-4acb80b7b1ca" name="Changes" comment="My agent" />
+    <list default="true" id="df5d3721-fe21-4195-aaa6-4acb80b7b1ca" name="Changes" comment="My agent">
+      <change afterPath="$PROJECT_DIR$/clinic_admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/provision_admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/admin.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/clinic_admin/base.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/clinic_admin/dashboard.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/clinic_admin/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/widget.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/widget.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,6 +71,7 @@
     &quot;Python.WebScraper.executor&quot;: &quot;Run&quot;,
     &quot;Python.Z.executor&quot;: &quot;Run&quot;,
     &quot;Python.agent.executor&quot;: &quot;Run&quot;,
+    &quot;Python.chatbot.executor&quot;: &quot;Run&quot;,
     &quot;Python.chatbot_detector.executor&quot;: &quot;Run&quot;,
     &quot;Python.g.executor&quot;: &quot;Run&quot;,
     &quot;Python.intent_classifier.executor&quot;: &quot;Run&quot;,
@@ -73,7 +85,7 @@
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/Dentist&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/Dentist/templates&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;
   },
@@ -87,14 +99,20 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\User\Dentist\templates" />
+      <recent name="C:\Users\User\Dentist\static" />
+      <recent name="C:\Users\User\Dentist" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\User\Dentist\templates\clinic_admin" />
       <recent name="C:\Users\nnavo\PycharmProjects\Dentist" />
       <recent name="C:\Users\nnavo\AppData\Roaming\JetBrains\PyCharm2025.1\scratches" />
       <recent name="C:\Users\nnavo\PycharmProjects\Agent\templates" />
       <recent name="C:\Users\nnavo\PycharmProjects\Agent" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.chatbot">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="Agent" />
       <option name="ENV_FILES" value="" />
@@ -191,6 +209,53 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="chatbot" type="PythonConfigurationType" factoryName="Python">
+      <module name="Agent" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="FLASK_SECRET_KEY" value="23653cf718d84e33953eb231dfd234baa988bad29a3fd0c2b92274fa8cb578b3" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.11 (Dentist) (2)" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unnamed" type="SwaggerCodegen" editBeforeRun="true" nameIsGenerated="true" show_console_on_std_err="false" show_console_on_std_out="false">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="customTemplatesPath" value="" />
+      <option name="generateToPath" value="" />
+      <option name="generationParameters">
+        <list />
+      </option>
+      <option name="generatorType" value="OPENAPI_GENERATOR_V7" />
+      <option name="jdkPath" value="" />
+      <option name="language" value="" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="specificationPath" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.chatbot" />
+      <item itemvalue="OpenAPI/Swagger Code Generator.Unnamed" />
+    </list>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -206,70 +271,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1770391771205</updated>
-    </task>
-    <task id="LOCAL-00116" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1784639898408</created>
-      <option name="number" value="00116" />
-      <option name="presentableId" value="LOCAL-00116" />
-      <option name="project" value="LOCAL" />
-      <updated>1784639898422</updated>
-    </task>
-    <task id="LOCAL-00117" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1784640107135</created>
-      <option name="number" value="00117" />
-      <option name="presentableId" value="LOCAL-00117" />
-      <option name="project" value="LOCAL" />
-      <updated>1784640107135</updated>
-    </task>
-    <task id="LOCAL-00118" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1784640289414</created>
-      <option name="number" value="00118" />
-      <option name="presentableId" value="LOCAL-00118" />
-      <option name="project" value="LOCAL" />
-      <updated>1784640289414</updated>
-    </task>
-    <task id="LOCAL-00119" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1784641128344</created>
-      <option name="number" value="00119" />
-      <option name="presentableId" value="LOCAL-00119" />
-      <option name="project" value="LOCAL" />
-      <updated>1784641128344</updated>
-    </task>
-    <task id="LOCAL-00120" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1784642011151</created>
-      <option name="number" value="00120" />
-      <option name="presentableId" value="LOCAL-00120" />
-      <option name="project" value="LOCAL" />
-      <updated>1784642011151</updated>
-    </task>
-    <task id="LOCAL-00121" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1784642480294</created>
-      <option name="number" value="00121" />
-      <option name="presentableId" value="LOCAL-00121" />
-      <option name="project" value="LOCAL" />
-      <updated>1784642480295</updated>
-    </task>
-    <task id="LOCAL-00122" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1784643098581</created>
-      <option name="number" value="00122" />
-      <option name="presentableId" value="LOCAL-00122" />
-      <option name="project" value="LOCAL" />
-      <updated>1784643098581</updated>
-    </task>
-    <task id="LOCAL-00123" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1784643766036</created>
-      <option name="number" value="00123" />
-      <option name="presentableId" value="LOCAL-00123" />
-      <option name="project" value="LOCAL" />
-      <updated>1784643766037</updated>
     </task>
     <task id="LOCAL-00124" summary="My agent">
       <option name="closed" value="true" />
@@ -599,7 +600,71 @@
       <option name="project" value="LOCAL" />
       <updated>1794611522008</updated>
     </task>
-    <option name="localTasksCounter" value="165" />
+    <task id="LOCAL-00165" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1794612544332</created>
+      <option name="number" value="00165" />
+      <option name="presentableId" value="LOCAL-00165" />
+      <option name="project" value="LOCAL" />
+      <updated>1794612544332</updated>
+    </task>
+    <task id="LOCAL-00166" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1794615772956</created>
+      <option name="number" value="00166" />
+      <option name="presentableId" value="LOCAL-00166" />
+      <option name="project" value="LOCAL" />
+      <updated>1794615772956</updated>
+    </task>
+    <task id="LOCAL-00167" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1794688606243</created>
+      <option name="number" value="00167" />
+      <option name="presentableId" value="LOCAL-00167" />
+      <option name="project" value="LOCAL" />
+      <updated>1794688606243</updated>
+    </task>
+    <task id="LOCAL-00168" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1794689383771</created>
+      <option name="number" value="00168" />
+      <option name="presentableId" value="LOCAL-00168" />
+      <option name="project" value="LOCAL" />
+      <updated>1794689383772</updated>
+    </task>
+    <task id="LOCAL-00169" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1794689975780</created>
+      <option name="number" value="00169" />
+      <option name="presentableId" value="LOCAL-00169" />
+      <option name="project" value="LOCAL" />
+      <updated>1794689975781</updated>
+    </task>
+    <task id="LOCAL-00170" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1794690264889</created>
+      <option name="number" value="00170" />
+      <option name="presentableId" value="LOCAL-00170" />
+      <option name="project" value="LOCAL" />
+      <updated>1794690264908</updated>
+    </task>
+    <task id="LOCAL-00171" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1794690961779</created>
+      <option name="number" value="00171" />
+      <option name="presentableId" value="LOCAL-00171" />
+      <option name="project" value="LOCAL" />
+      <updated>1794690961781</updated>
+    </task>
+    <task id="LOCAL-00172" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1794691243951</created>
+      <option name="number" value="00172" />
+      <option name="presentableId" value="LOCAL-00172" />
+      <option name="project" value="LOCAL" />
+      <updated>1794691243951</updated>
+    </task>
+    <option name="localTasksCounter" value="173" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

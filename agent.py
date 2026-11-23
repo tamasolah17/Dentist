@@ -310,6 +310,23 @@ def handle_message(
     clinic_id
 ):
 
+    # The clinic profile is supplied by main.py for every request.
+    # Keep the booking flow isolated to the selected clinic.
+    if not isinstance(clinic, dict):
+        clinic = {}
+
+    clinic_name = str(
+        clinic.get("clinic_name")
+        or clinic.get("name")
+        or clinic.get("practice_name")
+        or ""
+    ).strip()
+
+    if session.get("clinic_id") not in (None, clinic_id):
+        session.clear()
+
+    session["clinic_id"] = clinic_id
+
     T = tr(language)
 
     clinic_data = clinic_treatments(
@@ -430,7 +447,6 @@ def handle_message(
             ),
             "suggestions": treatment_names
         }
-
     # ========================================================
     # FAQ INTERRUPTS
     #*
@@ -788,7 +804,6 @@ def handle_message(
                 )
             )
         }
-
     # ========================================================
     # APPOINTMENT STAGE 4: NAME
     # ========================================================
@@ -937,7 +952,8 @@ def handle_message(
                 "Consultation"
             ),
             date=session["date"],
-            time=session["time"]
+            time=session["time"],
+            clinic_name=clinic_name
         )
 
         try:

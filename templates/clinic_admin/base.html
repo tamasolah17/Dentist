@@ -1,0 +1,6 @@
+<!doctype html>
+<html lang="hu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ title or 'Rendelő adminisztráció' }}</title><link rel="stylesheet" href="{{ url_for('clinic_admin.static', filename='clinic_admin/admin.css') }}"></head>
+<body><div class="shell">
+{% if admin_user %}<aside class="sidebar"><div class="brand">DentAssist <span>ADMIN</span></div><nav><a href="{{ url_for('clinic_admin.dashboard') }}#clinic">Rendelő adatai</a><a href="{{ url_for('clinic_admin.dashboard') }}#treatments">Kezelések és árak</a><a href="{{ url_for('clinic_admin.dashboard') }}#calendar">Naptár</a></nav><form method="post" action="{{ url_for('clinic_admin.logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="logout">Kijelentkezés</button></form></aside>{% endif %}
+<main class="main">{% with messages=get_flashed_messages(with_categories=true) %}{% for category,message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}{% endwith %}{% block content %}{% endblock %}</main></div></body></html>
