@@ -17,6 +17,11 @@ CLINICS = {
     "clinic_001": {
 
         "name": "Shopify Test Clinic",
+        "google_maps_uri": "https://maps.app.goo.gl/qKx78yCz1jbn5Wsv5",
+
+        "google_rating": 4.9,
+
+        "google_review_count": 1049,
 
         "treatments": {
 

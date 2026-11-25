@@ -118,8 +118,10 @@ def _google_place_details(place_id):
 
 
 @app2.route("/clinic-config", methods=["GET", "OPTIONS"])
+@app2.route("/clinic-config", methods=["GET", "OPTIONS"])
 def clinic_config():
     """Public, read-only widget configuration for one clinic."""
+
     if request.method == "OPTIONS":
         return "", 204
 
@@ -132,54 +134,52 @@ def clinic_config():
         return jsonify({"error": "Unknown clinic_id"}), 404
 
     clinic = get_clinic(clinic_id) or {}
+
     if not isinstance(clinic, dict):
-        app2.logger.error("Invalid clinic configuration for %s", clinic_id)
+        app2.logger.error(
+            "Invalid clinic configuration for %s", clinic_id
+        )
         return jsonify({"error": "Invalid clinic configuration"}), 500
 
-    # Support common field names while keeping the existing clinic store intact.
+    # Support both top-level and nested Google configuration.
     google_config = clinic.get("google")
+
     if not isinstance(google_config, dict):
         google_config = {}
 
-    place_id = (
-        clinic.get("google_place_id")
-        or clinic.get("place_id")
-        or google_config.get("place_id")
+    clinic_name = _clinic_name(clinic)
+
+    google_rating = (
+        clinic.get("google_rating")
+        if clinic.get("google_rating") is not None
+        else google_config.get("rating")
     )
 
-    maps_url = (
-        clinic.get("google_maps_url")
-        or clinic.get("google_maps_uri")
+    google_review_count = (
+        clinic.get("google_review_count")
+        if clinic.get("google_review_count") is not None
+        else google_config.get("review_count")
+    )
+
+    google_maps_uri = (
+        clinic.get("google_maps_uri")
+        or clinic.get("google_maps_url")
+        or google_config.get("maps_uri")
+        or google_config.get("maps_url")
         or ""
     )
 
     result = {
         "clinic_id": clinic_id,
-        "clinic_name": _clinic_name(clinic),
-        "google_rating": None,
-        "google_review_count": None,
-        "google_maps_uri": maps_url,
-        "google_verified": False,
+        "clinic_name": clinic_name,
+        "google_rating": google_rating,
+        "google_review_count": google_review_count,
+        "google_maps_uri": google_maps_uri,
+
+        # These values are manually configured, not verified
+        # through the Google Places API.
+        "google_verified": None,
     }
-
-    # Always prefer fresh Google data over values manually entered in Excel.
-    google_data = _google_place_details(place_id)
-
-    if google_data:
-        result.update(google_data)
-
-        # Prefer the clinic's configured name; Google displayName is a fallback.
-        result["clinic_name"] = (
-            _clinic_name(clinic)
-            or google_data.get("clinic_name")
-            or ""
-        )
-
-        # If Google returned a Maps URI, use it instead of a manually supplied URL.
-        result["google_maps_uri"] = (
-            google_data.get("google_maps_uri")
-            or maps_url
-        )
 
     return jsonify(result)
 

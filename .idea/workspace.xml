@@ -5,16 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df5d3721-fe21-4195-aaa6-4acb80b7b1ca" name="Changes" comment="My agent">
-      <change afterPath="$PROJECT_DIR$/clinic_admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/provision_admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/admin.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/clinic_admin/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/clinic_admin/dashboard.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/clinic_admin/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clinics.py" beforeDir="false" afterPath="$PROJECT_DIR$/clinics.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/widget.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/widget.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -271,14 +264,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1770391771205</updated>
-    </task>
-    <task id="LOCAL-00124" summary="My agent">
-      <option name="closed" value="true" />
-      <created>1784643938225</created>
-      <option name="number" value="00124" />
-      <option name="presentableId" value="LOCAL-00124" />
-      <option name="project" value="LOCAL" />
-      <updated>1784643938225</updated>
     </task>
     <task id="LOCAL-00125" summary="My agent">
       <option name="closed" value="true" />
@@ -664,7 +649,15 @@
       <option name="project" value="LOCAL" />
       <updated>1794691243951</updated>
     </task>
-    <option name="localTasksCounter" value="173" />
+    <task id="LOCAL-00173" summary="My agent">
+      <option name="closed" value="true" />
+      <created>1795475741953</created>
+      <option name="number" value="00173" />
+      <option name="presentableId" value="LOCAL-00173" />
+      <option name="project" value="LOCAL" />
+      <updated>1795475741956</updated>
+    </task>
+    <option name="localTasksCounter" value="174" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
