@@ -73,3 +73,28 @@
     align-items:center;
     justify-content:center;
 }
+.google-rating-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+}
+
+.google-rating-link {
+    color: #4285F4;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.google-rating-link:hover {
+    text-decoration: underline;
+}
+
+.google-rating-stars {
+    color: #fbbc04;
+    letter-spacing: 1px;
+}
+
+.google-reviews {
+    color: #64748b;
+}

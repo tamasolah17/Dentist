@@ -150,14 +150,9 @@ window.addEventListener("DOMContentLoaded", function () {
 
     chatBox.appendChild(messages);
 
+
     // GOOGLE TRUST BAR
     const trust = document.createElement("div");
-
-    trust.style.padding = "8px 10px";
-    trust.style.fontSize = "12px";
-    trust.style.borderBottom = "1px solid #eee";
-
-    trust.innerHTML = "";
 
     trust.style.background = "#ecfdf5";
     trust.style.color = "#15803d";
@@ -168,7 +163,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
     chatBox.insertBefore(trust, messages);
 
-    // Load the correct clinic name and Google rating for this widget's clinic_id.
+    // Load Google rating for this clinic
     async function loadClinicGoogleInfo() {
         try {
             const response = await fetch(
@@ -188,95 +183,89 @@ window.addEventListener("DOMContentLoaded", function () {
 
             const config = await response.json();
 
-            // Do not display placeholder or unverified Google data.
             if (config.google_verified === false) {
                 trust.style.display = "none";
                 return;
             }
 
-            const clinicName = config.clinic_name || "";
             const rating = Number(config.google_rating);
             const reviewCount = Number(config.google_review_count);
-            const mapsUrl = config.google_maps_uri || config.google_maps_url || "";
+            const mapsUrl =
+                config.google_maps_uri || config.google_maps_url || "";
 
             trust.replaceChildren();
 
-            const wrapper = document.createElement("div");
-            wrapper.style.display = "flex";
-            wrapper.style.flexDirection = "column";
-            wrapper.style.gap = "3px";
-
-            if (clinicName) {
-                const name = document.createElement("strong");
-                name.textContent = clinicName;
-                name.style.color = "#111827";
-                name.style.fontSize = "12px";
-                wrapper.appendChild(name);
-            }
-
             if (
-                Number.isFinite(rating) &&
-                rating > 0 &&
-                Number.isFinite(reviewCount) &&
-                reviewCount >= 0
+                !Number.isFinite(rating) ||
+                rating <= 0 ||
+                rating > 5 ||
+                !Number.isFinite(reviewCount) ||
+                reviewCount < 0
             ) {
-                const ratingRow = document.createElement("div");
-                ratingRow.style.display = "flex";
-                ratingRow.style.alignItems = "center";
-                ratingRow.style.gap = "7px";
-
-                const googleLabel = document.createElement("span");
-                googleLabel.textContent = "Google";
-                googleLabel.style.color = "#666";
-                googleLabel.style.fontSize = "12px";
-
-                const stars = document.createElement("span");
-                stars.textContent = "★★★★★";
-                stars.style.color = "#f59e0b";
-                stars.style.fontSize = "14px";
-                stars.style.letterSpacing = "1px";
-
-                const score = document.createElement("strong");
-                score.textContent = rating.toFixed(1);
-                score.style.color = "#111";
-                score.style.fontSize = "13px";
-
-                const count = document.createElement("span");
-                count.textContent =
-                    `(${reviewCount.toLocaleString()} reviews)`;
-                count.style.color = "#666";
-                count.style.fontSize = "12px";
-
-                ratingRow.append(
-                    googleLabel,
-                    stars,
-                    score,
-                    count
-                );
-
-                wrapper.appendChild(ratingRow);
+                trust.style.display = "none";
+                return;
             }
+
+            const ratingRow = document.createElement("div");
+
+            ratingRow.style.display = "flex";
+            ratingRow.style.alignItems = "center";
+            ratingRow.style.gap = "6px";
+            ratingRow.style.flexWrap = "wrap";
+
+            // Google link
+            let googleLabel;
 
             if (mapsUrl) {
-                const link = document.createElement("a");
+                googleLabel = document.createElement("a");
+                googleLabel.href = mapsUrl;
+                googleLabel.target = "_blank";
+                googleLabel.rel = "noopener noreferrer";
+                googleLabel.style.cursor = "pointer";
+                googleLabel.style.textDecoration = "none";
 
-                link.href = mapsUrl;
-                link.target = "_blank";
-                link.rel = "noopener noreferrer";
-                link.textContent = "Google Maps";
-                link.style.color = "#15803d";
-                link.style.fontSize = "11px";
-                link.style.textDecoration = "underline";
+                googleLabel.addEventListener("mouseenter", () => {
+                    googleLabel.style.textDecoration = "underline";
+                });
 
-                wrapper.appendChild(link);
-            }
-
-            if (wrapper.childElementCount > 0) {
-                trust.appendChild(wrapper);
-                trust.style.display = "block";
+                googleLabel.addEventListener("mouseleave", () => {
+                    googleLabel.style.textDecoration = "none";
+                });
             } else {
-                trust.style.display = "none";
+                googleLabel = document.createElement("span");
             }
+
+            googleLabel.textContent = "Google";
+            googleLabel.style.color = "#4285F4";
+            googleLabel.style.fontSize = "12px";
+
+            // Stars
+            const stars = document.createElement("span");
+            stars.textContent = "★★★★★";
+            stars.style.color = "#f59e0b";
+            stars.style.fontSize = "14px";
+            stars.style.letterSpacing = "1px";
+
+            // Rating
+            const score = document.createElement("strong");
+            score.textContent = rating.toFixed(1);
+            score.style.color = "#111";
+
+            // Review count
+            const count = document.createElement("span");
+            count.textContent =
+                `(${reviewCount.toLocaleString("en-US")} reviews)`;
+            count.style.color = "#666";
+
+            ratingRow.append(
+                googleLabel,
+                stars,
+                score,
+                count
+            );
+
+            trust.appendChild(ratingRow);
+            trust.style.display = "block";
 
         } catch (error) {
             console.error(
@@ -289,6 +278,7 @@ window.addEventListener("DOMContentLoaded", function () {
     }
 
     loadClinicGoogleInfo();
+
 
     // INPUT AREA
     const inputArea = document.createElement("div");
