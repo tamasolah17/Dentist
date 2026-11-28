@@ -66,7 +66,7 @@ window.addEventListener("DOMContentLoaded", function () {
     chatBox.style.bottom = "90px";
     chatBox.style.right = "20px";
     chatBox.style.width = "350px";
-    chatBox.style.height = "555px";
+    chatBox.style.height = "500px";
     chatBox.style.background = "white";
     chatBox.style.flexDirection = "column";
     chatBox.style.overflow = "hidden";
